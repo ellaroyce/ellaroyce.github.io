@@ -24,6 +24,21 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
+// EU AI Act countdown (target: 2 Aug 2026)
+(function () {
+  const el = document.getElementById('countdown');
+  if (!el) return;
+  const target = new Date('2026-08-02T00:00:00Z').getTime();
+  function tick() {
+    const diff = target - Date.now();
+    if (diff <= 0) { el.textContent = 'Now in force'; return; }
+    const days = Math.floor(diff / 86400000);
+    el.textContent = days + ' days';
+  }
+  tick();
+  setInterval(tick, 60000);
+})();
+
 // Reveal on scroll
 (function () {
   const els = document.querySelectorAll('.reveal');

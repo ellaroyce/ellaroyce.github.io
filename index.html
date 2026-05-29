@@ -86,7 +86,12 @@
       <a href="#ready">EU AI readiness</a>
       <a href="#needs">What you need</a>
       <a href="#about">About me</a>
-      <a href="#contact" class="nav__cta">Work with me</a>
+      <a href="#faq">FAQ</a>
+      <!-- TODO: replace # with your LinkedIn profile URL -->
+      <a href="#" class="nav__link-icon" aria-label="LinkedIn profile" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.74v20.52C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="#contact" class="nav__cta">Book a call</a>
     </nav>
     <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode"></button>
   </div>
@@ -100,8 +105,10 @@
       <p class="eyebrow reveal">AI Governance · Architecture · Delivery — Erlangen, Germany</p>
       <h1 class="hero__title reveal">From prototype to production, <span class="accent">compliant by design.</span></h1>
       <p class="hero__lede reveal">I turn stuck AI prototypes into compliant, adopted, margin-positive products — bridging the model, the architecture, and the EU&nbsp;AI&nbsp;Act, so regulated European enterprises ship AI that auditors, engineers, and the board all trust.</p>
+      <p class="hero__for reveal">For regulated European enterprises with AI in — or near — production.</p>
       <div class="hero__actions reveal">
-        <a href="#contact" class="btn btn--primary">Start a conversation</a>
+        <!-- TODO: replace with your Cal.com / Calendly booking link -->
+        <a href="#contact" class="btn btn--primary">Book a 20-min intro call</a>
         <a href="#ready" class="btn btn--ghost">Are you AI-Act ready?</a>
       </div>
     </div>
@@ -147,9 +154,9 @@
         <p class="section__lede">The EU AI Act's general obligations apply from August 2026, with high-risk requirements phasing in through 2028. AI is the fastest-growing segment of German consulting — yet nearly three in four companies still lack mature AI governance. If your AI touches customers, safety, or regulated data, the clock is already running.</p>
       </div>
       <ul class="whynow__list reveal" role="list">
-        <li><span class="big">Aug 2026</span><span>EU AI Act general obligations apply across the EU.</span></li>
-        <li><span class="big">+22%</span><span>Forecast 2026 growth in the AI consulting segment in Germany.</span></li>
-        <li><span class="big">~3 in 4</span><span>German companies lack fully developed AI governance.</span></li>
+        <li class="whynow__count"><span class="big" id="countdown" aria-live="polite">—</span><span>until the EU AI Act's main obligations apply (2 Aug 2026).</span></li>
+        <li><span class="big big--pop">€35M / 7%</span><span>Maximum fine of global annual turnover for the most serious breaches.</span></li>
+        <li><span class="big">~3 in 4</span><span>German companies still lack fully developed AI governance.</span></li>
       </ul>
     </div>
   </section>
@@ -210,6 +217,27 @@
           </div>
         </div>
       </div>
+
+      <!-- Fixed-scope entry offer -->
+      <div class="offer reveal">
+        <div class="offer__body">
+          <span class="offer__badge">Start here</span>
+          <h3 class="offer__title">EU AI Act Readiness Assessment</h3>
+          <p class="offer__lede">A fixed-scope, two-week engagement that tells your board exactly where you stand and what to do next — no open-ended retainer required.</p>
+          <ul class="offer__list" role="list">
+            <li>Risk classification of your AI systems against the Act</li>
+            <li>Gap analysis vs. high-risk obligations &amp; documentation</li>
+            <li>A prioritised, board-ready compliance roadmap</li>
+          </ul>
+        </div>
+        <div class="offer__aside">
+          <span class="offer__meta">Timeframe</span>
+          <span class="offer__metaval">~2 weeks</span>
+          <span class="offer__meta">Format</span>
+          <span class="offer__metaval">Fixed scope &amp; fee</span>
+          <a href="#contact" class="btn btn--primary offer__cta">Book the assessment</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -259,14 +287,65 @@
     </div>
   </section>
 
+  <!-- Why fractional + testimonial -->
+  <section class="section whyme" id="whyme">
+    <div class="container whyme__grid">
+      <div class="reveal">
+        <p class="eyebrow">Why fractional</p>
+        <h2 class="section__title section__title--sm">Senior, hands-on, and has actually shipped the models — at a fraction of a big firm.</h2>
+        <p class="section__lede">A large consultancy sends a slide deck and a junior team. I bring one senior operator who has built and governed AI in regulated settings, embeds with your people, and owns the outcome — without the overhead, ramp-up, or headcount of a full-time hire.</p>
+      </div>
+      <!-- TODO: replace with a real client testimonial (name, title, company optional) -->
+      <figure class="quote reveal">
+        <blockquote>“Add a short client quote here — e.g. how a stuck pilot reached production or passed an audit. One specific, verifiable sentence beats any list of adjectives.”</blockquote>
+        <figcaption><span class="quote__name">Client name</span><span class="quote__role">Title · Sector (e.g. VP Engineering, MedTech)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <p class="eyebrow reveal">Before you reach out</p>
+      <h2 class="section__title reveal">Frequently asked</h2>
+      <div class="faq__list">
+        <details class="faq__item reveal">
+          <summary>How does an engagement start?</summary>
+          <p>With a 20-minute intro call to understand your AI estate and timeline. Most clients then begin with the fixed-scope EU AI Act Readiness Assessment, which de-risks the bigger decision and gives the board a clear picture before any retainer.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>Do you work remotely and across the EU?</summary>
+          <p>Yes. I'm based in Germany and work with regulated enterprises across Europe — remote by default, on-site for key workshops and board sessions when it helps.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>What kinds of organisations do you work with?</summary>
+          <p>Regulated and safety-critical European enterprises with AI in or near production — industrial services, MedTech, life sciences, and similar sectors where auditors, engineers, and the board all need to trust the system.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>How are engagements structured and contracted?</summary>
+          <p>Project-based or fractional retainer (roughly one to three days a week), on fixed scope and fee rather than hourly billing — clean for both sides and well-suited to German contracting norms.</p>
+        </details>
+        <details class="faq__item reveal">
+          <summary>What makes you different from a large consultancy?</summary>
+          <p>You get one senior operator who has personally built, deployed, and governed AI in regulated domains — not a deck and a rotating junior team. Hands-on, accountable for outcomes, and a fraction of the cost.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact CTA -->
   <section class="section contact" id="contact">
     <div class="container contact__inner reveal">
       <p class="eyebrow">Let's talk</p>
       <h2 class="contact__title">AI that survives the auditor <span class="accent">and the P&amp;L review.</span></h2>
-      <p class="contact__lede">If you're a regulated European enterprise preparing for the EU AI Act — or sitting on AI pilots that never reached production — let's scope what good looks like.</p>
-      <a class="btn btn--primary btn--lg" href="mailto:ellatiuriumina@gmail.com?subject=AI%20governance%20advisory%20enquiry">Email&nbsp;Ella&nbsp;→</a>
-      <p class="contact__email">ellatiuriumina@gmail.com</p>
+      <p class="contact__lede">If you're a regulated European enterprise preparing for the EU AI Act — or sitting on AI pilots that never reached production — let's scope what good looks like in a 20-minute call.</p>
+      <div class="contact__actions">
+        <!-- TODO: replace href with your Cal.com / Calendly booking link -->
+        <a class="btn btn--primary btn--lg" href="mailto:ellatiuriumina@gmail.com?subject=20-min%20intro%20call%20%E2%80%94%20AI%20governance&amp;body=Hi%20Ella%2C%0A%0AWe're%20a%20%5Bsector%5D%20company%20with%20AI%20%5Bin%2Fnear%20production%5D.%20We'd%20like%20to%20talk%20about%20%5BEU%20AI%20Act%20readiness%20%2F%20getting%20a%20pilot%20to%20production%5D.%0A%0AA%20good%20time%20for%20a%2020-min%20call%20would%20be%3A%20%5B...%5D%0A%0AThanks%2C%0A%5BName%5D">Book a 20-min call&nbsp;→</a>
+        <!-- TODO: replace # with your LinkedIn profile URL -->
+        <a class="btn btn--ghost btn--lg" href="#" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+      <p class="contact__email">Prefer email? ellatiuriumina@gmail.com</p>
     </div>
   </section>
 
@@ -275,6 +354,11 @@
 <footer class="footer">
   <div class="container footer__inner">
     <span>© 2026 Ella Türümina · Erlangen, Germany</span>
+    <span class="footer__links">
+      <!-- TODO: replace # with your LinkedIn profile URL -->
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:ellatiuriumina@gmail.com">Email</a>
+    </span>
     <span class="footer__tag">Fractional AI-governance &amp; architecture advisory</span>
   </div>
 </footer>
