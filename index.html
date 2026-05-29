@@ -83,7 +83,9 @@
       </svg>
       <span class="logo__text">Ella&nbsp;Türümina</span>
     </a>
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <a href="#funnel" class="nav__mobile-only" data-i18n="nav.how">How it works</a>
+      <a href="#shift" class="nav__mobile-only" data-i18n="nav.why">Why me</a>
       <a href="#ready" data-i18n="nav.ready">EU AI readiness</a>
       <a href="#needs" data-i18n="nav.needs">What you need</a>
       <a href="#about" data-i18n="nav.about">About me</a>
@@ -94,6 +96,9 @@
       </a>
       <a href="#contact" class="nav__cta" data-i18n="nav.cta">Book a free call</a>
     </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
     <div class="lang-switch" role="group" aria-label="Language / Sprache">
       <button type="button" class="lang-switch__btn is-active" data-lang-set="en" aria-pressed="true">EN</button>
       <span class="lang-switch__sep" aria-hidden="true">/</span>
@@ -119,26 +124,32 @@
       </div>
     </div>
 
-    <!-- The one picture: prototype -> production journey -->
-    <div class="container reveal">
-      <div class="flow" role="img" aria-label="From prototype to production to a compliant, adopted product">
-        <div class="flow__node">
-          <span class="flow__icon" aria-hidden="true">{ }</span>
-          <span class="flow__label" data-i18n="flow.proto">Prototype</span>
-          <span class="flow__sub" data-i18n="flow.protoSub">A model in a notebook</span>
+    <!-- The one picture: a funnel from stuck pilots to a compliant, shipped product with measurable payoff -->
+    <div class="container reveal" id="funnel">
+      <div class="funnel" role="img" aria-label="A funnel: stuck AI pilots are narrowed through governance and production engineering into one EU AI Act compliant product, producing fewer incidents, lower run-costs, less manual work and faster time to value.">
+        <div class="funnel__stages">
+          <div class="funnel__stage funnel__stage--wide">
+            <span class="funnel__tag" data-i18n="funnel.s1tag">Where most teams are stuck</span>
+            <span class="funnel__label" data-i18n="funnel.s1">Promising pilots that never ship</span>
+          </div>
+          <span class="funnel__chev" aria-hidden="true"></span>
+          <div class="funnel__stage funnel__stage--mid">
+            <span class="funnel__tag" data-i18n="funnel.s2tag">What I add</span>
+            <span class="funnel__label" data-i18n="funnel.s2">Governance + production engineering</span>
+          </div>
+          <span class="funnel__chev" aria-hidden="true"></span>
+          <div class="funnel__stage funnel__stage--out">
+            <span class="funnel__check" aria-hidden="true">✓</span>
+            <span class="funnel__out-label" data-i18n="funnel.s3">One product, compliant with the EU AI Act</span>
+          </div>
         </div>
-        <span class="flow__arrow" aria-hidden="true">→</span>
-        <div class="flow__node">
-          <span class="flow__icon" aria-hidden="true">⚙</span>
-          <span class="flow__label" data-i18n="flow.prod">Production</span>
-          <span class="flow__sub" data-i18n="flow.prodSub">Monitored, adopted, scaled</span>
-        </div>
-        <span class="flow__arrow" aria-hidden="true">→</span>
-        <div class="flow__node flow__node--accent">
-          <span class="flow__icon" aria-hidden="true">✓</span>
-          <span class="flow__label" data-i18n="flow.compliant">EU AI Act compliant</span>
-          <span class="flow__sub" data-i18n="flow.compliantSub">Survives the auditor &amp; the P&amp;L review</span>
-        </div>
+        <p class="funnel__payoff-intro" data-i18n="funnel.payoff">What that delivers to the business</p>
+        <ul class="funnel__outcomes" role="list">
+          <li><span class="funnel__o-num" data-i18n="funnel.o1">Fewer incidents</span></li>
+          <li><span class="funnel__o-num" data-i18n="funnel.o2">Lower run-costs</span></li>
+          <li><span class="funnel__o-num" data-i18n="funnel.o3">Less manual work</span></li>
+          <li><span class="funnel__o-num" data-i18n="funnel.o4">Faster to value</span></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -150,6 +161,37 @@
       <span data-i18n="strip.1">EU AI Act readiness</span><i>/</i><span data-i18n="strip.2">High-risk system governance</span><i>/</i><span data-i18n="strip.3">MLOps &amp; model lifecycle</span><i>/</i><span data-i18n="strip.4">Enterprise &amp; data architecture</span><i>/</i><span data-i18n="strip.5">Pilot-to-product delivery</span><i>/</i><span data-i18n="strip.6">Sovereign &amp; healthcare AI</span><i>/</i>
     </div>
   </div>
+
+  <!-- Why others stall vs. what changes when Ella steps in -->
+  <section class="section shift" id="shift">
+    <div class="container">
+      <div class="shift__head reveal">
+        <p class="eyebrow" data-i18n="shift.eyebrow">Why most AI stalls</p>
+        <h2 class="section__title section__title--sm" data-i18n="shift.title">The gap isn't the model. It's everything around it.</h2>
+        <p class="section__lede" data-i18n="shift.lede">Most teams have data scientists who don't read regulation, lawyers who don't read code, and architects who don't own the outcome. So the model works in a demo and then sits there. I cover all three at once, which is exactly where projects get unstuck.</p>
+      </div>
+      <div class="shift__cols reveal">
+        <div class="shift__col shift__col--before">
+          <p class="shift__col-tag" data-i18n="shift.beforeTag">Without the right person</p>
+          <ul role="list">
+            <li data-i18n="shift.b1">Pilot looks great, but nobody will sign off the risk.</li>
+            <li data-i18n="shift.b2">Compliance and engineering blame each other; the model waits.</li>
+            <li data-i18n="shift.b3">Tooling sprawls, run-costs climb, no one owns the architecture.</li>
+            <li data-i18n="shift.b4">The EU AI Act deadline gets closer and the board gets nervous.</li>
+          </ul>
+        </div>
+        <div class="shift__col shift__col--after">
+          <p class="shift__col-tag" data-i18n="shift.afterTag">When I step in</p>
+          <ul role="list">
+            <li data-i18n="shift.a1">The model is mapped to the EU AI Act, with the gaps written down and closed.</li>
+            <li data-i18n="shift.a2">Governance, engineering and architecture pull in one direction.</li>
+            <li data-i18n="shift.a3">Fragmented tooling becomes one platform your team can actually run.</li>
+            <li data-i18n="shift.a4">It clears internal audit and goes live, with someone owning the result.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Are you ready for EU AI regulation? -->
   <section class="section whynow" id="ready">
