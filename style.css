@@ -155,6 +155,9 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 .section__title{font-size:var(--text-2xl);font-weight:800;max-width:18ch}
 .section__title--sm{font-size:var(--text-xl);max-width:16ch}
 .section__lede{font-size:var(--text-lg);color:var(--color-text-muted);max-width:54ch;margin-top:var(--space-5);font-weight:400}
+.ready__ref{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-4);letter-spacing:.01em}
+.ready__ref a{color:var(--color-primary);text-decoration:none;border-bottom:1px solid var(--color-primary-line);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ready__ref a:hover{border-bottom-color:var(--color-primary)}
 
 /* ---------- Hero ---------- */
 .hero{

@@ -59,6 +59,7 @@ const I18N = {
     'ready.eyebrow': 'Die Frage, die jeder Vorstand stellt',
     'ready.title': 'Sind Sie bereit für die EU-KI-Regulierung?',
     'ready.lede': 'Die zentralen Pflichten der EU-KI-Verordnung gelten ab August 2026, die Anforderungen an Hochrisiko-Systeme kommen schrittweise bis 2028 dazu. KI ist derzeit das am schnellsten wachsende Beratungsfeld in Deutschland. Trotzdem fehlt fast drei von vier Unternehmen eine wirklich ausgereifte KI-Governance. Sobald Ihre KI Kunden, Sicherheit oder regulierte Daten berührt, läuft die Uhr bereits.',
+    'ready.ref': 'Der vollständige Text: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Verordnung (EU)&nbsp;2024/1689</a>',
     'ready.stat1': 'bis die zentralen Pflichten der EU-KI-Verordnung greifen (2. Aug. 2026).',
     'ready.stat2': 'Höchststrafe vom weltweiten Jahresumsatz bei den schwersten Verstößen.',
     'ready.stat3num': '~3 von 4',
