@@ -78,11 +78,11 @@ const I18N = {
 
     'ready.eyebrow': 'Die Frage, die jeder Vorstand stellt',
     'ready.title': 'Sind Sie bereit für die EU-KI-Regulierung?',
-    'ready.lede': 'Die zentralen Pflichten der EU-KI-Verordnung gelten ab August 2026, die Anforderungen an Hochrisiko-Systeme kommen schrittweise bis 2028 dazu. KI ist derzeit das am schnellsten wachsende Beratungsfeld in Deutschland. Trotzdem fehlt fast drei von vier Unternehmen eine wirklich ausgereifte KI-Governance. Sobald Ihre KI Kunden, Sicherheit oder regulierte Daten berührt, läuft die Uhr bereits.',
+    'ready.lede': 'Die zentralen Pflichten der EU-KI-Verordnung gelten ab August 2026, die Anforderungen an Hochrisiko-Systeme kommen schrittweise bis 2028 dazu. KI ist derzeit das am schnellsten wachsende Beratungsfeld in Deutschland. Trotzdem fehlt vielen Unternehmen eine wirklich ausgereifte KI-Governance. Sobald Ihre KI Kunden, Sicherheit oder regulierte Daten berührt, läuft die Uhr bereits.',
     'ready.ref': 'Der vollständige Text: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Verordnung (EU)&nbsp;2024/1689</a>',
     'ready.stat1': 'bis die zentralen Pflichten der EU-KI-Verordnung greifen (2. Aug. 2026).',
     'ready.stat2': 'Höchststrafe vom weltweiten Jahresumsatz bei den schwersten Verstößen.',
-    'ready.stat3num': '~3 von 4',
+    'ready.stat3num': 'Viele',
     'ready.stat3': 'deutsche Unternehmen haben noch keine voll entwickelte KI-Governance.',
 
     'needs.eyebrow': 'Wo ich helfe',
@@ -139,12 +139,12 @@ const I18N = {
     'proof.p4': 'Den Weg vom Prototyp in die Produktion verkürzt, mit echter Akzeptanz und Wirkung auf die Marge statt Modellen, die im Notebook liegen bleiben.',
 
     'creds.intro': 'Gestützt auf',
-    'creds.l1': 'Doktorandin, Mathematik in den Lebenswissenschaften (FAU Erlangen)',
-    'creds.l2': 'MSc Informatik, cum laude',
-    'creds.l3': 'ArchiMate-zertifiziert · IPMA Level D',
-    'creds.l4': 'Google Generative AI Leader · Anthropic- & Databricks-zertifiziert',
-    'creds.l5': 'Q1-Publikationen · 3 Software-Patente · ausgezeichnete KI-Umsetzung',
-    'creds.l6': 'Englisch C2 · Deutsch B2 · Russisch Muttersprache',
+    'creds.l1': '3 Software-Patente',
+    'creds.l2': 'Ausgezeichnete KI-Umsetzung',
+    'creds.l3': 'Google Generative AI Leader',
+    'creds.l4': 'Anthropic- & Databricks-zertifiziert',
+    'creds.l5': 'Promotion in Mathematik',
+    'creds.l6': 'BSc/MSc Informatik',
 
     'whyme.eyebrow': 'Warum fraktional',
     'whyme.title': 'Erfahren, nah an der Umsetzung und mit echten Modellen im Einsatz, zu einem Bruchteil dessen, was eine große Beratung kostet.',
