@@ -82,8 +82,8 @@ const I18N = {
     'ready.ref': 'Der vollständige Text: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Verordnung (EU)&nbsp;2024/1689</a>',
     'ready.stat1': 'bis die zentralen Pflichten der EU-KI-Verordnung greifen (2. Aug. 2026).',
     'ready.stat2': 'Höchststrafe vom weltweiten Jahresumsatz bei den schwersten Verstößen.',
-    'ready.stat3num': 'Viele',
-    'ready.stat3': 'deutsche Unternehmen haben noch keine voll entwickelte KI-Governance.',
+    'ready.stat3num': '~3 von 4',
+    'ready.stat3': 'deutsche Unternehmen haben keine voll entwickelten KI-Governance-Strukturen (Red Hat / Censuswide, 2026).',
 
     'needs.eyebrow': 'Wo ich helfe',
     'needs.title': 'Was meine Kunden brauchen',
