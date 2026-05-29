@@ -33,20 +33,20 @@ const I18N = {
     'nav.needs': 'Was Sie brauchen',
     'nav.about': 'Über mich',
     'nav.faq': 'FAQ',
-    'nav.cta': 'Gespräch buchen',
+    'nav.cta': 'Kostenloses Gespräch',
 
     'hero.eyebrow': 'KI-Governance · Architektur · Umsetzung',
-    'hero.title': 'Vom Prototyp in die Produktion, <span class="accent">konform von Anfang an.</span>',
+    'hero.title': 'Vom Prototyp in die Produktion, <span class="accent">konform mit dem EU AI Act.</span>',
     'hero.lede': 'Die meisten KI-Projekte bleiben irgendwo zwischen einer guten Demo und einem Produkt stecken, das man wirklich ausliefern kann. Genau über diese Lücke bringe ich sie, und zwar im Einklang mit der EU-KI-Verordnung. Am Ende steht KI, der Ihre Prüfer, Ihre Technik und Ihr Vorstand vertrauen.',
     'hero.for': 'Für regulierte Unternehmen in Europa, deren KI schon im Einsatz ist oder kurz davorsteht.',
-    'hero.cta1': '20-Min-Gespräch buchen',
+    'hero.cta1': 'Kostenloses 20-Min-Gespräch',
     'hero.cta2': 'Sind Sie bereit für den AI Act?',
 
     'flow.proto': 'Prototyp',
     'flow.protoSub': 'Ein Modell im Notebook',
     'flow.prod': 'Produktion',
     'flow.prodSub': 'Überwacht, akzeptiert, skaliert',
-    'flow.compliant': 'Konformes Produkt',
+    'flow.compliant': 'Konform mit dem EU AI Act',
     'flow.compliantSub': 'Besteht Prüfung & GuV-Review',
 
     'strip.1': 'EU-KI-Verordnung-Bereitschaft',
@@ -150,7 +150,7 @@ const I18N = {
     'contact.eyebrow': 'Sprechen wir',
     'contact.title': 'KI, die den Prüfer <span class="accent">und den GuV-Review besteht.</span>',
     'contact.lede': 'Vielleicht bereiten Sie sich auf die EU-KI-Verordnung vor. Vielleicht haben Sie Piloten, die es nie ganz in die Produktion geschafft haben. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, wie gut für Sie aussieht.',
-    'contact.cta1': '20-Min-Gespräch buchen →',
+    'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
     'contact.cta2': 'Auf LinkedIn vernetzen',
     'contact.email': 'Lieber E-Mail? ellatiuriumina@gmail.com',
 
