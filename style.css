@@ -135,6 +135,21 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 }
 .theme-toggle:hover{color:var(--color-primary);border-color:var(--color-primary-line)}
 
+/* ---------- Language switch ---------- */
+.lang-switch{
+  display:inline-flex;align-items:center;gap:.15rem;
+  padding:.2rem .5rem;border:1px solid var(--color-border);
+  border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;
+}
+.lang-switch__btn{
+  background:none;border:0;cursor:pointer;padding:.1rem .3rem;
+  color:var(--color-text-muted);font:inherit;letter-spacing:.02em;
+  border-radius:var(--radius-full);transition:color .2s;
+}
+.lang-switch__btn:hover{color:var(--color-text)}
+.lang-switch__btn.is-active{color:var(--color-primary)}
+.lang-switch__sep{color:var(--color-border);font-weight:400;user-select:none}
+
 /* ---------- Section base ---------- */
 .section{padding-block:clamp(var(--space-16),9vw,var(--space-32))}
 .section__title{font-size:var(--text-2xl);font-weight:800;max-width:18ch}

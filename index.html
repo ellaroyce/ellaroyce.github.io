@@ -83,16 +83,21 @@
       <span class="logo__text">Ella&nbsp;Türümina</span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="#ready">EU AI readiness</a>
-      <a href="#needs">What you need</a>
-      <a href="#about">About me</a>
-      <a href="#faq">FAQ</a>
+      <a href="#ready" data-i18n="nav.ready">EU AI readiness</a>
+      <a href="#needs" data-i18n="nav.needs">What you need</a>
+      <a href="#about" data-i18n="nav.about">About me</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <!-- TODO: replace # with your LinkedIn profile URL -->
       <a href="#" class="nav__link-icon" aria-label="LinkedIn profile" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.74v20.52C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z"/></svg>
       </a>
-      <a href="#contact" class="nav__cta">Book a call</a>
+      <a href="#contact" class="nav__cta" data-i18n="nav.cta">Book a call</a>
     </nav>
+    <div class="lang-switch" role="group" aria-label="Language / Sprache">
+      <button type="button" class="lang-switch__btn is-active" data-lang-set="en" aria-pressed="true">EN</button>
+      <span class="lang-switch__sep" aria-hidden="true">/</span>
+      <button type="button" class="lang-switch__btn" data-lang-set="de" aria-pressed="false">DE</button>
+    </div>
     <button class="theme-toggle" data-theme-toggle aria-label="Switch to light mode"></button>
   </div>
 </header>
@@ -102,14 +107,14 @@
   <!-- Hero / brand banner: explain in one picture -->
   <section class="hero" id="hero">
     <div class="container hero__copy hero__copy--center">
-      <p class="eyebrow reveal">AI Governance · Architecture · Delivery — Erlangen, Germany</p>
-      <h1 class="hero__title reveal">From prototype to production, <span class="accent">compliant by design.</span></h1>
-      <p class="hero__lede reveal">I turn stuck AI prototypes into compliant, adopted, margin-positive products — bridging the model, the architecture, and the EU&nbsp;AI&nbsp;Act, so regulated European enterprises ship AI that auditors, engineers, and the board all trust.</p>
-      <p class="hero__for reveal">For regulated European enterprises with AI in — or near — production.</p>
+      <p class="eyebrow reveal" data-i18n="hero.eyebrow">AI Governance · Architecture · Delivery — Erlangen, Germany</p>
+      <h1 class="hero__title reveal" data-i18n-html="hero.title">From prototype to production, <span class="accent">compliant by design.</span></h1>
+      <p class="hero__lede reveal" data-i18n="hero.lede">I turn stuck AI prototypes into compliant, adopted, margin-positive products — bridging the model, the architecture, and the EU&nbsp;AI&nbsp;Act, so regulated European enterprises ship AI that auditors, engineers, and the board all trust.</p>
+      <p class="hero__for reveal" data-i18n="hero.for">For regulated European enterprises with AI in — or near — production.</p>
       <div class="hero__actions reveal">
         <!-- TODO: replace with your Cal.com / Calendly booking link -->
-        <a href="#contact" class="btn btn--primary">Book a 20-min intro call</a>
-        <a href="#ready" class="btn btn--ghost">Are you AI-Act ready?</a>
+        <a href="#contact" class="btn btn--primary" data-i18n="hero.cta1">Book a 20-min intro call</a>
+        <a href="#ready" class="btn btn--ghost" data-i18n="hero.cta2">Are you AI-Act ready?</a>
       </div>
     </div>
 
@@ -118,20 +123,20 @@
       <div class="flow" role="img" aria-label="From prototype to production to a compliant, adopted product">
         <div class="flow__node">
           <span class="flow__icon" aria-hidden="true">{ }</span>
-          <span class="flow__label">Prototype</span>
-          <span class="flow__sub">A model in a notebook</span>
+          <span class="flow__label" data-i18n="flow.proto">Prototype</span>
+          <span class="flow__sub" data-i18n="flow.protoSub">A model in a notebook</span>
         </div>
         <span class="flow__arrow" aria-hidden="true">→</span>
         <div class="flow__node">
           <span class="flow__icon" aria-hidden="true">⚙</span>
-          <span class="flow__label">Production</span>
-          <span class="flow__sub">Monitored, adopted, scaled</span>
+          <span class="flow__label" data-i18n="flow.prod">Production</span>
+          <span class="flow__sub" data-i18n="flow.prodSub">Monitored, adopted, scaled</span>
         </div>
         <span class="flow__arrow" aria-hidden="true">→</span>
         <div class="flow__node flow__node--accent">
           <span class="flow__icon" aria-hidden="true">✓</span>
-          <span class="flow__label">Compliant product</span>
-          <span class="flow__sub">Survives the auditor &amp; the P&amp;L review</span>
+          <span class="flow__label" data-i18n="flow.compliant">Compliant product</span>
+          <span class="flow__sub" data-i18n="flow.compliantSub">Survives the auditor &amp; the P&amp;L review</span>
         </div>
       </div>
     </div>
@@ -140,8 +145,8 @@
   <!-- Marquee / credibility strip -->
   <div class="strip" aria-label="Domains of expertise">
     <div class="strip__track">
-      <span>EU AI Act readiness</span><i>/</i><span>High-risk system governance</span><i>/</i><span>MLOps &amp; model lifecycle</span><i>/</i><span>Enterprise &amp; data architecture</span><i>/</i><span>Pilot-to-product delivery</span><i>/</i><span>Sovereign &amp; healthcare AI</span><i>/</i>
-      <span>EU AI Act readiness</span><i>/</i><span>High-risk system governance</span><i>/</i><span>MLOps &amp; model lifecycle</span><i>/</i><span>Enterprise &amp; data architecture</span><i>/</i><span>Pilot-to-product delivery</span><i>/</i><span>Sovereign &amp; healthcare AI</span><i>/</i>
+      <span data-i18n="strip.1">EU AI Act readiness</span><i>/</i><span data-i18n="strip.2">High-risk system governance</span><i>/</i><span data-i18n="strip.3">MLOps &amp; model lifecycle</span><i>/</i><span data-i18n="strip.4">Enterprise &amp; data architecture</span><i>/</i><span data-i18n="strip.5">Pilot-to-product delivery</span><i>/</i><span data-i18n="strip.6">Sovereign &amp; healthcare AI</span><i>/</i>
+      <span data-i18n="strip.1">EU AI Act readiness</span><i>/</i><span data-i18n="strip.2">High-risk system governance</span><i>/</i><span data-i18n="strip.3">MLOps &amp; model lifecycle</span><i>/</i><span data-i18n="strip.4">Enterprise &amp; data architecture</span><i>/</i><span data-i18n="strip.5">Pilot-to-product delivery</span><i>/</i><span data-i18n="strip.6">Sovereign &amp; healthcare AI</span><i>/</i>
     </div>
   </div>
 
@@ -149,14 +154,14 @@
   <section class="section whynow" id="ready">
     <div class="container whynow__grid">
       <div class="reveal">
-        <p class="eyebrow">The question every board is asking</p>
-        <h2 class="section__title section__title--sm">Are you ready for EU AI regulation?</h2>
-        <p class="section__lede">The EU AI Act's general obligations apply from August 2026, with high-risk requirements phasing in through 2028. AI is the fastest-growing segment of German consulting — yet nearly three in four companies still lack mature AI governance. If your AI touches customers, safety, or regulated data, the clock is already running.</p>
+        <p class="eyebrow" data-i18n="ready.eyebrow">The question every board is asking</p>
+        <h2 class="section__title section__title--sm" data-i18n="ready.title">Are you ready for EU AI regulation?</h2>
+        <p class="section__lede" data-i18n="ready.lede">The EU AI Act's general obligations apply from August 2026, with high-risk requirements phasing in through 2028. AI is the fastest-growing segment of German consulting — yet nearly three in four companies still lack mature AI governance. If your AI touches customers, safety, or regulated data, the clock is already running.</p>
       </div>
       <ul class="whynow__list reveal" role="list">
-        <li class="whynow__count"><span class="big" id="countdown" aria-live="polite">—</span><span>until the EU AI Act's main obligations apply (2 Aug 2026).</span></li>
-        <li><span class="big big--pop">€35M / 7%</span><span>Maximum fine of global annual turnover for the most serious breaches.</span></li>
-        <li><span class="big">~3 in 4</span><span>German companies still lack fully developed AI governance.</span></li>
+        <li class="whynow__count"><span class="big" id="countdown" aria-live="polite">—</span><span data-i18n="ready.stat1">until the EU AI Act's main obligations apply (2 Aug 2026).</span></li>
+        <li><span class="big big--pop">€35M / 7%</span><span data-i18n="ready.stat2">Maximum fine of global annual turnover for the most serious breaches.</span></li>
+        <li><span class="big" data-i18n="ready.stat3num">~3 in 4</span><span data-i18n="ready.stat3">German companies still lack fully developed AI governance.</span></li>
       </ul>
     </div>
   </section>
@@ -164,56 +169,56 @@
   <!-- What my customers need -->
   <section class="section services" id="needs">
     <div class="container">
-      <p class="eyebrow reveal">Where I help</p>
-      <h2 class="section__title reveal">What my customers need</h2>
-      <p class="section__lede reveal">Most teams have data scientists who can't read regulation, lawyers who can't read code, and architects who don't own outcomes. My clients need someone who sits in all three seats at once.</p>
+      <p class="eyebrow reveal" data-i18n="needs.eyebrow">Where I help</p>
+      <h2 class="section__title reveal" data-i18n="needs.title">What my customers need</h2>
+      <p class="section__lede reveal" data-i18n="needs.lede">Most teams have data scientists who can't read regulation, lawyers who can't read code, and architects who don't own outcomes. My clients need someone who sits in all three seats at once.</p>
 
       <div class="services__list">
         <article class="service reveal">
           <div class="service__head">
-            <h3>“We need to be EU AI Act ready — fast.”</h3>
-            <span class="service__tag">Most urgent</span>
+            <h3 data-i18n="svc1.h">“We need to be EU AI Act ready — fast.”</h3>
+            <span class="service__tag" data-i18n="svc1.tag">Most urgent</span>
           </div>
-          <p>Risk classification, conformity documentation, human-oversight design, and MLOps audit trails — a defensible governance posture before the deadline lands.</p>
+          <p data-i18n="svc1.p">Risk classification, conformity documentation, human-oversight design, and MLOps audit trails — a defensible governance posture before the deadline lands.</p>
         </article>
         <article class="service reveal">
           <div class="service__head">
-            <h3>“Our AI tooling is sprawling and fragmented.”</h3>
+            <h3 data-i18n="svc2.h">“Our AI tooling is sprawling and fragmented.”</h3>
           </div>
-          <p>The “tool sprawl to strategic platforms” playbook — a coherent AI target architecture for organisations drowning in fragmented tooling and ad-hoc custom builds.</p>
+          <p data-i18n="svc2.p">The “tool sprawl to strategic platforms” playbook — a coherent AI target architecture for organisations drowning in fragmented tooling and ad-hoc custom builds.</p>
         </article>
         <article class="service reveal">
           <div class="service__head">
-            <h3>“Our pilots never reach production.”</h3>
+            <h3 data-i18n="svc3.h">“Our pilots never reach production.”</h3>
           </div>
-          <p>Taking stuck proofs-of-concept to adopted, monitored production — with measurable margin impact, not just a model in a notebook.</p>
+          <p data-i18n="svc3.p">Taking stuck proofs-of-concept to adopted, monitored production — with measurable margin impact, not just a model in a notebook.</p>
         </article>
         <article class="service reveal">
           <div class="service__head">
-            <h3>“We work in healthcare or safety-critical AI.”</h3>
+            <h3 data-i18n="svc4.h">“We work in healthcare or safety-critical AI.”</h3>
           </div>
-          <p>The niche where a clinical research record and GDPR-native instincts become a genuine moat — MedTech, life sciences, and safety-critical AI.</p>
+          <p data-i18n="svc4.p">The niche where a clinical research record and GDPR-native instincts become a genuine moat — MedTech, life sciences, and safety-critical AI.</p>
         </article>
       </div>
 
       <div class="engage reveal">
-        <h3 class="engage__title">Ways to engage</h3>
+        <h3 class="engage__title" data-i18n="engage.title">Ways to engage</h3>
         <div class="engage__grid">
           <div class="engage__tier">
-            <span class="engage__label">Advisor</span>
-            <span class="engage__detail">~1 day / week. Strategy, governance oversight, board readiness.</span>
+            <span class="engage__label" data-i18n="engage.t1l">Advisor</span>
+            <span class="engage__detail" data-i18n="engage.t1d">~1 day / week. Strategy, governance oversight, board readiness.</span>
           </div>
           <div class="engage__tier">
-            <span class="engage__label">Operating partner</span>
-            <span class="engage__detail">~2 days / week. Active execution alongside your team.</span>
+            <span class="engage__label" data-i18n="engage.t2l">Operating partner</span>
+            <span class="engage__detail" data-i18n="engage.t2d">~2 days / week. Active execution alongside your team.</span>
           </div>
           <div class="engage__tier">
-            <span class="engage__label">Embedded AI officer</span>
-            <span class="engage__detail">~3 days / week. Full governance ownership in regulated settings.</span>
+            <span class="engage__label" data-i18n="engage.t3l">Embedded AI officer</span>
+            <span class="engage__detail" data-i18n="engage.t3d">~3 days / week. Full governance ownership in regulated settings.</span>
           </div>
           <div class="engage__tier">
-            <span class="engage__label">AI Act readiness sprint</span>
-            <span class="engage__detail">Fixed-scope assessment: risk classification, gap analysis, roadmap.</span>
+            <span class="engage__label" data-i18n="engage.t4l">AI Act readiness sprint</span>
+            <span class="engage__detail" data-i18n="engage.t4d">Fixed-scope assessment: risk classification, gap analysis, roadmap.</span>
           </div>
         </div>
       </div>
@@ -221,21 +226,21 @@
       <!-- Fixed-scope entry offer -->
       <div class="offer reveal">
         <div class="offer__body">
-          <span class="offer__badge">Start here</span>
-          <h3 class="offer__title">EU AI Act Readiness Assessment</h3>
-          <p class="offer__lede">A fixed-scope, two-week engagement that tells your board exactly where you stand and what to do next — no open-ended retainer required.</p>
+          <span class="offer__badge" data-i18n="offer.badge">Start here</span>
+          <h3 class="offer__title" data-i18n="offer.title">EU AI Act Readiness Assessment</h3>
+          <p class="offer__lede" data-i18n="offer.lede">A fixed-scope, two-week engagement that tells your board exactly where you stand and what to do next — no open-ended retainer required.</p>
           <ul class="offer__list" role="list">
-            <li>Risk classification of your AI systems against the Act</li>
-            <li>Gap analysis vs. high-risk obligations &amp; documentation</li>
-            <li>A prioritised, board-ready compliance roadmap</li>
+            <li data-i18n="offer.li1">Risk classification of your AI systems against the Act</li>
+            <li data-i18n="offer.li2">Gap analysis vs. high-risk obligations &amp; documentation</li>
+            <li data-i18n="offer.li3">A prioritised, board-ready compliance roadmap</li>
           </ul>
         </div>
         <div class="offer__aside">
-          <span class="offer__meta">Timeframe</span>
-          <span class="offer__metaval">~2 weeks</span>
-          <span class="offer__meta">Format</span>
-          <span class="offer__metaval">Fixed scope &amp; fee</span>
-          <a href="#contact" class="btn btn--primary offer__cta">Book the assessment</a>
+          <span class="offer__meta" data-i18n="offer.m1">Timeframe</span>
+          <span class="offer__metaval" data-i18n="offer.m1v">~2 weeks</span>
+          <span class="offer__meta" data-i18n="offer.m2">Format</span>
+          <span class="offer__metaval" data-i18n="offer.m2v">Fixed scope &amp; fee</span>
+          <a href="#contact" class="btn btn--primary offer__cta" data-i18n="offer.cta">Book the assessment</a>
         </div>
       </div>
     </div>
@@ -250,38 +255,38 @@
             <source srcset="assets/portrait.webp" type="image/webp" />
             <img src="assets/portrait.jpg" alt="Ella Türümina" width="1100" height="1100" loading="lazy" />
           </picture>
-          <div class="hero__tag">PhD-level modelling × Enterprise architecture × EU AI Act</div>
+          <div class="hero__tag" data-i18n="about.tag">PhD-level modelling × Enterprise architecture × EU AI Act</div>
         </div>
       </div>
       <div class="about__copy reveal">
-        <p class="eyebrow">About me</p>
-        <h2 class="section__title section__title--sm">A decade turning AI from research into regulated, real-world products.</h2>
-        <p class="section__lede">I bridge the model, the architecture, and the regulation — and I have shipped models in two of the most heavily regulated domains there are: safety-critical industrial services and healthcare research.</p>
+        <p class="eyebrow" data-i18n="about.eyebrow">About me</p>
+        <h2 class="section__title section__title--sm" data-i18n="about.title">A decade turning AI from research into regulated, real-world products.</h2>
+        <p class="section__lede" data-i18n="about.lede">I bridge the model, the architecture, and the regulation — and I have shipped models in two of the most heavily regulated domains there are: safety-critical industrial services and healthcare research.</p>
         <ul class="hero__stats about__stats" role="list">
-          <li><span class="stat__num">10+</span><span class="stat__label">Years scaling AI &amp; data platforms</span></li>
-          <li><span class="stat__num">10+</span><span class="stat__label">Countries delivered across</span></li>
-          <li><span class="stat__num">20+</span><span class="stat__label">AI &amp; analytics initiatives led</span></li>
+          <li><span class="stat__num">10+</span><span class="stat__label" data-i18n="about.s1">Years scaling AI &amp; data platforms</span></li>
+          <li><span class="stat__num">10+</span><span class="stat__label" data-i18n="about.s2">Countries delivered across</span></li>
+          <li><span class="stat__num">20+</span><span class="stat__label" data-i18n="about.s3">AI &amp; analytics initiatives led</span></li>
         </ul>
       </div>
     </div>
 
     <div class="container">
       <div class="proof__grid">
-        <div class="proof__item reveal"><span class="proof__num">Fewer<br>incidents</span><p>Set MLOps, monitoring and robustness standards across 20+ AI initiatives to make production deployments dependable.</p></div>
-        <div class="proof__item reveal"><span class="proof__num">Lower<br>run-costs</span><p>Consolidated fragmented tooling into strategic, cloud-ready platforms with measurably reduced operating cost.</p></div>
-        <div class="proof__item reveal"><span class="proof__num">Less<br>manual work</span><p>Built a global KPI &amp; dashboard framework spanning projects across 10+ countries, cutting reporting effort.</p></div>
-        <div class="proof__item reveal"><span class="proof__num">Faster<br>to value</span><p>Shortened prototype-to-production cycles, with adoption and margin impact rather than models left in notebooks.</p></div>
+        <div class="proof__item reveal"><span class="proof__num" data-i18n-html="proof.n1">Fewer<br>incidents</span><p data-i18n="proof.p1">Set MLOps, monitoring and robustness standards across 20+ AI initiatives to make production deployments dependable.</p></div>
+        <div class="proof__item reveal"><span class="proof__num" data-i18n-html="proof.n2">Lower<br>run-costs</span><p data-i18n="proof.p2">Consolidated fragmented tooling into strategic, cloud-ready platforms with measurably reduced operating cost.</p></div>
+        <div class="proof__item reveal"><span class="proof__num" data-i18n-html="proof.n3">Less<br>manual work</span><p data-i18n="proof.p3">Built a global KPI &amp; dashboard framework spanning projects across 10+ countries, cutting reporting effort.</p></div>
+        <div class="proof__item reveal"><span class="proof__num" data-i18n-html="proof.n4">Faster<br>to value</span><p data-i18n="proof.p4">Shortened prototype-to-production cycles, with adoption and margin impact rather than models left in notebooks.</p></div>
       </div>
 
       <div class="creds reveal">
-        <p class="creds__intro">Backed by</p>
+        <p class="creds__intro" data-i18n="creds.intro">Backed by</p>
         <ul role="list">
-          <li>PhD candidate, Mathematics in the Life Sciences (FAU Erlangen)</li>
-          <li>MSc Computer Science, cum laude</li>
-          <li>ArchiMate Certified · IPMA Level D</li>
-          <li>Google Generative AI Leader · Anthropic &amp; Databricks certified</li>
-          <li>Q1 publications · 3 software patents · award-winning AI delivery</li>
-          <li>English C2 · German B2 · Russian native</li>
+          <li data-i18n="creds.l1">PhD candidate, Mathematics in the Life Sciences (FAU Erlangen)</li>
+          <li data-i18n="creds.l2">MSc Computer Science, cum laude</li>
+          <li data-i18n="creds.l3">ArchiMate Certified · IPMA Level D</li>
+          <li data-i18n="creds.l4">Google Generative AI Leader · Anthropic &amp; Databricks certified</li>
+          <li data-i18n="creds.l5">Q1 publications · 3 software patents · award-winning AI delivery</li>
+          <li data-i18n="creds.l6">English C2 · German B2 · Russian native</li>
         </ul>
       </div>
     </div>
@@ -291,14 +296,14 @@
   <section class="section whyme" id="whyme">
     <div class="container whyme__grid">
       <div class="reveal">
-        <p class="eyebrow">Why fractional</p>
-        <h2 class="section__title section__title--sm">Senior, hands-on, and has actually shipped the models — at a fraction of a big firm.</h2>
-        <p class="section__lede">A large consultancy sends a slide deck and a junior team. I bring one senior operator who has built and governed AI in regulated settings, embeds with your people, and owns the outcome — without the overhead, ramp-up, or headcount of a full-time hire.</p>
+        <p class="eyebrow" data-i18n="whyme.eyebrow">Why fractional</p>
+        <h2 class="section__title section__title--sm" data-i18n="whyme.title">Senior, hands-on, and has actually shipped the models — at a fraction of a big firm.</h2>
+        <p class="section__lede" data-i18n="whyme.lede">A large consultancy sends a slide deck and a junior team. I bring one senior operator who has built and governed AI in regulated settings, embeds with your people, and owns the outcome — without the overhead, ramp-up, or headcount of a full-time hire.</p>
       </div>
       <!-- TODO: swap for a named, attributable client quote once you have sign-off. Current text is a genericised outcome statement (no real name/company) so nothing is misattributed. -->
       <figure class="quote reveal">
-        <blockquote>“Our model had been stuck in pilot for a year because nobody could sign off the risk. She mapped it to the EU AI Act, fixed the gaps in our documentation and monitoring, and we cleared internal audit in six weeks — then went live.”</blockquote>
-        <figcaption><span class="quote__name">Head of Data Science</span><span class="quote__role">Regulated industrials · engagement reference available on request</span></figcaption>
+        <blockquote data-i18n="quote.text">“Our model had been stuck in pilot for a year because nobody could sign off the risk. She mapped it to the EU AI Act, fixed the gaps in our documentation and monitoring, and we cleared internal audit in six weeks — then went live.”</blockquote>
+        <figcaption><span class="quote__name" data-i18n="quote.name">Head of Data Science</span><span class="quote__role" data-i18n="quote.role">Regulated industrials · engagement reference available on request</span></figcaption>
       </figure>
     </div>
   </section>
@@ -306,28 +311,28 @@
   <!-- FAQ -->
   <section class="section faq" id="faq">
     <div class="container">
-      <p class="eyebrow reveal">Before you reach out</p>
-      <h2 class="section__title reveal">Frequently asked</h2>
+      <p class="eyebrow reveal" data-i18n="faq.eyebrow">Before you reach out</p>
+      <h2 class="section__title reveal" data-i18n="faq.title">Frequently asked</h2>
       <div class="faq__list">
         <details class="faq__item reveal">
-          <summary>How does an engagement start?</summary>
-          <p>With a 20-minute intro call to understand your AI estate and timeline. Most clients then begin with the fixed-scope EU AI Act Readiness Assessment, which de-risks the bigger decision and gives the board a clear picture before any retainer.</p>
+          <summary data-i18n="faq.q1">How does an engagement start?</summary>
+          <p data-i18n="faq.a1">With a 20-minute intro call to understand your AI estate and timeline. Most clients then begin with the fixed-scope EU AI Act Readiness Assessment, which de-risks the bigger decision and gives the board a clear picture before any retainer.</p>
         </details>
         <details class="faq__item reveal">
-          <summary>Do you work remotely and across the EU?</summary>
-          <p>Yes. I'm based in Germany and work with regulated enterprises across Europe — remote by default, on-site for key workshops and board sessions when it helps.</p>
+          <summary data-i18n="faq.q2">Do you work remotely and across the EU?</summary>
+          <p data-i18n="faq.a2">Yes. I'm based in Germany and work with regulated enterprises across Europe — remote by default, on-site for key workshops and board sessions when it helps.</p>
         </details>
         <details class="faq__item reveal">
-          <summary>What kinds of organisations do you work with?</summary>
-          <p>Regulated and safety-critical European enterprises with AI in or near production — industrial services, MedTech, life sciences, and similar sectors where auditors, engineers, and the board all need to trust the system.</p>
+          <summary data-i18n="faq.q3">What kinds of organisations do you work with?</summary>
+          <p data-i18n="faq.a3">Regulated and safety-critical European enterprises with AI in or near production — industrial services, MedTech, life sciences, and similar sectors where auditors, engineers, and the board all need to trust the system.</p>
         </details>
         <details class="faq__item reveal">
-          <summary>How are engagements structured and contracted?</summary>
-          <p>Project-based or fractional retainer (roughly one to three days a week), on fixed scope and fee rather than hourly billing — clean for both sides and well-suited to German contracting norms.</p>
+          <summary data-i18n="faq.q4">How are engagements structured and contracted?</summary>
+          <p data-i18n="faq.a4">Project-based or fractional retainer (roughly one to three days a week), on fixed scope and fee rather than hourly billing — clean for both sides and well-suited to German contracting norms.</p>
         </details>
         <details class="faq__item reveal">
-          <summary>What makes you different from a large consultancy?</summary>
-          <p>You get one senior operator who has personally built, deployed, and governed AI in regulated domains — not a deck and a rotating junior team. Hands-on, accountable for outcomes, and a fraction of the cost.</p>
+          <summary data-i18n="faq.q5">What makes you different from a large consultancy?</summary>
+          <p data-i18n="faq.a5">You get one senior operator who has personally built, deployed, and governed AI in regulated domains — not a deck and a rotating junior team. Hands-on, accountable for outcomes, and a fraction of the cost.</p>
         </details>
       </div>
     </div>
@@ -336,16 +341,16 @@
   <!-- Contact CTA -->
   <section class="section contact" id="contact">
     <div class="container contact__inner reveal">
-      <p class="eyebrow">Let's talk</p>
-      <h2 class="contact__title">AI that survives the auditor <span class="accent">and the P&amp;L review.</span></h2>
-      <p class="contact__lede">If you're a regulated European enterprise preparing for the EU AI Act — or sitting on AI pilots that never reached production — let's scope what good looks like in a 20-minute call.</p>
+      <p class="eyebrow" data-i18n="contact.eyebrow">Let's talk</p>
+      <h2 class="contact__title" data-i18n-html="contact.title">AI that survives the auditor <span class="accent">and the P&amp;L review.</span></h2>
+      <p class="contact__lede" data-i18n="contact.lede">If you're a regulated European enterprise preparing for the EU AI Act — or sitting on AI pilots that never reached production — let's scope what good looks like in a 20-minute call.</p>
       <div class="contact__actions">
         <!-- TODO: replace href with your Cal.com / Calendly booking link -->
-        <a class="btn btn--primary btn--lg" href="mailto:ellatiuriumina@gmail.com?subject=20-min%20intro%20call%20%E2%80%94%20AI%20governance&amp;body=Hi%20Ella%2C%0A%0AWe're%20a%20%5Bsector%5D%20company%20with%20AI%20%5Bin%2Fnear%20production%5D.%20We'd%20like%20to%20talk%20about%20%5BEU%20AI%20Act%20readiness%20%2F%20getting%20a%20pilot%20to%20production%5D.%0A%0AA%20good%20time%20for%20a%2020-min%20call%20would%20be%3A%20%5B...%5D%0A%0AThanks%2C%0A%5BName%5D">Book a 20-min call&nbsp;→</a>
+        <a class="btn btn--primary btn--lg" href="mailto:ellatiuriumina@gmail.com?subject=20-min%20intro%20call%20%E2%80%94%20AI%20governance&amp;body=Hi%20Ella%2C%0A%0AWe're%20a%20%5Bsector%5D%20company%20with%20AI%20%5Bin%2Fnear%20production%5D.%20We'd%20like%20to%20talk%20about%20%5BEU%20AI%20Act%20readiness%20%2F%20getting%20a%20pilot%20to%20production%5D.%0A%0AA%20good%20time%20for%20a%2020-min%20call%20would%20be%3A%20%5B...%5D%0A%0AThanks%2C%0A%5BName%5D" data-i18n="contact.cta1">Book a 20-min call&nbsp;→</a>
         <!-- TODO: replace # with your LinkedIn profile URL -->
-        <a class="btn btn--ghost btn--lg" href="#" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <a class="btn btn--ghost btn--lg" href="#" target="_blank" rel="noopener" data-i18n="contact.cta2">Connect on LinkedIn</a>
       </div>
-      <p class="contact__email">Prefer email? ellatiuriumina@gmail.com</p>
+      <p class="contact__email" data-i18n-html="contact.email">Prefer email? ellatiuriumina@gmail.com</p>
     </div>
   </section>
 
@@ -353,13 +358,13 @@
 
 <footer class="footer">
   <div class="container footer__inner">
-    <span>© 2026 Ella Türümina · Erlangen, Germany</span>
+    <span data-i18n="footer.copy">© 2026 Ella Türümina · Erlangen, Germany</span>
     <span class="footer__links">
       <!-- TODO: replace # with your LinkedIn profile URL -->
       <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:ellatiuriumina@gmail.com">Email</a>
+      <a href="mailto:ellatiuriumina@gmail.com" data-i18n="footer.email">Email</a>
     </span>
-    <span class="footer__tag">Fractional AI-governance &amp; architecture advisory</span>
+    <span class="footer__tag" data-i18n="footer.tag">Fractional AI-governance &amp; architecture advisory</span>
   </div>
 </footer>
 
