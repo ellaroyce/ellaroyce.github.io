@@ -30,7 +30,6 @@
 const I18N = {
   de: {
     'nav.how': 'So funktioniert es',
-    'nav.why': 'Warum ich',
     'nav.ready': 'EU-KI-Bereitschaft',
     'nav.needs': 'Was Sie brauchen',
     'nav.about': 'Über mich',
@@ -54,20 +53,6 @@ const I18N = {
     'funnel.o2': 'Geringere Betriebskosten',
     'funnel.o3': 'Weniger Handarbeit',
     'funnel.o4': 'Schneller zum Nutzen',
-
-    'shift.eyebrow': 'Warum KI meist stecken bleibt',
-    'shift.title': 'Das Problem ist nicht das Modell. Es ist alles drumherum.',
-    'shift.lede': 'Die meisten Teams haben Data Scientists, die sich mit Regulierung nicht auskennen, Juristen, die keinen Code lesen, und Architekten, die am Ende nicht für das Ergebnis geradestehen. Das Modell läuft in der Demo und bleibt dann liegen. Ich decke alle drei Seiten gleichzeitig ab, und genau da kommen Projekte wieder in Bewegung.',
-    'shift.beforeTag': 'Ohne die richtige Person',
-    'shift.b1': 'Das Pilotprojekt sieht super aus, aber niemand will das Risiko freigeben.',
-    'shift.b2': 'Compliance und Technik schieben sich die Verantwortung zu, das Modell wartet.',
-    'shift.b3': 'Die Tools wuchern, die Betriebskosten steigen, niemand verantwortet die Architektur.',
-    'shift.b4': 'Die Frist der EU-KI-Verordnung rückt näher und der Vorstand wird nervös.',
-    'shift.afterTag': 'Wenn ich dazukomme',
-    'shift.a1': 'Das Modell wird der EU-KI-Verordnung zugeordnet, die Lücken werden festgehalten und geschlossen.',
-    'shift.a2': 'Governance, Technik und Architektur ziehen an einem Strang.',
-    'shift.a3': 'Aus verstreuten Tools wird eine Plattform, die Ihr Team auch wirklich betreiben kann.',
-    'shift.a4': 'Es besteht das interne Audit und geht live, und jemand steht für das Ergebnis gerade.',
 
     'strip.1': 'EU-KI-Verordnung-Bereitschaft',
     'strip.2': 'Governance für Hochrisiko-Systeme',
@@ -143,8 +128,6 @@ const I18N = {
     'creds.l2': 'Ausgezeichnete KI-Umsetzung',
     'creds.l3': 'Google Generative AI Leader',
     'creds.l4': 'Anthropic- & Databricks-zertifiziert',
-    'creds.l5': 'Promotion in Mathematik',
-    'creds.l6': 'BSc/MSc Informatik',
 
     'whyme.eyebrow': 'Warum fraktional',
     'whyme.title': 'Erfahren, nah an der Umsetzung und mit echten Modellen im Einsatz, zu einem Bruchteil dessen, was eine große Beratung kostet.',
