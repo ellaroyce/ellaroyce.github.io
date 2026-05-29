@@ -35,10 +35,10 @@ const I18N = {
     'nav.faq': 'FAQ',
     'nav.cta': 'Gespräch buchen',
 
-    'hero.eyebrow': 'KI-Governance · Architektur · Umsetzung — Erlangen, Deutschland',
+    'hero.eyebrow': 'KI-Governance · Architektur · Umsetzung',
     'hero.title': 'Vom Prototyp in die Produktion, <span class="accent">konform by Design.</span>',
-    'hero.lede': 'Ich bringe steckengebliebene KI-Prototypen in konforme, akzeptierte und margenpositive Produkte — als Brücke zwischen Modell, Architektur und EU&nbsp;KI-Verordnung, damit regulierte europäische Unternehmen KI ausliefern, der Prüfer, Ingenieure und der Vorstand vertrauen.',
-    'hero.for': 'Für regulierte europäische Unternehmen mit KI in — oder kurz vor — der Produktion.',
+    'hero.lede': 'Die meisten KI-Piloten bleiben irgendwo zwischen vielversprechendem Demo und auslieferbarem Produkt stecken. Ich bringe sie über diese Lücke, und zwar auf der richtigen Seite der EU KI-Verordnung. Das Ergebnis ist KI, die Ihre Prüfer, Ihre Ingenieure und Ihr Vorstand abzeichnen können.',
+    'hero.for': 'Für regulierte europäische Unternehmen, deren KI bereits in der Produktion ist oder kurz davor steht.',
     'hero.cta1': '20-Min-Erstgespräch buchen',
     'hero.cta2': 'Sind Sie KI-Act-bereit?',
 
@@ -148,8 +148,8 @@ const I18N = {
 
     'contact.eyebrow': 'Sprechen wir',
     'contact.title': 'KI, die den Prüfer <span class="accent">und den GuV-Review besteht.</span>',
-    'contact.lede': 'Wenn Sie ein reguliertes europäisches Unternehmen sind, das sich auf die EU-KI-Verordnung vorbereitet — oder auf KI-Piloten sitzt, die nie in die Produktion kamen — lassen Sie uns in einem 20-minütigen Gespräch klären, wie gut aussieht.',
-    'contact.cta1': '20-Min-Gespräch buchen&nbsp;→',
+    'contact.lede': 'Vielleicht bereiten Sie sich auf die EU-KI-Verordnung vor. Vielleicht haben Sie Piloten, die es nie ganz in die Produktion geschafft haben. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, wie gut für Sie aussieht.',
+    'contact.cta1': '20-Min-Gespräch buchen →',
     'contact.cta2': 'Auf LinkedIn vernetzen',
     'contact.email': 'Lieber E-Mail? ellatiuriumina@gmail.com',
 
