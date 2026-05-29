@@ -211,7 +211,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 /* ---------- Proof ---------- */
 .proof__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);margin-top:var(--space-12)}
 .proof__item{padding:var(--space-6) 0;border-top:1px solid var(--color-divider)}
-.proof__num{display:block;font-family:var(--font-display);font-weight:800;font-size:var(--text-2xl);color:var(--color-text);margin-bottom:var(--space-3);line-height:1}
+.proof__num{display:block;font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);color:var(--color-text);margin-bottom:var(--space-4);line-height:1.05}
 .proof__item p{font-size:var(--text-sm);color:var(--color-text-muted)}
 
 .creds{margin-top:var(--space-16);padding:var(--space-8);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
