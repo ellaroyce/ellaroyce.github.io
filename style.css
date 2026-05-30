@@ -177,7 +177,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 /* ---------- Funnel (the one picture) ---------- */
 .funnel{
   margin-top:clamp(var(--space-10),5vw,var(--space-16));
-  max-width:680px;margin-inline:auto;
+  max-width:860px;margin-inline:auto;
 }
 .funnel__stages{display:flex;flex-direction:column;align-items:center;gap:var(--space-2)}
 .funnel__stage{
@@ -190,9 +190,9 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 .funnel__stage--wide{width:100%}
 .funnel__stage--mid{width:80%}
 .funnel__stage--out{
-  width:fit-content;max-width:80%;
-  flex-direction:row;justify-content:center;gap:.7rem;
-  padding-inline:var(--space-6);
+  width:66%;
+  flex-direction:row;justify-content:center;gap:.75rem;
+  padding:var(--space-5) var(--space-6);
   background:var(--color-primary);border-color:var(--color-primary);
   box-shadow:0 24px 60px var(--color-primary-soft);
 }
@@ -203,7 +203,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
   display:grid;place-items:center;width:1.7rem;height:1.7rem;flex:0 0 auto;border-radius:999px;
   background:rgba(255,255,255,.2);color:#fff;font-weight:800;font-size:1rem;
 }
-.funnel__out-label{font-family:var(--font-display);font-weight:700;font-size:var(--text-base);color:#fff;line-height:1.25;text-wrap:pretty}
+.funnel__out-label{font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);color:#fff;line-height:1.25;text-wrap:balance}
 .funnel__chev{
   display:block;width:0;height:0;
   border-left:11px solid transparent;border-right:11px solid transparent;
