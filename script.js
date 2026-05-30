@@ -155,7 +155,7 @@ const I18N = {
     'contact.lede': 'Vielleicht bereiten Sie sich auf die EU-KI-Verordnung vor. Vielleicht haben Sie Piloten, die es nie ganz in die Produktion geschafft haben. So oder so: Geben Sie mir 20 Minuten, und wir klären, wie ein gutes Ergebnis für Sie konkret aussieht.',
     'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
     'contact.cta2': 'Auf LinkedIn vernetzen',
-    'contact.email': 'Lieber E-Mail? ellatiuriumina@gmail.com',
+    'contact.cta3': 'Direkt anrufen →',
 
     'footer.copy': '© 2026 Ella Türümina · Erlangen, Deutschland',
     'footer.email': 'E-Mail',

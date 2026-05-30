@@ -314,7 +314,6 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 .contact__inner .eyebrow{display:block}
 .contact__title{font-size:var(--text-2xl);font-weight:800;margin-bottom:var(--space-5)}
 .contact__lede{font-size:var(--text-lg);color:var(--color-text-muted);margin-bottom:var(--space-10);max-width:52ch;margin-inline:auto;font-weight:400}
-.contact__email{margin-top:var(--space-5);font-size:var(--text-sm);color:var(--color-text-faint)}
 
 /* ---------- Footer ---------- */
 .footer{border-top:1px solid var(--color-divider);padding-block:var(--space-8)}
