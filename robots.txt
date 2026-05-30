@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ellaroyce.github.io/sitemap.xml
+Sitemap: https://www.prunasecura.ai/sitemap.xml

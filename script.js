@@ -157,7 +157,7 @@ const I18N = {
     'contact.cta2': 'Auf LinkedIn vernetzen',
     'contact.cta3': 'Direkt anrufen →',
 
-    'footer.copy': '© 2026 Ella Türümina · Erlangen, Deutschland',
+    'footer.copy': '© 2026 Pruna Secura · Ella Türümina · Erlangen, Deutschland',
     'footer.email': 'E-Mail',
     'footer.tag': 'KI-Governance- & Architekturberatung aus einer Hand'
   }
