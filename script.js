@@ -76,7 +76,7 @@ const I18N = {
 
     'svc1.h': '„Wir müssen schnell EU-KI-Act-konform werden.“',
     'svc1.tag': 'Am dringendsten',
-    'svc1.p': 'Risikoklassifizierung, Konformitätsdokumentation, die Gestaltung der menschlichen Aufsicht und MLOps-Audit-Trails: eine belastbare Governance-Grundlage, bevor die Frist greift.',
+    'svc1.p': 'Risikoklassifizierung, Konformitätsdokumentation, die Gestaltung der menschlichen Aufsicht und <span class="term" data-term="mlops">MLOps</span>-Audit-Trails: eine belastbare <span class="term" data-term="governance">Governance</span>-Grundlage, bevor die Frist greift.',
     'svc2.h': '„Unsere KI-Tools sind zersplittert und uneinheitlich.“',
     'svc2.p': 'Der Weg vom Wildwuchs einzelner Tools hin zu strategischen Plattformen: eine klare KI-Zielarchitektur für Organisationen, die in verstreuten Werkzeugen und Eigenbauten den Überblick verlieren.',
     'svc3.h': '„Unsere Pilotprojekte erreichen nie die Produktion.“',
@@ -98,7 +98,7 @@ const I18N = {
     'offer.title': 'Readiness-Assessment zur EU-KI-Verordnung',
     'offer.lede': 'Ein zweiwöchiges Projekt mit festem Umfang, das Ihrem Vorstand genau zeigt, wo Sie stehen und was als Nächstes ansteht. Ganz ohne langfristige Bindung.',
     'offer.li1': 'Risikoklassifizierung Ihrer KI-Systeme nach der Verordnung',
-    'offer.li2': 'Gap-Analyse gegenüber Hochrisiko-Pflichten & Dokumentation',
+    'offer.li2': 'Gap-Analyse gegenüber <span class="term" data-term="high-risk">Hochrisiko</span>-Pflichten & Dokumentation',
     'offer.li3': 'Eine priorisierte, vorstandsreife Compliance-Roadmap',
     'offer.m1': 'Zeitrahmen',
     'offer.m1v': '~2 Wochen',
@@ -106,7 +106,7 @@ const I18N = {
     'offer.m2v': 'Fester Umfang & Honorar',
     'offer.cta': 'Assessment buchen',
 
-    'about.tag': 'Modellierung auf PhD-Niveau × Enterprise-Architektur × EU-KI-Verordnung',
+    'about.tag': 'Modellierung auf PhD-Niveau × <span class="term" data-term="enterprise-architecture">Enterprise-Architektur</span> × EU-KI-Verordnung',
     'about.eyebrow': 'Über mich',
     'about.title': 'Seit über zehn Jahren bringe ich KI aus der Forschung in echte, regulierte Produkte.',
     'about.lede': 'Ich denke Modell, Architektur und Regulierung zusammen und habe Modelle in zwei der am stärksten regulierten Bereiche tatsächlich in den Einsatz gebracht: in sicherheitskritischen Industriediensten und in der Gesundheitsforschung.',
@@ -125,11 +125,11 @@ const I18N = {
 
     'creds.intro': 'Gestützt auf',
     'creds.l1': '3 Software-Patente',
-    'creds.l2': 'Ausgezeichnete KI-Umsetzung',
+    'creds.l2': 'KI-Umsetzung mit Auszeichnung',
     'creds.l3': 'Google Generative AI Leader',
     'creds.l4': 'Anthropic- & Databricks-zertifiziert',
 
-    'whyme.eyebrow': 'Warum fraktional',
+    'whyme.eyebrow': 'Alles aus einer Hand',
     'whyme.title': 'Erfahren, nah an der Umsetzung und mit echten Modellen im Einsatz, zu einem Bruchteil dessen, was eine große Beratung kostet.',
     'whyme.lede': 'Eine große Beratung schickt eine Präsentation und ein Juniorteam. Bei mir bekommen Sie jemanden mit Erfahrung, der KI im regulierten Umfeld selbst gebaut und gesteuert hat, sich in Ihr Team einarbeitet und für das Ergebnis geradesteht. Ohne Overhead, ohne lange Einarbeitung und ohne Festanstellung.',
 
@@ -146,20 +146,20 @@ const I18N = {
     'faq.q3': 'Mit welchen Organisationen arbeiten Sie?',
     'faq.a3': 'Mit regulierten und sicherheitskritischen Unternehmen in Europa, deren KI bereits läuft oder kurz davorsteht: Industriedienste, MedTech, Life Sciences und ähnliche Branchen, in denen Prüfer, Ingenieure und Vorstand dem System vertrauen müssen.',
     'faq.q4': 'Wie ist eine Zusammenarbeit aufgesetzt und beauftragt?',
-    'faq.a4': 'Entweder projektbasiert oder als fraktionale Zusammenarbeit (etwa ein bis drei Tage pro Woche), mit festem Umfang und Honorar statt Stundenabrechnung. Das ist für beide Seiten sauber und passt gut zu den üblichen deutschen Vertragsformen.',
+    'faq.a4': 'Entweder projektbasiert oder als laufende Zusammenarbeit von ein bis drei Tagen pro Woche, mit festem Umfang und Honorar statt Stundenabrechnung. Das ist für beide Seiten sauber und passt gut zu den üblichen deutschen Vertragsformen.',
     'faq.q5': 'Was unterscheidet Sie von einer großen Beratung?',
     'faq.a5': 'Sie bekommen jemanden mit Erfahrung, der KI in regulierten Bereichen selbst gebaut, in den Einsatz gebracht und gesteuert hat. Keine reine Präsentation und kein ständig wechselndes Juniorteam, sondern jemand, der mit anpackt, für das Ergebnis geradesteht und das zu einem Bruchteil der Kosten.',
 
     'contact.eyebrow': 'Sprechen wir',
     'contact.title': 'KI, die den Prüfer <span class="accent">und den GuV-Review besteht.</span>',
-    'contact.lede': 'Vielleicht bereiten Sie sich auf die EU-KI-Verordnung vor. Vielleicht haben Sie Piloten, die es nie ganz in die Produktion geschafft haben. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, wie gut für Sie aussieht.',
+    'contact.lede': 'Vielleicht bereiten Sie sich auf die EU-KI-Verordnung vor. Vielleicht haben Sie Piloten, die es nie ganz in die Produktion geschafft haben. So oder so: Geben Sie mir 20 Minuten, und wir klären, wie ein gutes Ergebnis für Sie konkret aussieht.',
     'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
     'contact.cta2': 'Auf LinkedIn vernetzen',
     'contact.email': 'Lieber E-Mail? ellatiuriumina@gmail.com',
 
     'footer.copy': '© 2026 Ella Türümina · Erlangen, Deutschland',
     'footer.email': 'E-Mail',
-    'footer.tag': 'Fraktionale KI-Governance- & Architekturberatung'
+    'footer.tag': 'KI-Governance- & Architekturberatung aus einer Hand'
   }
 };
 
@@ -257,4 +257,70 @@ const I18N = {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(e => io.observe(e));
+})();
+
+// Inline glossary popovers — plain-language explanations for jargon (CEO-friendly)
+(function () {
+  const GLOSSARY = {
+    governance: {
+      en: { t: 'Governance', d: 'The rules, controls and clear accountability for how AI is built, approved and used — so someone owns the risk and decisions are defensible.' },
+      de: { t: 'Governance', d: 'Die Regeln, Kontrollen und klare Verantwortung dafür, wie KI gebaut, freigegeben und eingesetzt wird – damit jemand das Risiko trägt und Entscheidungen belastbar sind.' }
+    },
+    mlops: {
+      en: { t: 'MLOps', d: 'The engineering practice of running AI models reliably in production: deploying, monitoring and updating them so they keep working in the real world.' },
+      de: { t: 'MLOps', d: 'Die technische Praxis, KI-Modelle zuverlässig im Betrieb zu führen: ausrollen, überwachen und aktualisieren, damit sie im echten Einsatz funktionieren.' }
+    },
+    'enterprise-architecture': {
+      en: { t: 'Enterprise architecture', d: 'How systems, data and tools fit together across the whole organisation, so a project connects to everything else instead of standing alone.' },
+      de: { t: 'Enterprise-Architektur', d: 'Wie Systeme, Daten und Werkzeuge im ganzen Unternehmen zusammenpassen, damit ein Projekt mit allem anderen verbunden ist und nicht für sich allein steht.' }
+    },
+    'high-risk': {
+      en: { t: 'High-risk & conformity', d: 'Under the EU AI Act, certain AI uses count as "high-risk" and need documented proof ("conformity") that they meet the rules before going live.' },
+      de: { t: 'Hochrisiko & Konformität', d: 'Nach der EU-KI-Verordnung gelten bestimmte KI-Anwendungen als „hochriskant" und brauchen einen dokumentierten Nachweis („Konformität"), dass sie die Vorgaben erfüllen, bevor sie live gehen.' }
+    }
+  };
+
+  let openPop = null;
+  function closeOpen() {
+    if (openPop) { openPop.classList.remove('is-open'); openPop = null; }
+  }
+
+  function build(term) {
+    const key = term.getAttribute('data-term');
+    const entry = GLOSSARY[key];
+    if (!entry) return;
+    const pop = document.createElement('span');
+    pop.className = 'term__pop';
+    pop.setAttribute('role', 'tooltip');
+    const t = document.createElement('span'); t.className = 'term__pop-term';
+    const d = document.createElement('span'); d.className = 'term__pop-def';
+    pop.appendChild(t); pop.appendChild(d);
+    term.appendChild(pop);
+    term.setAttribute('tabindex', '0');
+
+    function fill() {
+      const lang = (window.__lang === 'de') ? 'de' : 'en';
+      t.textContent = entry[lang].t;
+      d.textContent = entry[lang].d;
+    }
+    function open() { closeOpen(); fill(); pop.classList.add('is-open'); openPop = pop; }
+    function close() { pop.classList.remove('is-open'); if (openPop === pop) openPop = null; }
+
+    // Desktop hover
+    term.addEventListener('mouseenter', open);
+    term.addEventListener('mouseleave', close);
+    // Keyboard
+    term.addEventListener('focus', open);
+    term.addEventListener('blur', close);
+    // Tap / click toggle (mobile + click)
+    term.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (pop.classList.contains('is-open')) close(); else open();
+    });
+    pop.addEventListener('click', (e) => e.stopPropagation());
+  }
+
+  document.querySelectorAll('.term[data-term]').forEach(build);
+  document.addEventListener('click', closeOpen);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOpen(); });
 })();
