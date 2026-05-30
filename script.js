@@ -48,7 +48,7 @@ const I18N = {
     'funnel.s2tag': 'Was ich beitrage',
     'funnel.s2': 'Governance und Produktions-Engineering',
     'funnel.s3': 'Ein Produkt, konform mit dem EU AI Act',
-    'funnel.payoff': 'Was das dem Unternehmen bringt',
+    'funnel.payoff': 'Was das dem Unternehmen bringt:',
     'funnel.o1': 'Weniger Störungen',
     'funnel.o2': 'Geringere Betriebskosten',
     'funnel.o3': 'Weniger Handarbeit',
