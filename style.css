@@ -229,6 +229,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 /* ---------- About ---------- */
 .about__grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem);align-items:center;margin-bottom:clamp(var(--space-12),5vw,var(--space-20))}
 .about__media{max-width:420px}
+.about__bio{margin-top:var(--space-5);max-width:54ch;color:var(--color-text-muted);font-size:var(--text-base);line-height:1.7}
 .about__stats{margin-top:var(--space-8)}
 .hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
 .hero__title{font-size:var(--text-3xl);font-weight:800;margin-bottom:var(--space-6)}

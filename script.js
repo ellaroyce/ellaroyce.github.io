@@ -83,6 +83,8 @@ const I18N = {
     'svc3.p': 'Liegengebliebene Proof-of-Concepts in eine akzeptierte, überwachte Produktion überführen, mit messbarer Wirkung auf die Marge statt nur einem Modell im Notebook.',
     'svc4.h': '„Wir arbeiten mit Healthcare- oder sicherheitskritischer KI.“',
     'svc4.p': 'Genau das Feld, in dem ein Hintergrund in klinischer Forschung und ein sicheres Gespür für die DSGVO zum echten Vorteil werden: MedTech, Life Sciences und sicherheitskritische KI.',
+    'svc5.h': '„Wir sind ein Start-up und haben noch gar keine IT.“',
+    'svc5.p': 'Für Start-ups, die bei null anfangen: Ich baue Ihre IT von Grund auf auf, mit den Prozessen, den Tools und den Systemen, die zu den KPIs passen, an denen Ihr Unternehmen wirklich gemessen wird. So wächst sie mit, statt zum nächsten Problemfall zu werden.',
 
     'engage.title': 'Zusammenarbeitsmodelle',
     'engage.t1l': 'Advisor',
@@ -110,6 +112,7 @@ const I18N = {
     'about.eyebrow': 'Über mich',
     'about.title': 'Seit über zehn Jahren bringe ich KI aus der Forschung in echte, regulierte Produkte.',
     'about.lede': 'Ich denke Modell, Architektur und Regulierung zusammen und habe Modelle in zwei der am stärksten regulierten Bereiche tatsächlich in den Einsatz gebracht: in sicherheitskritischen Industriediensten und in der Gesundheitsforschung.',
+    'about.bio': 'Pruna Secura habe ich nach Jahren als Enterprise-Architektin in sicherheitskritischer Bahntechnik gegründet, und davor war ich Wissenschaftlerin im MedTech-Bereich. Außerdem unterstütze ich junge Start-ups, die noch keine eigene IT haben, beim Aufbau von Grund auf: Prozesse, Tools und Systeme, alle ausgerichtet an den KPIs, an denen das Unternehmen gemessen wird.',
     'about.s1': 'Jahre Skalierung von KI- & Datenplattformen',
     'about.s2': 'Länder, in denen geliefert wurde',
     'about.s3': 'geleitete KI- & Analytics-Initiativen',
