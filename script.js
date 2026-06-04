@@ -127,8 +127,7 @@ const I18N = {
     'creds.intro': 'Gestützt auf',
     'creds.l1': '3 Software-Patente',
     'creds.l2': 'KI-Umsetzung mit Auszeichnung',
-    'creds.l3': 'Google Generative AI Leader',
-    'creds.l4': 'Anthropic- & Databricks-zertifiziert',
+    'creds.l3': 'Google AI- & Anthropic-zertifiziert',
 
     'whyme.eyebrow': 'Alles aus einer Hand',
     'whyme.title': 'Erfahren, nah an der Umsetzung und mit echten Modellen im Einsatz, zu einem Bruchteil dessen, was eine große Beratung kostet.',
