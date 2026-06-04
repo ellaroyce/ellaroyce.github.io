@@ -81,8 +81,6 @@ const I18N = {
     'svc2.p': 'Sie fangen bei null an. Ich baue Ihre IT- und KI-Grundlagen auf, ausgerichtet an Ihren KPIs, damit alles mitwächst, statt zum nächsten Problemfall zu werden.',
     'svc3.h': '„Unsere Pilotprojekte erreichen nie die Produktion.“',
     'svc3.p': 'Liegengebliebene Proof-of-Concepts in eine akzeptierte, überwachte Produktion überführen, mit messbarer Wirkung auf die Marge statt nur einem Modell im Notebook.',
-    'svc4.h': '„Wir arbeiten mit Healthcare- oder sicherheitskritischer KI.“',
-    'svc4.p': 'Genau das Feld, in dem ein Hintergrund in klinischer Forschung und ein sicheres Gespür für die DSGVO zum echten Vorteil werden: MedTech, Life Sciences und sicherheitskritische KI.',
     'svc5.h': '„Eine große Beratung können wir uns nicht leisten.“',
     'svc5.p': 'Kein sechsstelliges Projekt nötig. Festpreis-Pakete oder eine schlanke monatliche Begleitung, passend zu Ihrer Phase. Erfahrene Einschätzung ohne den Preis einer großen Beratung.',
 
