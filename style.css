@@ -329,6 +329,8 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 .nav__link-icon:hover{color:var(--color-primary)}
 .hero__for{margin-top:var(--space-4);font-size:var(--text-sm);font-weight:600;color:var(--color-primary)}
 .hero__copy--center .hero__for{text-align:center}
+.hero__note{margin-top:var(--space-2);font-size:var(--text-sm);color:var(--color-text-muted);max-width:52ch}
+.hero__copy--center .hero__note{margin-inline:auto;text-align:center}
 .big--pop{color:var(--color-pop)!important}
 .whynow__count .big{min-width:auto}
 

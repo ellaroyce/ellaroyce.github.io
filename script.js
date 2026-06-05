@@ -38,8 +38,9 @@ const I18N = {
 
     'hero.eyebrow': 'Coaching & Workshops zu KI, ML und IT für Gründer und Teams',
     'hero.title': 'Wissen, wo Sie mit KI anfangen, <span class="accent">ohne den Fachjargon.</span>',
-    'hero.lede': 'Noch keine IT und KI fühlt sich nur nach Lärm an? Ich begleite Sie und Ihr Team Schritt für Schritt: wo Sie anfangen, wie Sie Ihre Prozesse aufsetzen und was ML, LLMs und der EU\u00a0AI\u00a0Act konkret für Sie bedeuten.',
-    'hero.for': 'Für Gründer, C-Level und kleine Teams, die lernen wollen, statt auszulagern.',
+    'hero.lede': 'Noch keine IT und KI fühlt sich nur nach Lärm an? Ich begleite Sie und Ihr Team Schritt für Schritt: wo Sie anfangen, wie Sie Ihre Prozesse aufsetzen und was ML, LLMs und der EU AI Act konkret für Sie bedeuten.',
+    'hero.for': 'Für Gründer, C-Level und kleine Teams, die lernen wollen, statt auszulagern. Noch kein CISO, kein Datenteam, keine KI-Verantwortliche? Ich helfe Ihnen zu verstehen, was Sie wirklich brauchen, bevor Sie einstellen oder bauen.',
+    'hero.note': 'Eine unabhängige Coachin, keine Tool-Anbieterin. Ich arbeite mit den KI-Werkzeugen, die Sie wählen, bleibe davon aber unabhängig.',
     'hero.cta1': 'Kostenloses 20-Min-Gespräch',
     'hero.cta2': 'Sehen, was ich lehre',
 
@@ -63,7 +64,7 @@ const I18N = {
 
     'ready.eyebrow': 'Ein Thema, das ich coache',
     'ready.title': 'Der EU AI Act, in klarer Sprache',
-    'ready.lede': 'Die zentralen Pflichten gelten ab August 2026, und klein zu sein ist keine Ausnahme. Ich helfe Ihnen zu verstehen, was das für Ihr Produkt heißt und was zuerst zu tun ist, damit es sich wie eine Checkliste anfühlt und nicht wie eine Bedrohung.',
+    'ready.lede': 'Die zentralen Pflichten gelten ab August 2026, und klein zu sein ist keine Ausnahme. Ich helfe Ihnen zu verstehen, was das für Ihr Produkt heißt und was zuerst zu tun ist, und wie es zu Rahmenwerken wie NIST AI RMF und ISO 42001 passt, damit es sich wie eine Checkliste anfühlt und nicht wie eine Bedrohung.',
     'ready.ref': 'Der vollständige Text: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Verordnung (EU)&nbsp;2024/1689</a>',
     'ready.stat1': 'bis die zentralen Pflichten der EU-KI-Verordnung greifen (2. Aug. 2026).',
     'ready.stat2': 'Höchststrafe vom weltweiten Jahresumsatz bei den schwersten Verstößen.',
@@ -108,7 +109,7 @@ const I18N = {
     'about.eyebrow': 'Über mich',
     'about.title': 'Ich habe das Echte gebaut. Jetzt zeige ich Ihnen, wie es funktioniert.',
     'about.lede': 'Seit über zehn Jahren bringe ich KI aus der Forschung in Produkte, die wirklich live gegangen sind, in einigen der anspruchsvollsten Umfelder, die es gibt. Ich coache in klarer Sprache, weil ich die schwierigen Teile selbst gemacht habe.',
-    'about.bio': 'Gründerin von Pruna Secura. Früher Enterprise-Architektin in sicherheitskritischer Bahntechnik, davor Wissenschaftlerin im MedTech-Bereich. Heute coache ich Gründer und Teams, die bei null anfangen: wo beginnen, wie die IT aufsetzen und was KI wirklich für sie leisten kann.',
+    'about.bio': 'Gründerin von Pruna Secura. Früher Enterprise-Architektin in sicherheitskritischer Bahntechnik, davor Wissenschaftlerin im MedTech-Bereich, zwei der am stärksten regulierten Umfelder für KI. Die Gewohnheiten, die dort funktionieren, vermittle ich in klarer Sprache, damit Gründer und Teams, die bei null anfangen, lernen, wo sie beginnen, wie sie die IT aufsetzen und was KI wirklich für sie leisten kann.',
     'about.s1': 'Jahre Skalierung von KI- & Datenplattformen',
     'about.s2': 'Länder, in denen geliefert wurde',
     'about.s3': 'geleitete KI- & Analytics-Initiativen',
