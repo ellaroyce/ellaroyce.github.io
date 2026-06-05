@@ -37,7 +37,7 @@ const I18N = {
     'nav.cta': 'Kostenloses Gespräch',
 
     'hero.eyebrow': 'Coaching & Workshops zu KI, ML und IT für Gründer und Teams',
-    'hero.title': 'Wissen, wo Sie mit KI anfangen, <span class="accent">ohne den Fachjargon.</span>',
+    'hero.title': 'Von null IT zu <span class="accent">KI-fit.</span>',
     'hero.lede': 'Noch keine IT und KI fühlt sich nur nach Lärm an? Ich coache Sie und Ihr Team: wo Sie anfangen, wie Sie Ihre Prozesse aufsetzen und was ML, LLMs und der EU AI Act konkret für Sie bedeuten.',
     'hero.for': 'Für Gründer, C-Level und kleine Teams, die lernen wollen, statt auszulagern.',
     'hero.cta1': 'Kostenloses 20-Min-Gespräch',
