@@ -133,11 +133,8 @@ const I18N = {
     'contact.title': 'Holen wir Ihnen <span class="accent">Rückendeckung.</span>',
     'contact.lede': 'Vielleicht müssen Sie einfach laut denken. Vielleicht brauchen Sie eine Hand, um etwas zu erledigen. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, was Ihnen wirklich weiterhilft.',
     'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
-    'contact.cta2': 'Auf LinkedIn vernetzen',
-    'contact.cta3': 'Direkt anrufen →',
 
     'footer.copy': '© 2026 Pruna Secura · Ella Türümina · Erlangen, Deutschland',
-    'footer.email': 'E-Mail',
     'footer.tag': 'Sparring, Coaching & Unterstützung für Gründerinnen und Gründer'
   }
 };
