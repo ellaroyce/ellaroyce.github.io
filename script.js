@@ -30,134 +30,115 @@
 const I18N = {
   de: {
     'nav.how': 'So läuft es ab',
-    'nav.ready': 'AI Act, einfach erklärt',
-    'nav.needs': 'Worüber ich lehre',
-    'nav.about': 'Über mich',
+    'nav.needs': 'Was ich mache',
+    'nav.about': 'Das bringt es',
     'nav.faq': 'FAQ',
     'nav.cta': 'Kostenloses Gespräch',
 
-    'hero.eyebrow': 'Coaching & Workshops zu KI, ML und IT für Gründer und Teams',
-    'hero.title': 'Von null IT zu <span class="accent">KI-fit.</span>',
-    'hero.lede': 'Noch keine IT und KI fühlt sich nur nach Lärm an? Ich coache Sie und Ihr Team: wo Sie anfangen, wie Sie Ihre Prozesse aufsetzen und was ML, LLMs und der EU AI Act konkret für Sie bedeuten.',
-    'hero.for': 'Für Gründer, C-Level und kleine Teams, die lernen wollen, statt auszulagern.',
+    'hero.eyebrow': 'Sparring, Coaching & Unterstützung für Gründerinnen und Gründer',
+    'hero.title': 'Jemand an Ihrer <span class="accent">Seite.</span>',
+    'hero.lede': 'Ein Unternehmen aufzubauen ist einsam, und an Ratschlägen fehlt es nie. Ich bin die Person, mit der Sie laut denken: Sparringspartnerin und Coachin, die anpackt, wenn es nötig ist, und mit ruhiger Hand bei Ihren Social Media hilft.',
+    'hero.for': 'Für Gründerinnen und Gründer, die eine echte Resonanz wollen, keinen weiteren Kurs.',
     'hero.cta1': 'Kostenloses 20-Min-Gespräch',
-    'hero.cta2': 'Sehen, was ich lehre',
+    'hero.cta2': 'Sehen, wie ich helfe',
 
-    'funnel.s1tag': 'Wo die meisten Gründer stehen',
-    'funnel.s1': 'Überall KI, aber keine Ahnung, wo anfangen',
+    'funnel.s1tag': 'Wo die meisten Gründenden stehen',
+    'funnel.s1': 'Jede Entscheidung allein tragen',
     'funnel.s2tag': 'Was wir zusammen machen',
-    'funnel.s2': 'Coaching, verständliche Workshops, ein klarer Plan',
-    'funnel.s3': 'Ein Team, das weiß, was als Nächstes zu tun ist',
+    'funnel.s2': 'Sparring, Coaching, Unterstützung, Social Media',
+    'funnel.s3': 'Gründende, die mit klarem Kopf vorangehen',
     'funnel.payoff': 'Das nehmen Sie mit:',
-    'funnel.o1': 'Einen klaren ersten Schritt',
-    'funnel.o2': 'Eine gemeinsame Sprache',
-    'funnel.o3': 'Sichere Entscheidungen',
-    'funnel.o4': 'Ein Team, das es versteht',
+    'funnel.o1': 'Eine echte Resonanz',
+    'funnel.o2': 'Einen klareren Kopf',
+    'funnel.o3': 'Schwung statt Überforderung',
+    'funnel.o4': 'Eine Marke, die auffällt',
 
-    'strip.1': 'Wo Sie mit KI anfangen',
-    'strip.2': 'IT-Prozesse aufsetzen',
-    'strip.3': 'ML & LLMs verständlich erklärt',
-    'strip.4': 'EU AI Act, einfach gemacht',
-    'strip.5': 'Von der Idee zum ersten Produkt',
-    'strip.6': 'Ein KI-fittes Team aufbauen',
+    'strip.1': 'Eine Sparringspartnerin',
+    'strip.2': 'Gründer-Coaching',
+    'strip.3': 'Anpackende Unterstützung',
+    'strip.4': 'Hilfe bei Social Media',
+    'strip.5': 'Persönliche Marke',
+    'strip.6': 'Jemand an Ihrer Seite',
 
-    'ready.eyebrow': 'Ein Thema, das ich coache',
-    'ready.title': 'Der EU AI Act, in klarer Sprache',
-    'ready.lede': 'Die zentralen Pflichten gelten ab August 2026, und klein zu sein ist keine Ausnahme. Ich helfe Ihnen zu verstehen, was das für Ihr Produkt heißt und was zuerst zu tun ist, mit einem Blick auf Rahmenwerke wie NIST AI RMF und ISO 42001, damit es sich wie eine Checkliste anfühlt und nicht wie eine Bedrohung.',
-    'ready.ref': 'Der vollständige Text: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">Verordnung (EU)&nbsp;2024/1689</a>',
-    'ready.stat1': 'bis die zentralen Pflichten der EU-KI-Verordnung greifen (2. Aug. 2026).',
-    'ready.stat2': 'Höchststrafe vom weltweiten Jahresumsatz bei den schwersten Verstößen.',
-    'ready.stat3num': '~3 von 4',
-    'ready.stat3': 'deutsche Unternehmen haben keine voll entwickelten KI-Governance-Strukturen (Red Hat / Censuswide, 2026).',
+    'needs.eyebrow': 'Wie ich helfe',
+    'needs.title': 'Vier Wege, wie ich Ihnen den Rücken freihalte',
+    'needs.lede': 'Manche Gründende wollen eine Resonanz. Manche wollen, dass jemand mit anpackt. Die meisten wollen beides. So sieht das aus.',
 
-    'needs.eyebrow': 'Worüber ich lehre',
-    'needs.title': 'Die Fragen, bei denen ich Ihnen weiterhelfe',
-    'needs.lede': 'Keine Buzzwords, keine Folien ins Leere. Nur klare Antworten auf die Fragen, an denen Gründer und Teams wirklich hängenbleiben.',
-
-    'svc1.h': '„Wo fangen wir mit KI überhaupt an?“',
+    'svc1.h': 'Sparring',
     'svc1.tag': 'Am häufigsten gefragt',
-    'svc1.p': 'Wir lassen den Hype beiseite und finden die ein, zwei Stellen, an denen KI Ihre Zeit wirklich wert ist, und in welcher Reihenfolge Sie sie angehen.',
-    'svc2.h': '„Wir haben noch gar keine richtige IT.“',
-    'svc2.p': 'Ich zeige Ihnen, wie Sie Ihre IT und Prozesse von null an organisieren, damit Sie früh gute Gewohnheiten aufbauen statt später ein Durcheinander entwirren zu müssen.',
-    'svc3.h': '„Was sind ML und LLMs eigentlich?“',
-    'svc3.p': 'Eine verständliche Erklärung von maschinellem Lernen und großen Sprachmodellen: was sie können, was nicht, und wo sie in Ihr Unternehmen passen.',
-    'svc5.h': '„Unser Team muss auf den gleichen Stand kommen.“',
-    'svc5.p': 'Praxisnahe Workshops, die Ihr ganzes Team auf ein gemeinsames Verständnis bringen, damit alle dieselbe Sprache sprechen und in dieselbe Richtung ziehen.',
+    'svc1.p': 'Eine klare, ehrliche Resonanz für die Entscheidungen, die Sie mit Ihrem Team nicht durchsprechen können. Sie denken laut, ich halte dagegen, und Sie gehen mit klarerem Kopf.',
+    'svc2.h': 'Coaching',
+    'svc2.p': 'Regelmäßige Einzelsitzungen, die Sie als Gründerin oder Gründer weiterbringen: Ihre Prioritäten, Ihre blinden Flecken und die Gewohnheiten, die Sie ruhig halten, wenn es laut wird.',
+    'svc3.h': 'Anpackende Unterstützung',
+    'svc3.p': 'Nicht nur Rat. Wenn Sie am Limit sind, krempele ich die Ärmel hoch und helfe Ihnen, die Sache zu erledigen, damit sie vom Tisch ist und läuft.',
+    'svc5.h': 'Social Media',
+    'svc5.p': 'Ihre Präsenz, geregelt: persönliche Marke, ein einfacher Content-Plan und Posten aus einer Hand, wenn Sie lieber bauen als schreiben. Sie zeigen sich, ohne dass es Ihre Woche frisst.',
 
     'engage.title': 'Wege, zusammenzuarbeiten',
-    'engage.t1l': '1:1-Coaching',
-    'engage.t1d': 'Regelmäßige Sitzungen für Gründer oder Führungskräfte. Wir arbeiten Ihre Fragen in Ihrem Tempo durch.',
-    'engage.t2l': 'Team-Workshops',
-    'engage.t2d': 'Praxisnahe Halb- oder Ganztagessitzungen, die Ihr ganzes Team auf ein gemeinsames Niveau bringen.',
-    'engage.t3l': 'Vorträge & Einstiegssitzungen',
-    'engage.t3d': 'Ein einzelner Vortrag oder eine „Wo anfangen“-Sitzung für Ihr Team oder Event.',
+    'engage.t1l': 'Laufendes Sparring',
+    'engage.t1d': 'Ein fester Slot in Ihrem Monat. Jemand, der Ihren Kontext kennt und immer an Ihrer Seite steht.',
+    'engage.t2l': 'Unterstützung nach Bedarf',
+    'engage.t2d': 'Anpackende Hilfe, wenn eine bestimmte Sache erledigt werden muss, ohne lange Bindung.',
+    'engage.t3l': 'Hilfe bei Social Media',
+    'engage.t3d': 'Vom Content-Plan, den Sie selbst umsetzen, bis dahin, dass ich das Posten für Sie übernehme.',
 
     'offer.badge': 'Hier starten',
-    'offer.title': '„Wo mit KI anfangen“-Sitzung',
-    'offer.lede': 'Eine fokussierte erste Sitzung, um zu klären, wo Sie stehen und welche wenigen Dinge als Nächstes lohnen. Ein entspannter Weg, um zu sehen, ob Coaching zu Ihnen passt.',
-    'offer.li1': 'Eine ehrliche Einschätzung, wo KI Ihnen wirklich hilft',
-    'offer.li2': 'Die ersten zwei, drei Schritte, in klarer Sprache',
-    'offer.li3': 'Ein einfacher Plan, dem Sie und Ihr Team folgen können',
+    'offer.title': 'Eine erste Sparring-Sitzung',
+    'offer.lede': 'Eine fokussierte Sitzung zu dem, was Sie gerade beschäftigt. Ein entspannter Weg, um zu spüren, wie es ist, mich an Ihrer Seite zu haben.',
+    'offer.li1': 'Raum, eine schwierige Sache einmal ganz durchzudenken',
+    'offer.li2': 'Ehrlicher Widerspruch und ein frischer Blickwinkel',
+    'offer.li3': 'Ein, zwei nächste Schritte, mit denen Sie sich wohlfühlen',
     'offer.m1': 'Format',
     'offer.m1v': '90-Min-Sitzung',
     'offer.m2': 'Für',
-    'offer.m2v': 'Gründer & Teams',
+    'offer.m2v': 'Gründerinnen und Gründer',
     'offer.cta': 'Sitzung buchen',
 
-    'about.tag': 'Echte KI & ML × IT von Grund auf × klare Sprache',
-    'about.eyebrow': 'Über mich',
-    'about.title': 'Ich habe das Echte gebaut. Jetzt zeige ich Ihnen, wie es funktioniert.',
-    'about.lede': 'Seit über zehn Jahren bringe ich KI aus der Forschung in Produkte, die wirklich live gegangen sind, in einigen der anspruchsvollsten Umfelder, die es gibt. Ich coache in klarer Sprache, weil ich die schwierigen Teile selbst gemacht habe.',
-    'about.bio': 'Gründerin von Pruna Secura. Früher Enterprise-Architektin in sicherheitskritischer Bahntechnik, davor Wissenschaftlerin im MedTech-Bereich, zwei der am stärksten regulierten Umfelder für KI. Die Gewohnheiten, die dort funktionieren, vermittle ich in klarer Sprache, und bleibe von jedem Tool-Anbieter unabhängig.',
-    'about.s1': 'Jahre Skalierung von KI- & Datenplattformen',
-    'about.s2': 'Länder, in denen geliefert wurde',
-    'about.s3': 'geleitete KI- & Analytics-Initiativen',
+    'proof.n1': 'Ein klarerer<br>Kopf',
+    'proof.p1': 'Das Durcheinander im Kopf wird zu etwas, mit dem Sie tatsächlich arbeiten können, ein Gespräch nach dem anderen.',
+    'proof.n2': 'Weniger<br>allein',
+    'proof.p2': 'Ein verlässlicher Mensch, der Ihren Kontext kennt, damit Sie nicht jede große Entscheidung allein tragen.',
+    'proof.n3': 'Mehr<br>Schwung',
+    'proof.p3': 'Weniger Dinge, die auf Ihrem Tisch liegen bleiben. Die wichtigen bringen wir in Bewegung, statt sie sich stapeln zu lassen.',
+    'proof.n4': 'Eine sichtbare<br>Marke',
+    'proof.p4': 'Sie zeigen sich dort, wo es zählt, mit einer Präsenz, die nach Ihnen klingt und Ihre Woche nicht auffrisst.',
 
-    'proof.n1': 'Weniger<br>Störungen',
-    'proof.p1': 'MLOps-, Monitoring- und Robustheitsstandards über 20+ KI-Initiativen gesetzt, um Produktionsbereitstellungen verlässlich zu machen.',
-    'proof.n2': 'Niedrigere<br>Betriebskosten',
-    'proof.p2': 'Verstreute Tools zu strategischen, cloud-fähigen Plattformen zusammengeführt und so die Betriebskosten messbar gesenkt.',
-    'proof.n3': 'Weniger<br>Handarbeit',
-    'proof.p3': 'Ein globales KPI- & Dashboard-Framework über Projekte in 10+ Ländern aufgebaut und den Reporting-Aufwand gesenkt.',
-    'proof.n4': 'Schneller<br>zum Wert',
-    'proof.p4': 'Den Weg vom Prototyp in die Produktion verkürzt, mit echter Akzeptanz und Wirkung auf die Marge statt Modellen, die im Notebook liegen bleiben.',
-
-    'creds.intro': 'Gestützt auf',
-    'creds.l1': '3 Software-Patente',
-    'creds.l2': 'KI-Umsetzung mit Auszeichnung',
-    'creds.l3': 'Google AI- & Anthropic-zertifiziert',
+    'creds.intro': 'Das bekommen Gründende',
+    'creds.l1': 'Eine Resonanz, die selbst mittendrin war',
+    'creds.l2': 'Ehrlicher Widerspruch, keine Ja-Sager',
+    'creds.l3': 'Echte Hilfe, nicht nur Hausaufgaben',
 
     'whyme.eyebrow': 'Warum mit mir',
-    'whyme.title': 'Eine Coachin, die KI wirklich gebaut hat, nicht nur darüber gelesen.',
-    'whyme.lede': 'Die meisten KI-Schulungen sind allgemeine Folien von jemandem, der nie etwas live gebracht hat. Ich habe KI in anspruchsvollen Umfeldern selbst gebaut und betrieben, deshalb kann ich sie einfach erklären und die echten Fragen Ihres Teams beantworten. Sie lernen von jemandem, der die Arbeit gemacht hat.',
+    'whyme.title': 'Eine Resonanz, die selbst gebaut hat, nicht nur darüber gelesen.',
+    'whyme.lede': 'Ich war selbst mittendrin und weiß, wie sich Gründen an den harten Tagen anfühlt. Ich sage Ihnen, was ich wirklich denke, helfe Ihnen, die Last zu tragen, und bleibe an Ihrer Seite, ob die Woche gut läuft oder auseinanderfällt.',
 
-    'quote.text': '„Mein Team hörte ständig von KI, aber niemand wusste wirklich, was das für uns bedeutet. Nach ein paar Sitzungen mit Ella sprachen wir endlich dieselbe Sprache, wussten, wo wir anfangen, und jagten nicht mehr jedem neuen Tool hinterher.“',
+    'quote.text': '„Gründen war das Einsamste, was ich je gemacht habe. Ella zum lauten Denken zu haben, und jemanden, der wirklich hilft statt nur zu nicken, hat verändert, wie ich jede Woche auftrete.“',
     'quote.name': 'Start-up-Gründerin',
-    'quote.role': 'Kleines Team · Referenz auf Anfrage',
+    'quote.role': 'Referenz auf Anfrage',
 
     'faq.eyebrow': 'Bevor Sie schreiben',
     'faq.title': 'Häufige Fragen',
     'faq.q1': 'Wie fangen wir an?',
-    'faq.a1': 'Mit einem kostenlosen 20-minütigen Gespräch, in dem ich höre, wo Sie stehen und was Sie lernen möchten. Die meisten starten danach mit einer einzelnen „Wo mit KI anfangen“-Sitzung. Das ist ein entspannter Weg, um zu sehen, ob Coaching passt, bevor Sie mehr buchen.',
-    'faq.q2': 'Coachen Sie remote und EU-weit?',
-    'faq.a2': 'Ja. Ich sitze in Deutschland und coache Gründer und Teams in ganz Europa. Standardmäßig remote, für Team-Workshops aber gerne auch vor Ort, wenn das besser passt.',
-    'faq.q3': 'Brauche ich technisches Vorwissen?',
-    'faq.a3': 'Nein. Ich coache Gründer, C-Level und Teams, die noch wenig oder gar keine IT haben. Alles in klarer Sprache, und wir starten dort, wo Sie gerade stehen.',
-    'faq.q4': 'Wie sieht eine Sitzung oder ein Workshop aus?',
-    'faq.a4': 'Entweder 1:1-Coaching, ein Team-Workshop oder ein einzelner Vortrag. Die Sitzungen sind praxisnah und bauen auf Ihren Fragen auf, nicht auf einem festen Foliensatz. Umfang und Preis legen wir vorab einfach fest, ohne Stundenabrechnung.',
-    'faq.q5': 'Ist das Beratung oder Coaching?',
-    'faq.a5': 'Coaching und Lehre. Ich helfe Ihnen und Ihrem Team, KI, ML und IT zu verstehen und zu entscheiden, was zu tun ist, sodass das Wissen bei Ihnen bleibt. Ich übernehme nicht Ihre Projekte für Sie.',
+    'faq.a1': 'Mit einem kostenlosen 20-minütigen Gespräch, in dem ich höre, wo Sie stehen und was Sie beschäftigt. Die meisten Gründenden buchen danach eine erste Sparring-Sitzung. Das ist ein entspannter Weg, um zu sehen, ob es passt, bevor Sie sich auf etwas Laufendes festlegen.',
+    'faq.q2': 'Arbeiten Sie remote und EU-weit?',
+    'faq.a2': 'Ja. Ich sitze in Deutschland und arbeite mit Gründenden in ganz Europa. Standardmäßig remote, vor Ort, wenn es passt.',
+    'faq.q3': 'Was ist der Unterschied zwischen Sparring und Coaching?',
+    'faq.a3': 'Sparring ist im Moment: Sie bringen eine aktuelle Entscheidung mit, und wir denken sie zusammen durch. Coaching ist das längere Spiel: regelmäßige Sitzungen, die Sie als Gründerin oder Gründer weiterbringen. Viele kombinieren beides.',
+    'faq.q4': 'Was umfasst die Hilfe bei Social Media?',
+    'faq.a4': 'So viel, wie Sie brauchen: Ihre persönliche Marke schärfen, einen einfachen Content-Plan, den Sie selbst umsetzen, oder ich übernehme das Posten und die Betreuung für Sie, damit es vom Tisch ist.',
+    'faq.q5': 'Wie funktioniert die Preisgestaltung?',
+    'faq.a5': 'Wir legen den Umfang vorab einfach fest, ob eine einzelne Sitzung, ein laufender Slot oder Hilfe bei Social Media. Keine Überraschungen und keine Stundenabrechnung.',
 
     'contact.eyebrow': 'Sprechen wir',
-    'contact.title': 'Finden wir heraus, <span class="accent">wo Sie anfangen.</span>',
-    'contact.lede': 'Vielleicht fühlt sich KI nur nach Lärm an und Sie wissen nicht, was der erste Schritt ist. Vielleicht muss Ihr Team auf den gleichen Stand kommen. So oder so: Geben Sie mir 20 Minuten, und wir besprechen, was Ihnen wirklich weiterhilft.',
-    'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
+    'contact.title': 'Holen wir Ihnen <span class="accent">Rückendeckung.</span>',
+    'contact.lede': 'Vielleicht müssen Sie einfach laut denken. Vielleicht brauchen Sie eine Hand, um etwas zu erledigen. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, was Ihnen wirklich weiterhilft.',
+    'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
     'contact.cta2': 'Auf LinkedIn vernetzen',
-    'contact.cta3': 'Direkt anrufen →',
+    'contact.cta3': 'Direkt anrufen →',
 
     'footer.copy': '© 2026 Pruna Secura · Ella Türümina · Erlangen, Deutschland',
     'footer.email': 'E-Mail',
-    'footer.tag': 'KI-, ML- & IT-Coaching für Gründer und Teams'
+    'footer.tag': 'Sparring, Coaching & Unterstützung für Gründerinnen und Gründer'
   }
 };
 
@@ -187,7 +168,6 @@ const I18N = {
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     window.__lang = lang;
-    if (typeof window.__renderCountdown === 'function') window.__renderCountdown();
   }
 
   // Default to German on first visit; honour a saved choice on return.
@@ -223,23 +203,6 @@ const I18N = {
   }
 })();
 
-// EU AI Act countdown (target: 2 Aug 2026)
-(function () {
-  const el = document.getElementById('countdown');
-  if (!el) return;
-  const target = new Date('2026-08-02T00:00:00Z').getTime();
-  function tick() {
-    const lang = window.__lang || 'en';
-    const diff = target - Date.now();
-    if (diff <= 0) { el.textContent = lang === 'de' ? 'Jetzt in Kraft' : 'Now in force'; return; }
-    const days = Math.floor(diff / 86400000);
-    el.textContent = days + (lang === 'de' ? ' Tage' : ' days');
-  }
-  window.__renderCountdown = tick;
-  tick();
-  setInterval(tick, 60000);
-})();
-
 // Reveal on scroll
 (function () {
   const els = document.querySelectorAll('.reveal');
@@ -255,70 +218,4 @@ const I18N = {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(e => io.observe(e));
-})();
-
-// Inline glossary popovers — plain-language explanations for jargon (CEO-friendly)
-(function () {
-  const GLOSSARY = {
-    governance: {
-      en: { t: 'Governance', d: 'The rules, controls and clear accountability for how AI is built, approved and used — so someone owns the risk and decisions are defensible.' },
-      de: { t: 'Governance', d: 'Die Regeln, Kontrollen und klare Verantwortung dafür, wie KI gebaut, freigegeben und eingesetzt wird – damit jemand das Risiko trägt und Entscheidungen belastbar sind.' }
-    },
-    mlops: {
-      en: { t: 'MLOps', d: 'The engineering practice of running AI models reliably in production: deploying, monitoring and updating them so they keep working in the real world.' },
-      de: { t: 'MLOps', d: 'Die technische Praxis, KI-Modelle zuverlässig im Betrieb zu führen: ausrollen, überwachen und aktualisieren, damit sie im echten Einsatz funktionieren.' }
-    },
-    'enterprise-architecture': {
-      en: { t: 'Enterprise architecture', d: 'How systems, data and tools fit together across the whole organisation, so a project connects to everything else instead of standing alone.' },
-      de: { t: 'Enterprise-Architektur', d: 'Wie Systeme, Daten und Werkzeuge im ganzen Unternehmen zusammenpassen, damit ein Projekt mit allem anderen verbunden ist und nicht für sich allein steht.' }
-    },
-    'high-risk': {
-      en: { t: 'High-risk & conformity', d: 'Under the EU AI Act, certain AI uses count as "high-risk" and need documented proof ("conformity") that they meet the rules before going live.' },
-      de: { t: 'Hochrisiko & Konformität', d: 'Nach der EU-KI-Verordnung gelten bestimmte KI-Anwendungen als „hochriskant" und brauchen einen dokumentierten Nachweis („Konformität"), dass sie die Vorgaben erfüllen, bevor sie live gehen.' }
-    }
-  };
-
-  let openPop = null;
-  function closeOpen() {
-    if (openPop) { openPop.classList.remove('is-open'); openPop = null; }
-  }
-
-  function build(term) {
-    const key = term.getAttribute('data-term');
-    const entry = GLOSSARY[key];
-    if (!entry) return;
-    const pop = document.createElement('span');
-    pop.className = 'term__pop';
-    pop.setAttribute('role', 'tooltip');
-    const t = document.createElement('span'); t.className = 'term__pop-term';
-    const d = document.createElement('span'); d.className = 'term__pop-def';
-    pop.appendChild(t); pop.appendChild(d);
-    term.appendChild(pop);
-    term.setAttribute('tabindex', '0');
-
-    function fill() {
-      const lang = (window.__lang === 'de') ? 'de' : 'en';
-      t.textContent = entry[lang].t;
-      d.textContent = entry[lang].d;
-    }
-    function open() { closeOpen(); fill(); pop.classList.add('is-open'); openPop = pop; }
-    function close() { pop.classList.remove('is-open'); if (openPop === pop) openPop = null; }
-
-    // Desktop hover
-    term.addEventListener('mouseenter', open);
-    term.addEventListener('mouseleave', close);
-    // Keyboard
-    term.addEventListener('focus', open);
-    term.addEventListener('blur', close);
-    // Tap / click toggle (mobile + click)
-    term.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (pop.classList.contains('is-open')) close(); else open();
-    });
-    pop.addEventListener('click', (e) => e.stopPropagation());
-  }
-
-  document.querySelectorAll('.term[data-term]').forEach(build);
-  document.addEventListener('click', closeOpen);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOpen(); });
 })();
