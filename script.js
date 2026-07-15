@@ -134,7 +134,7 @@ const I18N = {
     'contact.lede': 'Vielleicht müssen Sie einfach laut denken. Vielleicht brauchen Sie eine Hand, um etwas zu erledigen. So oder so: Geben Sie mir 20 Minuten, und wir finden heraus, was Ihnen wirklich weiterhilft.',
     'contact.cta1': 'Kostenloses 20-Min-Gespräch →',
 
-    'footer.copy': '© 2026 Pruna Secura · Ella Türümina · Erlangen, Deutschland',
+    'footer.copy': '© 2026 Pruna Secura · München, Deutschland',
     'footer.tag': 'Sparring, Coaching & Unterstützung für Gründerinnen und Gründer'
   }
 };
