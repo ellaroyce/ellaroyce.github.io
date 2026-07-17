@@ -138,7 +138,12 @@
   // --- Finale geometry ------------------------------------------------------
   // Founder planet finale anchored to the contact section. Progress within the
   // last stretch [dockStart..1] drives docking -> handshake -> shell close.
-  var dockStart = 0.86;
+  // Docking maps the final scroll stretch to the landing. It starts a touch
+  // earlier and completes before the very bottom (dockEnd < 1), so the craft
+  // reaches its landed/protected state and then HOLDS there through the rest of
+  // the scroll and while idle — a stable, persistent end state.
+  var dockStart = 0.82;
+  var dockEnd = 0.97;
   function contactVisible() {
     var el = document.getElementById('contact');
     if (!el) return { on: false };
@@ -262,13 +267,15 @@
     if (hidden) { running = false; return; }
 
     // Smooth progress toward target (interpolation for buttery scroll-follow).
-    prog += (targetProg - prog) * 0.12;
+    // A gentle factor makes the craft ease toward its scroll-mapped target more
+    // slowly, so the flight — and the final landing — is easier to follow.
+    prog += (targetProg - prog) * 0.07;
     if (Math.abs(targetProg - prog) < 0.0005) prog = targetProg;
 
     ctx.clearRect(0, 0, W, H);
 
     var fin = contactVisible();
-    var dock = fin.on ? Math.min(1, Math.max(0, (prog - dockStart) / (1 - dockStart))) : 0;
+    var dock = fin.on ? Math.min(1, Math.max(0, (prog - dockStart) / (dockEnd - dockStart))) : 0;
 
     // ---- Persistent flight (desktop full route; mobile lightweight) --------
     var showFlight = !small; // mobile hides the continuous weave for clarity
@@ -355,14 +362,10 @@
         drawSecurityShell(px, py, planetR * (small ? 3.4 : 4.2), shellClose, t);
       }
 
-      // Craft docks and fades into the planet at the very end.
-      if (dock < 0.92) {
-        var craftFade = 1 - Math.min(1, Math.max(0, (dock - 0.7) / 0.22));
-        ctx.globalAlpha = craftFade;
-        var toPlanet = Math.atan2(py - craftY, px - craftX);
-        drawShuttle(craftX, craftY, dock > 0.3 ? toPlanet : heading, small ? 0.5 : 0.62, 1);
-        ctx.globalAlpha = 1;
-      }
+      // Craft descends, docks beside the planet, and HOLDS there — no fade-out,
+      // so the landed craft stays visibly present at the end instead of vanishing.
+      var toPlanet = Math.atan2(py - craftY, px - craftX);
+      drawShuttle(craftX, craftY, dock > 0.3 ? toPlanet : heading, small ? 0.5 : 0.62, 1);
     } else if (showFlight && dock < 0.98) {
       // Normal cruising shuttle along the route.
       var glow = Math.min(1, 0.5 + prog);
@@ -399,6 +402,8 @@
     var planetR = Math.max(9, Math.min(W, H) * 0.02);
     drawPlanet(fin.x, fin.y, planetR, 1);
     drawSecurityShell(fin.x, fin.y, planetR * (small ? 3.4 : 4.2), 1, 0);
+    // Landed craft, held beside the planet — a clearly visible static end state.
+    drawShuttle(fin.x - 40, fin.y, 0, small ? 0.5 : 0.62, 1);
   }
 
   // --- Events ---------------------------------------------------------------
