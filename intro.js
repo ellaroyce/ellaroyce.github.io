@@ -1,19 +1,22 @@
 // ===========================================================================
-// intro.js — "Launch" cinematic opening sequence
+// intro.js — "Mission" cinematic opening, FIRST-PERSON from inside the ship.
 //
-// An abstract shuttle glyph ignites out of darkness, crosses a few layered
-// universes harvesting scattered signals into its trail, finds a small founder
-// planet trapped in a storm of noisy paths, then breaks through and lands with
-// a protective cobalt/mint shockwave. The chaos snaps into a stable system and
-// the landing core hands off to the Living Systems hero core beneath.
+// The viewer sits in a rocket/spaceship cockpit (see cockpit.js): a front
+// viewport framed by a canopy, with a premium mission-control dashboard below.
+// Through the glass we fly across art-directed galaxies collecting data signals
+// (confirmed on the instrument meters), detect a founder planet trapped in an
+// uncertainty storm, lock the route, break through, arrive, and deploy a
+// protective system around the planet — ending in a warm, stable, "made it"
+// state with a connection/handshake cue that hands off to the Living Systems
+// hero beneath.
 //
-// Not a literal superhero: the "rescue" reads as confident velocity, protective
-// arrival, and a landing shockwave. Vanilla Canvas 2D, DPR-capped, self-cleaning.
+// Directed beats (desktop): ignition -> transit/harvest -> detect/lock ->
+// approach/breakthrough -> arrive/protect -> handoff. ~4.4s + short fade.
 //
-// Public API (window.PrunaIntro):
-//   .play({ force })  -> run the sequence (force ignores the session flag)
-//   .hasPlayed()      -> boolean, session flag
-// The module auto-plays once per session on load unless reduced-motion.
+// The first frame paints synchronously: the cabin + live instruments are
+// visible within ~100ms. No blank open, no freeze.
+//
+// window.PrunaIntro.play({force}) / .hasPlayed()
 // ===========================================================================
 (function () {
   'use strict';
@@ -21,10 +24,9 @@
   var SESSION_KEY = 'pruna_intro_played';
   var overlay = document.getElementById('intro');
   var canvas = document.getElementById('intro-canvas');
-  if (!overlay || !canvas || !canvas.getContext) { unlockScroll(); return; }
+  if (!overlay || !canvas || !canvas.getContext || !window.PrunaCockpit) { unlockScroll(); return; }
 
   var ctx = canvas.getContext('2d', { alpha: true });
-  // Defensive radius clamp (same rationale as hero.js).
   var _arc = ctx.arc.bind(ctx);
   ctx.arc = function (x, y, r, s, e, cc) { return _arc(x, y, r > 0 ? r : 0, s, e, cc); };
   var _rg = ctx.createRadialGradient.bind(ctx);
@@ -34,25 +36,14 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var prefersData = window.matchMedia('(prefers-reduced-data: reduce)').matches;
+  function rgba(c, a) { return window.PrunaCockpit._rgba(c, a); }
 
-  // --- Palette from CSS custom properties (tracks theme) --------------------
-  function palette() {
-    var c = getComputedStyle(document.documentElement);
-    var g = function (n, f) { return (c.getPropertyValue(n).trim() || f); };
-    return {
-      ink: g('--ink', '#070b14'),
-      cobalt: g('--cobalt', '#3f78ff'),
-      cobaltSoft: g('--cobalt-soft', '#6a97ff'),
-      signal: g('--signal', '#b7f24a'),
-      node: g('--viz-node', '#9fb2d4'),
-      ivory: g('--ivory', '#f4efe6'),
-      loose: g('--viz-loose', 'rgba(143,166,201,0.55)')
-    };
-  }
-  var P = palette();
+  var P;
+  function refreshPalette() { P = window.PrunaCockpit.palette(); }
+  refreshPalette();
 
   // --- Sizing ---------------------------------------------------------------
-  var W = 0, H = 0, DPR = 1, small = false;
+  var W = 0, H = 0, DPR = 1, small = false, vp = null;
   function resize() {
     W = window.innerWidth; H = window.innerHeight;
     small = W < 720;
@@ -62,449 +53,377 @@
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    vp = window.PrunaCockpit.viewport(W, H, small);
   }
 
   // --- Timeline (seconds) ---------------------------------------------------
-  // Trimmed on mobile so it stays dramatic but lighter.
   var T = small
-    ? { ignite: 0.7, harvest: 1.7, distress: 2.9, land: 3.9, done: 4.4 }
-    : { ignite: 0.9, harvest: 2.3, distress: 3.6, land: 4.7, done: 5.2 };
+    ? { ignite: 0.55, transit: 1.7, detect: 2.5, approach: 3.15, arrive: 3.55, done: 3.9 }
+    : { ignite: 0.65, transit: 2.0, detect: 2.9, approach: 3.6, arrive: 4.05, done: 4.4 };
 
-  // Handoff target = hero core position/size (must match hero.js build()).
+  // Handoff target = hero core position (must match hero.js build()).
   function coreTarget() {
-    return {
-      x: W * 0.62,
-      y: H * 0.52,
-      r: Math.max(9, Math.min(W, H) * 0.018)
-    };
+    return { x: W * 0.62, y: H * 0.52, r: Math.max(9, Math.min(W, H) * 0.018) };
   }
 
-  // --- Scene state ----------------------------------------------------------
-  var stars = [], universes = [], fragments = [], stormNodes = [], stormPaths = [];
-  var shuttle, planet, shock, target;
+  // --- Scene ----------------------------------------------------------------
+  var stars, galaxies, signals, planet, storm, target;
   var rafId = 0, startT = 0, running = false, finished = false;
   var shakeSeed = Math.random() * 1000;
-
   function rand(a, b) { return a + Math.random() * (b - a); }
+  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function easeOut(x) { return 1 - Math.pow(1 - x, 3); }
+  function easeInOut(x) { return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
+  function smooth(x){ x=clamp01(x); return x*x*(3-2*x); }
 
-  function buildScene() {
-    P = palette();
+  function build() {
+    refreshPalette();
     target = coreTarget();
+    // Inner-viewport coordinate space (relative to the glass rect).
+    var gx = vp.x, gy = vp.y, gw = vp.w, gh = vp.h;
+    var cxg = gx + gw*0.5, cyg = gy + gh*0.5;
 
-    // Starfield (parallax depth), lighter on mobile.
+    // Starfield inside the viewport — depth cue, restrained.
     stars = [];
-    var starCount = small ? 90 : 170;
-    for (var i = 0; i < starCount; i++) {
-      stars.push({
-        x: Math.random() * W, y: Math.random() * H,
-        z: rand(0.25, 1), r: rand(0.4, 1.5)
-      });
-    }
+    var n = small ? 60 : 110;
+    for (var i=0;i<n;i++){ stars.push({ x: gx+Math.random()*gw, y: gy+Math.random()*gh, z: rand(0.25,1), r: rand(0.5,1.7) }); }
 
-    // Layered "universes": faint concentric arcs sweeping past. Distinct tints.
-    universes = [
-      { tint: P.cobalt, at: T.ignite + 0.1, y: H * 0.30 },
-      { tint: P.signal, at: T.ignite + 0.55, y: H * 0.62 },
-      { tint: P.cobaltSoft, at: T.ignite + 1.0, y: H * 0.44 }
+    // Art-directed galaxy layers we fly through during transit — soft spiral
+    // clouds tinted cobalt / mint, entering from the far center and sweeping past.
+    galaxies = [
+      { tint: P.cobalt, at: T.ignite+0.05, spin: 0.5,  seed: 1 },
+      { tint: P.signal, at: T.ignite+0.55, spin: -0.4, seed: 2 },
+      { tint: P.cobaltSoft, at: T.ignite+1.05, spin: 0.3, seed: 3 }
     ];
 
-    // Data fragments to harvest into the trail during phase 2.
-    fragments = [];
-    var fragCount = small ? 10 : 16;
-    for (var f = 0; f < fragCount; f++) {
-      fragments.push({
-        x: rand(W * 0.1, W * 1.05), y: rand(H * 0.1, H * 0.9),
-        r: rand(1.5, 3.2), captured: false, capT: 0,
-        appear: T.ignite + rand(0.1, 1.2), a: 0
+    // Data signals: originate in deep space (small far points) and stream toward
+    // the ship (screen -> down into the dashboard), confirming capture.
+    signals = [];
+    var sn = small ? 7 : 11;
+    for (var s=0;s<sn;s++){
+      signals.push({
+        appear: T.ignite + 0.15 + s*0.12,
+        // start near vanishing point, drift out toward a viewport edge
+        ang: rand(0, Math.PI*2), dist0: rand(gw*0.02, gw*0.06), dist1: rand(gw*0.32, gw*0.5),
+        captured:false, capT:0, spin: rand(0,6.28)
       });
     }
 
-    // Founder planet — small ivory ring, revealed in the distress phase.
-    planet = {
-      x: W * (small ? 0.5 : 0.62), y: H * (small ? 0.5 : 0.52),
-      r: Math.max(10, Math.min(W, H) * 0.02)
-    };
-
-    // Storm around the planet: scattered nodes + noisy paths (uncertainty).
-    stormNodes = [];
-    stormPaths = [];
-    var sCount = small ? 22 : 40;
-    for (var s = 0; s < sCount; s++) {
-      var ang = Math.random() * Math.PI * 2;
-      var dist = rand(planet.r * 2.2, Math.min(W, H) * (small ? 0.34 : 0.4));
-      stormNodes.push({
-        // chaotic starting position
-        cx: planet.x + Math.cos(ang) * dist,
-        cy: planet.y + Math.sin(ang) * dist,
-        // eventual organised slot (a calm ring around the core)
-        ox: 0, oy: 0,
-        jitter: rand(0, Math.PI * 2), jspeed: rand(0.6, 1.6),
-        jamp: rand(4, 14) * (small ? 0.7 : 1),
-        r: rand(1.6, 3.0)
-      });
+    // Founder planet appears at the vanishing point then we approach it; final
+    // handoff maps it to the hero core (outside the viewport, full screen).
+    planet = { vx: cxg, vy: cyg, r: Math.max(10, Math.min(gw,gh)*0.05) };
+    storm = [];
+    var stn = small ? 16 : 26;
+    for (var k=0;k<stn;k++){
+      var a = (k/stn)*Math.PI*2*2 + rand(-0.2,0.2);
+      var d = rand(planet.r*1.8, Math.min(gw,gh)*0.24);
+      storm.push({ a:a, d:d, j:rand(0,6.28), js:rand(0.8,1.6), ja:rand(4,10)*(small?0.7:1), r:rand(1.4,2.8) });
     }
-    // Assign organised slots on concentric rings (protected system look).
-    for (var k = 0; k < stormNodes.length; k++) {
-      var ring = 1 + (k % 3);
-      var a2 = (k / stormNodes.length) * Math.PI * 2 * 3 + k * 0.3;
-      var rr = target.r * (2.4 + ring * 1.7);
-      stormNodes[k].ox = target.x + Math.cos(a2) * rr;
-      stormNodes[k].oy = target.y + Math.sin(a2) * rr;
-    }
-    // noisy connecting paths during the storm
-    var pCount = small ? 14 : 26;
-    for (var p = 0; p < pCount; p++) {
-      stormPaths.push({
-        a: stormNodes[(Math.random() * stormNodes.length) | 0],
-        b: stormNodes[(Math.random() * stormNodes.length) | 0],
-        w: rand(0.4, 1.1)
-      });
-    }
-
-    // Shuttle: enters from lower-left dark, sweeps toward the planet.
-    shuttle = {
-      x: -W * 0.15, y: H * 0.86,
-      // control points for an arced flight into the core
-      trail: []
-    };
-
-    shock = { t: 0, active: false };
     finished = false;
   }
 
-  // --- Easing ---------------------------------------------------------------
-  function easeOut(x) { return 1 - Math.pow(1 - x, 3); }
-  function easeInOut(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
-  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
-
-  // Shuttle position along its flight path as a function of global time.
-  function shuttlePos(tt) {
-    // Fly from off-screen lower-left, arc up through the universes, then dive
-    // into the planet by the landing moment.
-    var p = clamp01((tt - T.ignite) / (T.land - T.ignite));
-    // Enter decisively after ignition so the craft is visible throughout the
-    // harvest beat, then slow down for the precision landing.
-    var e = p < 0.55
-      ? 0.5 * easeOut(p / 0.55)
-      : 0.5 + 0.5 * easeInOut((p - 0.55) / 0.45);
-    var sx = -W * 0.08, sy = H * 0.86;           // start
-    var mx = W * 0.32, my = H * 0.22;            // mid (up among universes)
-    var ex = planet.x, ey = planet.y;            // end (planet/core)
-    // quadratic bezier
-    var u = 1 - e;
-    var x = u * u * sx + 2 * u * e * mx + e * e * ex;
-    var y = u * u * sy + 2 * u * e * my + e * e * ey;
-    return { x: x, y: y, p: p };
-  }
-
-  // --- Draw helpers ---------------------------------------------------------
-  function withAlpha(color, a) {
-    color = (color || '').trim();
-    if (color.charAt(0) === '#') {
-      var h = color.slice(1);
-      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
-      var n = parseInt(h, 16);
-      return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  // Mission state for the dashboard, derived from time.
+  function missionState(tt) {
+    var st = { t: tt, shake: 0, heading: 0, bearing: 0.15, lock: 0,
+               meterA:0, meterB:0, meterC:0, capture:0, mission:'STANDBY', warn:0, protect:0 };
+    // ignition vibration
+    if (tt < T.ignite) st.shake = (1 - tt/T.ignite) * (small?3:5) + 1.5;
+    // capture progression fills meters through transit
+    var tr = clamp01((tt - T.ignite) / (T.detect - T.ignite));
+    st.meterA = easeOut(clamp01(tr*1.1));
+    st.meterB = easeOut(clamp01((tr-0.15)*1.2));
+    st.meterC = easeOut(clamp01((tr-0.35)*1.3));
+    // heading gently weaves during transit
+    st.heading = Math.sin(tt*1.6)*0.4*(tt<T.detect?1:0.2);
+    // detect -> lock
+    if (tt >= T.detect) {
+      st.lock = easeOut(clamp01((tt - T.detect)/(T.approach - T.detect)));
+      st.bearing = 0; // centered on target
+      st.heading = st.heading*(1-st.lock);
     }
-    if (color.indexOf('rgba') === 0) return color.replace(/[\d.]+\)$/, a + ')');
-    if (color.indexOf('rgb') === 0) return color.replace('rgb(', 'rgba(').replace(')', ',' + a + ')');
-    return color;
+    // breakthrough vibration near arrival
+    if (tt >= T.approach && tt < T.arrive+0.2) st.shake = (small?4:6) * (1 - clamp01((tt-T.approach)/0.4));
+    // mission text
+    if (tt < T.ignite) st.mission = 'ignition';
+    else if (tt < T.detect) { st.mission = 'transit · collecting signal'; }
+    else if (tt < T.approach) { st.mission = 'founder planet detected'; st.warn = 1; }
+    else if (tt < T.arrive) { st.mission = 'breaking through'; }
+    else { st.mission = 'arrived · protected'; st.protect = 1; st.lock = 1; st.meterA=st.meterB=st.meterC=1; }
+    return st;
   }
 
-  // Original shuttle glyph: an abstract protective chevron with a bright core
-  // and a swept mint/cobalt thruster. Drawn pointing along its heading.
-  function drawShuttle(x, y, angle, scale, glow) {
+  // Draw a soft spiral galaxy at (x,y).
+  function drawGalaxy(x, y, r, tint, spin, a, seed) {
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(angle);
-    ctx.scale(scale, scale);
-
-    // thruster glow behind
-    var tg = ctx.createLinearGradient(-46, 0, 6, 0);
-    tg.addColorStop(0, withAlpha(P.signal, 0));
-    tg.addColorStop(0.6, withAlpha(P.signal, 0.5 * glow));
-    tg.addColorStop(1, withAlpha(P.cobaltSoft, 0.9 * glow));
-    ctx.beginPath();
-    ctx.moveTo(-44, 0); ctx.lineTo(-6, -7); ctx.lineTo(-6, 7); ctx.closePath();
-    ctx.fillStyle = tg; ctx.fill();
-
-    // hull: forward chevron (protective arrowhead)
-    ctx.beginPath();
-    ctx.moveTo(20, 0);
-    ctx.lineTo(-8, -11);
-    ctx.lineTo(-2, 0);
-    ctx.lineTo(-8, 11);
-    ctx.closePath();
-    ctx.fillStyle = P.ivory;
-    ctx.fill();
-
-    // cobalt spine
-    ctx.beginPath();
-    ctx.moveTo(20, 0); ctx.lineTo(-2, 0);
-    ctx.strokeStyle = P.cobalt; ctx.lineWidth = 2.2; ctx.stroke();
-
-    // bright core dot
-    ctx.beginPath();
-    ctx.arc(4, 0, 3.1, 0, Math.PI * 2);
-    ctx.fillStyle = P.signal; ctx.fill();
-
+    ctx.rotate(spin);
+    ctx.globalAlpha = a;
+    // core glow
+    var g = ctx.createRadialGradient(0,0,0,0,0,r);
+    g.addColorStop(0, rgba(tint, 0.5));
+    g.addColorStop(0.3, rgba(tint, 0.18));
+    g.addColorStop(1, rgba(tint, 0));
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+    // two faint spiral arms
+    ctx.strokeStyle = rgba(tint, 0.35);
+    ctx.lineWidth = Math.max(1, r*0.03);
+    for (var arm=0;arm<2;arm++){
+      ctx.beginPath();
+      for (var tS=0;tS<=1;tS+=0.05){
+        var ang = arm*Math.PI + tS*Math.PI*1.8;
+        var rr2 = tS*r*0.95;
+        var px = Math.cos(ang)*rr2, py = Math.sin(ang)*rr2*0.6;
+        if (tS===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
     ctx.restore();
   }
 
-  // --- Frame ----------------------------------------------------------------
-  var lastShuttle = null;
+  // Render the whole cabin + scene.
+  function render(tt) {
+    var st = missionState(tt);
+    // whole-cabin vibration (subtle) — applied to everything via translate
+    var vibX = st.shake ? Math.sin(tt*70+shakeSeed)*st.shake*0.4 : 0;
+    var vibY = st.shake ? Math.cos(tt*58+shakeSeed)*st.shake*0.4 : 0;
+
+    // Base cabin fill (so no white flash / no transparent gaps)
+    ctx.fillStyle = P.frame;
+    ctx.fillRect(0,0,W,H);
+
+    // ---- SPACE SCENE inside the viewport glass ----------------------------
+    ctx.save();
+    ctx.translate(vibX, vibY);
+    window.PrunaCockpit.clipViewport(ctx, vp);
+
+    var gx=vp.x, gy=vp.y, gw=vp.w, gh=vp.h;
+    var cxg = gx+gw*0.5, cyg = gy+gh*0.5;
+
+    // deep-space backdrop
+    var bg = ctx.createRadialGradient(cxg, cyg, 0, cxg, cyg, Math.max(gw,gh)*0.7);
+    bg.addColorStop(0, P.light ? window.PrunaCockpit._mix(P.bg,'#ffffff',0.12) : P.bg);
+    bg.addColorStop(1, P.bgDeep);
+    ctx.fillStyle = bg;
+    ctx.fillRect(gx, gy, gw, gh);
+
+    // Ignition corridor: a clear moving reference from the very first paint.
+    // This prevents the opening from reading as a frozen empty viewport,
+    // especially in the bright cabin where individual stars are subtler.
+    if (tt < T.ignite) {
+      var ignition = clamp01(tt / T.ignite);
+      var pulse = 0.72 + Math.sin(tt * 18) * 0.12;
+      for (var ir = 0; ir < 4; ir++) {
+        var phase = (ignition * 1.8 + ir / 4) % 1;
+        var radius = Math.min(gw, gh) * (0.055 + phase * 0.42);
+        ctx.beginPath();
+        ctx.ellipse(cxg, cyg, radius * 1.65, radius, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(ir % 2 ? P.signal : P.cobalt, (1 - phase) * 0.42 * pulse);
+        ctx.lineWidth = P.light ? 1.8 : 1.4;
+        ctx.stroke();
+      }
+      var ignitionGlow = ctx.createRadialGradient(cxg, cyg, 0, cxg, cyg, Math.min(gw, gh) * 0.16);
+      ignitionGlow.addColorStop(0, rgba(P.cobalt, P.light ? 0.18 : 0.24));
+      ignitionGlow.addColorStop(0.45, rgba(P.signal, P.light ? 0.08 : 0.10));
+      ignitionGlow.addColorStop(1, rgba(P.cobalt, 0));
+      ctx.fillStyle = ignitionGlow;
+      ctx.fillRect(gx, gy, gw, gh);
+      ctx.strokeStyle = rgba(P.cobalt, P.light ? 0.46 : 0.34);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cxg - gw * 0.12, cyg); ctx.lineTo(cxg + gw * 0.12, cyg);
+      ctx.moveTo(cxg, cyg - gh * 0.12); ctx.lineTo(cxg, cyg + gh * 0.12);
+      ctx.stroke();
+    }
+
+    // velocity: stars streak radially from the vanishing point (we're moving fwd)
+    var vel = Math.max(0.24, clamp01((tt - T.ignite*0.08)/0.52))
+      * (tt < T.arrive ? 1 : easeOut(clamp01(1-(tt-T.arrive)/0.3)));
+    for (var i=0;i<stars.length;i++){
+      var stt = stars[i];
+      var dx = stt.x - cxg, dy = stt.y - cyg;
+      var len = vel * stt.z * (small?18:30);
+      var d = Math.hypot(dx,dy) || 1;
+      ctx.strokeStyle = rgba(P.node, (P.light?0.35:0.28)+stt.z*0.35);
+      ctx.lineWidth = stt.r*stt.z*0.9;
+      ctx.beginPath(); ctx.moveTo(stt.x, stt.y); ctx.lineTo(stt.x - dx/d*len, stt.y - dy/d*len); ctx.stroke();
+      // move outward
+      stt.x += dx/d * (0.4 + stt.z*1.4) * (vel*4+0.2);
+      stt.y += dy/d * (0.4 + stt.z*1.4) * (vel*4+0.2);
+      if (stt.x<gx||stt.x>gx+gw||stt.y<gy||stt.y>gy+gh){ stt.x=cxg+rand(-gw*0.04,gw*0.04); stt.y=cyg+rand(-gh*0.04,gh*0.04); }
+    }
+
+    // galaxies sweep past during transit (grow + drift outward)
+    for (var gi=0; gi<galaxies.length; gi++){
+      var gl = galaxies[gi];
+      var life = clamp01((tt - gl.at)/1.1);
+      if (life<=0 || life>=1 || tt>T.detect+0.3) continue;
+      var a = Math.sin(life*Math.PI) * 0.9;
+      var off = (gi-1)*gw*0.16;
+      var gxp = cxg + off + Math.cos(gl.seed)*gw*0.05;
+      var gyp = cyg + Math.sin(gl.seed*2)*gh*0.12;
+      var gr = (small?60:110) * (0.4 + life*1.1);
+      drawGalaxy(gxp, gyp, gr, gl.tint, gl.spin + tt*0.2, a, gl.seed);
+    }
+
+    // data signals stream out from vanishing point; captured near edges -> to dash
+    for (var s=0;s<signals.length;s++){
+      var sg = signals[s];
+      var ap = clamp01((tt - sg.appear)/0.5);
+      if (ap<=0 || tt>T.detect+0.2) continue;
+      var prog = clamp01((tt - sg.appear)/0.9);
+      var dd = sg.dist0 + (sg.dist1 - sg.dist0)*easeOut(prog);
+      var sx = cxg + Math.cos(sg.ang)*dd;
+      var sy = cyg + Math.sin(sg.ang)*dd*0.7;
+      var a = ap * (1-clamp01((prog-0.7)/0.3));
+      if (a<=0) continue;
+      sg.spin += 0.08;
+      // signal glyph: small framed diamond
+      ctx.save(); ctx.translate(sx,sy); ctx.rotate(sg.spin); ctx.globalAlpha=a;
+      ctx.strokeStyle = rgba(P.signal, 0.9); ctx.lineWidth=1.3;
+      var r=3.2; ctx.beginPath(); ctx.moveTo(0,-r); ctx.lineTo(r,0); ctx.lineTo(0,r); ctx.lineTo(-r,0); ctx.closePath(); ctx.stroke();
+      ctx.fillStyle=rgba(P.signal,1); ctx.beginPath(); ctx.arc(0,0,1.2,0,Math.PI*2); ctx.fill();
+      ctx.restore(); ctx.globalAlpha=1;
+      // faint capture line toward the dashboard center-bottom
+      if (prog>0.5){
+        ctx.strokeStyle = rgba(P.signal, (prog-0.5)*0.5*a);
+        ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(cxg, gy+gh); ctx.stroke();
+      }
+    }
+
+    // DETECT -> founder planet at vanishing point, storm around it, then approach
+    if (tt >= T.detect - 0.2) {
+      var det = clamp01((tt-(T.detect-0.2))/0.5);
+      var app = clamp01((tt - T.approach)/(T.arrive - T.approach)); // approach growth
+      var organise = clamp01((tt - T.arrive)/0.5);
+      // planet grows as we approach (zoom toward it)
+      var pr = planet.r * (0.5 + det*0.5) * (1 + app*2.2);
+      var px = cxg, py = cyg;
+      // storm ring
+      for (var k=0;k<storm.length;k++){
+        var sd = storm[k];
+        var jx = Math.cos(sd.j + tt*sd.js)*sd.ja*(1-organise);
+        var jy = Math.sin(sd.j + tt*sd.js)*sd.ja*(1-organise);
+        var dd2 = sd.d * (1+app*1.6);
+        var nx = px + Math.cos(sd.a)*dd2 + jx;
+        var ny = py + Math.sin(sd.a)*dd2*0.7 + jy;
+        // links (noisy before arrival, ordered after)
+        if (organise < 0.9 && k%2===0 && k+1<storm.length){
+          var sd2 = storm[k+1];
+          var nx2 = px+Math.cos(sd2.a)*sd2.d*(1+app*1.6), ny2 = py+Math.sin(sd2.a)*sd2.d*0.7*(1+app*1.6);
+          ctx.strokeStyle = rgba(P.node, det*(1-organise)*0.4); ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(nx,ny); ctx.lineTo(nx2,ny2); ctx.stroke();
+        }
+        if (organise>0.1){
+          ctx.strokeStyle = rgba(P.cobalt, organise*0.5); ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(nx,ny); ctx.lineTo(px,py); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.arc(nx,ny,sd.r,0,Math.PI*2);
+        ctx.fillStyle = organise>0.5?rgba(P.node,0.95):rgba(P.node,0.4+det*0.4); ctx.fill();
+      }
+      // planet body
+      var pg = ctx.createRadialGradient(px-pr*0.3, py-pr*0.3, pr*0.1, px, py, pr);
+      pg.addColorStop(0, rgba(P.cobaltSoft, 0.95));
+      pg.addColorStop(0.7, rgba(P.cobalt, 0.9));
+      pg.addColorStop(1, rgba(P.cobalt, 0.2));
+      ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2); ctx.fillStyle=pg; ctx.fill();
+      ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2);
+      ctx.strokeStyle = rgba(P.fg, 0.5*det); ctx.lineWidth=1.5; ctx.stroke();
+      // mint signal core
+      ctx.beginPath(); ctx.arc(px,py,pr*0.32,0,Math.PI*2); ctx.fillStyle=rgba(P.signal, 0.9); ctx.fill();
+
+      // PROTECT: geodesic shield deploys around planet after arrival
+      if (organise>0.05){
+        drawShield(px, py, pr*1.7, organise, tt);
+        // handshake: two dots meet below the planet
+        var meet = clamp01((organise-0.3)/0.5);
+        if (meet>0){
+          var gap = (1-meet)*pr*1.2;
+          var ay = py + pr*1.4;
+          ctx.strokeStyle = rgba(P.fg, 0.7*meet); ctx.lineWidth=1.6;
+          ctx.beginPath(); ctx.moveTo(px-gap-pr*0.1, ay); ctx.lineTo(px-2, ay); ctx.stroke();
+          ctx.strokeStyle = rgba(P.cobalt, 0.8*meet);
+          ctx.beginPath(); ctx.moveTo(px+gap+pr*0.1, ay); ctx.lineTo(px+2, ay); ctx.stroke();
+          ctx.beginPath(); ctx.arc(px-gap-pr*0.1, ay, 2.8, 0, Math.PI*2); ctx.fillStyle=P.signal; ctx.fill();
+          ctx.beginPath(); ctx.arc(px+gap+pr*0.1, ay, 2.8, 0, Math.PI*2); ctx.fillStyle=P.cobaltSoft; ctx.fill();
+        }
+      }
+    }
+
+    ctx.restore(); // end viewport clip
+
+    // ---- COCKPIT FRAME + DASHBOARD over the glass --------------------------
+    ctx.save();
+    ctx.translate(vibX*0.5, vibY*0.5);
+    window.PrunaCockpit.drawFrame(ctx, W, H, vp, P, {});
+    window.PrunaCockpit.drawPanel(ctx, W, H, vp, P, st);
+    ctx.restore();
+
+    // Warm arrival wash — a gentle relief glow across the cabin at the end.
+    if (tt >= T.arrive) {
+      var warm = easeOut(clamp01((tt - T.arrive)/0.5));
+      var wg = ctx.createRadialGradient(W*0.5, vp.y+vp.h*0.5, 0, W*0.5, vp.y+vp.h*0.5, Math.max(W,H)*0.6);
+      wg.addColorStop(0, rgba(P.signal, 0.10*warm));
+      wg.addColorStop(1, rgba(P.signal, 0));
+      ctx.fillStyle = wg; ctx.fillRect(0,0,W,H);
+    }
+  }
+
+  // Geodesic protective shield (bespoke — not code-rain).
+  function drawShield(cx, cy, r, k, tt) {
+    ctx.save();
+    var a = easeOut(k);
+    // boundary ring
+    ctx.strokeStyle = rgba(P.cobalt, 0.6*a); ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+    // spokes + facets
+    var seg = 10;
+    ctx.strokeStyle = rgba(P.cobaltSoft, 0.4*a); ctx.lineWidth=1;
+    for (var i=0;i<seg;i++){
+      var ang = (i/seg)*Math.PI*2 + tt*0.15;
+      var x1 = cx+Math.cos(ang)*r*0.35, y1=cy+Math.sin(ang)*r*0.35;
+      var x2 = cx+Math.cos(ang)*r, y2=cy+Math.sin(ang)*r;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      var ang2=((i+1)/seg)*Math.PI*2 + tt*0.15;
+      ctx.beginPath();
+      ctx.moveTo(x2,y2);
+      ctx.lineTo(cx+Math.cos(ang2)*r, cy+Math.sin(ang2)*r);
+      ctx.stroke();
+      // vertex node
+      ctx.beginPath(); ctx.arc(x2,y2,1.6,0,Math.PI*2); ctx.fillStyle=rgba(P.signal,0.8*a); ctx.fill();
+    }
+    // inner concentric strut
+    ctx.strokeStyle = rgba(P.cobalt, 0.3*a);
+    ctx.beginPath(); ctx.arc(cx,cy,r*0.62,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
   function frame(now) {
     if (!running) return;
-    var tt = (now - startT) / 1000;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Solid ink backdrop (prevents any white flash) with a subtle vignette.
-    ctx.fillStyle = P.ink;
-    ctx.fillRect(0, 0, W, H);
-
-    // Restrained camera shake during ignition + landing impact.
-    var shake = 0;
-    if (tt < T.ignite) shake = (1 - tt / T.ignite) * (small ? 3 : 5);
-    if (shock.active && shock.t < 0.25) shake = (0.25 - shock.t) / 0.25 * (small ? 5 : 9);
-    var shx = 0, shy = 0;
-    if (shake > 0.2) {
-       shx = Math.sin(tt * 90 + shakeSeed) * shake;
-      shy = Math.cos(tt * 77 + shakeSeed) * shake;
-    }
-    ctx.save();
-    ctx.translate(shx, shy);
-
-    // --- Stars / streaks (velocity) -----------------------------------------
-    var speed = clamp01((tt - T.ignite * 0.3) / 0.9) * (tt < T.land ? 1 : easeOut(clamp01(1 - (tt - T.land) / 0.5)));
-    for (var i = 0; i < stars.length; i++) {
-      var st = stars[i];
-      var streak = speed * st.z * (small ? 40 : 70);
-      ctx.strokeStyle = withAlpha(P.node, 0.15 + st.z * 0.35);
-      ctx.lineWidth = st.r * st.z;
-      ctx.beginPath();
-      ctx.moveTo(st.x, st.y);
-      ctx.lineTo(st.x + streak, st.y);
-      ctx.stroke();
-      // drift stars leftward to sell motion, wrap around
-      st.x -= (0.4 + st.z * 1.6) * (speed * 6 + 0.2);
-      if (st.x < -80) st.x = W + Math.random() * 40;
-    }
-
-    // --- Layered universes (sweeping tinted arcs) ---------------------------
-    for (var u2 = 0; u2 < universes.length; u2++) {
-      var uni = universes[u2];
-      var ua = clamp01((tt - uni.at) / 0.7) * clamp01((T.distress + 0.4 - tt) / 0.6);
-      if (ua <= 0) continue;
-      var sweep = easeInOut(clamp01((tt - uni.at) / 1.4));
-      var ux = W * 1.2 - sweep * W * 1.6;
-      var grd = ctx.createRadialGradient(ux, uni.y, 0, ux, uni.y, W * 0.6);
-      grd.addColorStop(0, withAlpha(uni.tint, 0.10 * ua));
-      grd.addColorStop(0.5, withAlpha(uni.tint, 0.04 * ua));
-      grd.addColorStop(1, withAlpha(uni.tint, 0));
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, W, H);
-      // a faint horizon arc per universe
-      ctx.beginPath();
-      ctx.arc(ux, uni.y, W * 0.5, 0, Math.PI * 2);
-      ctx.strokeStyle = withAlpha(uni.tint, 0.18 * ua);
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-    }
-
-    // --- Shuttle + harvested fragments --------------------------------------
-    var pos = shuttlePos(tt);
-    var heading = 0;
-    if (lastShuttle) heading = Math.atan2(pos.y - lastShuttle.y, pos.x - lastShuttle.x);
-    lastShuttle = { x: pos.x, y: pos.y };
-
-    // trail
-    shuttle.trail.push({ x: pos.x, y: pos.y, a: 1 });
-    if (shuttle.trail.length > (small ? 16 : 26)) shuttle.trail.shift();
-
-    // Fragments: appear, then get captured into the trail during harvest.
-    for (var fr = 0; fr < fragments.length; fr++) {
-      var fg = fragments[fr];
-      fg.a = clamp01((tt - fg.appear) / 0.5);
-      if (fg.a <= 0) continue;
-      if (!fg.captured) {
-        var d = Math.hypot(fg.x - pos.x, fg.y - pos.y);
-        if (tt > T.ignite && d < (small ? 90 : 130)) { fg.captured = true; fg.capT = tt; }
-      }
-      if (fg.captured) {
-        // fly toward the shuttle, shrink
-        var cp = easeOut(clamp01((tt - fg.capT) / 0.4));
-        fg.x += (pos.x - fg.x) * cp * 0.5;
-        fg.y += (pos.y - fg.y) * cp * 0.5;
-      }
-      var fa = fg.captured ? (1 - easeOut(clamp01((tt - fg.capT) / 0.5))) : fg.a;
-      if (fa <= 0) continue;
-      ctx.beginPath();
-      ctx.arc(fg.x, fg.y, fg.r, 0, Math.PI * 2);
-      ctx.fillStyle = withAlpha(P.signal, 0.85 * fa);
-      ctx.fill();
-      // tiny cross-tick to read as "data", not just a dot
-      ctx.strokeStyle = withAlpha(P.signal, 0.4 * fa);
-      ctx.lineWidth = 0.8;
-      ctx.beginPath();
-      ctx.moveTo(fg.x - fg.r * 2, fg.y); ctx.lineTo(fg.x + fg.r * 2, fg.y);
-      ctx.stroke();
-    }
-
-    // trail render (mint→cobalt comet)
-    if (tt > T.ignite && tt < T.land + 0.2) {
-      for (var tr = 0; tr < shuttle.trail.length; tr++) {
-        var pt = shuttle.trail[tr];
-        var frac = tr / shuttle.trail.length;
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, (1 - frac) * (small ? 3 : 4.5), 0, Math.PI * 2);
-        ctx.fillStyle = withAlpha(tr < shuttle.trail.length * 0.5 ? P.signal : P.cobaltSoft, frac * 0.5);
-        ctx.fill();
-      }
-    }
-
-    // --- Distress: founder planet in a storm --------------------------------
-    var distressA = clamp01((tt - T.distress) / 0.5);
-    var organise = clamp01((tt - T.land) / 0.8); // 0 chaos -> 1 organised
-    if (distressA > 0) {
-      // storm nodes move from chaos to organised ring after landing
-      for (var sn = 0; sn < stormNodes.length; sn++) {
-        var nd = stormNodes[sn];
-        var jx = Math.cos(nd.jitter + tt * nd.jspeed) * nd.jamp * (1 - organise);
-        var jy = Math.sin(nd.jitter + tt * nd.jspeed) * nd.jamp * (1 - organise);
-        var oe = easeInOut(organise);
-        nd.x = (nd.cx + jx) * (1 - oe) + nd.ox * oe;
-        nd.y = (nd.cy + jy) * (1 - oe) + nd.oy * oe;
-      }
-      // noisy paths fade as things organise
-      var pathA = distressA * (1 - organise) * 0.5;
-      if (pathA > 0.01) {
-        ctx.lineWidth = 1;
-        for (var sp = 0; sp < stormPaths.length; sp++) {
-          var pa = stormPaths[sp];
-          ctx.strokeStyle = withAlpha(P.loose, pathA * pa.w);
-          ctx.beginPath();
-          ctx.moveTo(pa.a.x, pa.a.y);
-          // jagged midpoint = uncertainty
-          var mx2 = (pa.a.x + pa.b.x) / 2 + Math.sin(tt * 3 + sp) * 18 * (1 - organise);
-          var my2 = (pa.a.y + pa.b.y) / 2 + Math.cos(tt * 2.5 + sp) * 18 * (1 - organise);
-          ctx.quadraticCurveTo(mx2, my2, pa.b.x, pa.b.y);
-          ctx.stroke();
-        }
-      }
-      // organised links to core after landing
-      if (organise > 0.05) {
-        ctx.strokeStyle = withAlpha(P.node, organise * 0.5);
-        ctx.lineWidth = 1;
-        for (var sl = 0; sl < stormNodes.length; sl += 2) {
-          ctx.beginPath();
-          ctx.moveTo(stormNodes[sl].x, stormNodes[sl].y);
-          ctx.lineTo(target.x, target.y);
-          ctx.stroke();
-        }
-      }
-      // draw storm nodes
-      for (var dn = 0; dn < stormNodes.length; dn++) {
-        var d2 = stormNodes[dn];
-        ctx.beginPath();
-        ctx.arc(d2.x, d2.y, d2.r, 0, Math.PI * 2);
-        ctx.fillStyle = organise > 0.5 ? withAlpha(P.node, 0.9) : withAlpha(P.loose, distressA);
-        ctx.fill();
-      }
-      // planet ring (before landing) — small, embattled
-      if (tt < T.land + 0.3) {
-        var planetA = distressA * (1 - clamp01((tt - T.land) / 0.3));
-        ctx.beginPath();
-        ctx.arc(planet.x, planet.y, planet.r, 0, Math.PI * 2);
-        ctx.strokeStyle = withAlpha(P.ivory, 0.8 * planetA);
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-    }
-
-    // --- Rescue landing shockwave -------------------------------------------
-    if (tt >= T.land && !shock.active) { shock.active = true; shock.t = 0; announce('landed'); }
-    if (shock.active) {
-      shock.t = tt - T.land;
-      var rings = 3;
-      for (var ri = 0; ri < rings; ri++) {
-        var rt = shock.t - ri * 0.12;
-        if (rt < 0) continue;
-        var rp = easeOut(clamp01(rt / 0.7));
-        var rr2 = rp * Math.min(W, H) * (small ? 0.5 : 0.62);
-        var ra = (1 - rp) * 0.8;
-        ctx.beginPath();
-        ctx.arc(target.x, target.y, rr2, 0, Math.PI * 2);
-        ctx.strokeStyle = withAlpha(ri % 2 ? P.signal : P.cobalt, ra);
-        ctx.lineWidth = (1 - rp) * (small ? 4 : 6) + 0.5;
-        ctx.stroke();
-      }
-    }
-
-    // --- Landing core (hands off to hero core) ------------------------------
-    if (tt >= T.land - 0.1) {
-      var coreGrow = easeOut(clamp01((tt - (T.land - 0.1)) / 0.5));
-      var haloR = target.r * (3.4 + Math.sin(tt * 6) * 0.3) * coreGrow;
-      var halo = ctx.createRadialGradient(target.x, target.y, target.r * 0.4, target.x, target.y, haloR);
-      halo.addColorStop(0, withAlpha(P.cobalt, 0.35 * coreGrow));
-      halo.addColorStop(1, withAlpha(P.cobalt, 0));
-      ctx.beginPath(); ctx.arc(target.x, target.y, haloR, 0, Math.PI * 2);
-      ctx.fillStyle = halo; ctx.fill();
-      // boundary ring
-      ctx.beginPath(); ctx.arc(target.x, target.y, target.r * 1.7 * coreGrow, 0, Math.PI * 2);
-      ctx.strokeStyle = withAlpha(P.cobalt, 0.5 * coreGrow); ctx.lineWidth = 1.4; ctx.stroke();
-      // body + mint centre — identical construction to hero core
-      ctx.beginPath(); ctx.arc(target.x, target.y, target.r * coreGrow, 0, Math.PI * 2);
-      ctx.fillStyle = P.cobalt; ctx.fill();
-      ctx.beginPath(); ctx.arc(target.x, target.y, target.r * 0.42 * coreGrow, 0, Math.PI * 2);
-      ctx.fillStyle = withAlpha(P.signal, 0.9); ctx.fill();
-    }
-
-    // --- Shuttle draw (fades into the core on landing) ----------------------
-    if (tt < T.land + 0.15) {
-      var shScale = (small ? 1.0 : 1.32) * (0.65 + easeOut(clamp01((tt - T.ignite) / 0.55)) * 0.35);
-      var shGlow = clamp01((tt - T.ignite * 0.4) / 0.5);
-      var shFade = 1 - clamp01((tt - (T.land - 0.15)) / 0.3);
-      ctx.globalAlpha = shFade;
-      drawShuttle(pos.x, pos.y, heading, shScale, shGlow);
-      ctx.globalAlpha = 1;
-    }
-
-    ctx.restore(); // shake
-
-    // --- Status announcements (throttled, screen-reader friendly) -----------
-    maybeAnnounce(tt);
-
-    // --- End ----------------------------------------------------------------
+    var tt = (now - startT)/1000;
+    ctx.clearRect(0,0,W,H);
+    render(tt);
     if (tt >= T.done) { finish(); return; }
     rafId = requestAnimationFrame(frame);
   }
 
-  // --- Screen-reader status (concise, not per event) ------------------------
+  // --- SR status ------------------------------------------------------------
   var statusEl = document.getElementById('intro-status');
-  var announced = {};
-  function announce(key) {
-    if (announced[key] || !statusEl) return;
-    announced[key] = true;
-    var lang = document.documentElement.getAttribute('lang') === 'de' ? 'de' : 'en';
-    var msg = {
-      en: { start: 'Intro animation playing. A launch sequence that ends at the homepage.', landed: '' },
-      de: { start: 'Intro-Animation läuft. Eine Startsequenz, die auf der Startseite endet.', landed: '' }
-    };
-    if (msg[lang][key]) statusEl.textContent = msg[lang][key];
+  function announce() {
+    if (!statusEl) return;
+    var de = document.documentElement.getAttribute('lang') === 'de';
+    statusEl.textContent = de
+      ? 'Intro-Animation: Ein Missionsflug aus dem Cockpit, der auf der Startseite ankommt.'
+      : 'Intro animation: a cockpit mission flight that arrives at the homepage.';
   }
-  function maybeAnnounce() { /* single concise status only; visual events not announced */ }
 
   // --- Finish / cleanup -----------------------------------------------------
   function finish() {
     if (finished) return;
-    finished = true;
-    running = false;
+    finished = true; running = false;
     cancelAnimationFrame(rafId);
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
-
-    // Iris/fade handoff: overlay fades out revealing the live hero underneath,
-    // whose core sits exactly where the intro core landed.
     overlay.classList.add('intro--out');
     unlockScroll();
     var onEnd = function () {
@@ -513,92 +432,87 @@
       teardown();
     };
     overlay.addEventListener('transitionend', onEnd, { once: true });
-    // Fallback in case transitionend doesn't fire.
-    setTimeout(onEnd, 1100);
-    // Nudge the hero to (re)start cleanly now that it's visible.
+    setTimeout(onEnd, 1000);
     if (typeof window.__prunaHeroKick === 'function') window.__prunaHeroKick();
   }
-
   function teardown() {
     window.removeEventListener('resize', onResize);
     document.removeEventListener('keydown', onKey);
     if (skipBtn) skipBtn.removeEventListener('click', onSkip);
   }
 
-  // --- Scroll lock ----------------------------------------------------------
-  function lockScroll() { document.documentElement.classList.add('intro-lock'); document.body.classList.add('intro-lock'); }
-  function unlockScroll() { document.documentElement.classList.remove('intro-lock'); document.body.classList.remove('intro-lock'); }
+  function lockScroll(){ document.documentElement.classList.add('intro-lock'); document.body.classList.add('intro-lock'); }
+  function unlockScroll(){ document.documentElement.classList.remove('intro-lock'); document.body.classList.remove('intro-lock'); }
 
-  // --- Controls -------------------------------------------------------------
   var skipBtn = document.getElementById('intro-skip');
-  function onSkip() { finish(); }
-  function onKey(e) { if (e.key === 'Escape') { e.preventDefault(); finish(); } }
+  function onSkip(){ finish(); }
+  function onKey(e){ if (e.key === 'Escape'){ e.preventDefault(); finish(); } }
+  var onResize = function () { resize(); build(); if (!running && !reduceMotion && !finished) render((performance.now()-startT)/1000); };
 
-  var onResize = function () { resize(); buildScene(); };
-
-  // --- Reduced motion: no flight; brief static core then reveal -------------
+  // --- Reduced motion: static protected cabin, then reveal ------------------
   function playReduced() {
-    resize(); buildScene();
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = P.ink; ctx.fillRect(0, 0, W, H);
-    var t2 = coreTarget();
-    var halo = ctx.createRadialGradient(t2.x, t2.y, t2.r * 0.4, t2.x, t2.y, t2.r * 3.4);
-    halo.addColorStop(0, withAlpha(P.cobalt, 0.35));
-    halo.addColorStop(1, withAlpha(P.cobalt, 0));
-    ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.r * 3.4, 0, Math.PI * 2); ctx.fillStyle = halo; ctx.fill();
-    ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.r * 1.7, 0, Math.PI * 2); ctx.strokeStyle = withAlpha(P.cobalt, 0.5); ctx.lineWidth = 1.4; ctx.stroke();
-    ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.r, 0, Math.PI * 2); ctx.fillStyle = P.cobalt; ctx.fill();
-    ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.r * 0.42, 0, Math.PI * 2); ctx.fillStyle = withAlpha(P.signal, 0.9); ctx.fill();
-    announce('start');
-    setTimeout(finish, 460); // under 500ms
+    resize(); build();
+    ctx.clearRect(0,0,W,H);
+    // draw a single calm arrived frame
+    var st = missionState(T.done);
+    // scene
+    ctx.fillStyle = P.frame; ctx.fillRect(0,0,W,H);
+    ctx.save(); window.PrunaCockpit.clipViewport(ctx, vp);
+    var bg = ctx.createRadialGradient(vp.x+vp.w*0.5, vp.y+vp.h*0.5, 0, vp.x+vp.w*0.5, vp.y+vp.h*0.5, Math.max(vp.w,vp.h)*0.7);
+    bg.addColorStop(0, P.bg); bg.addColorStop(1, P.bgDeep);
+    ctx.fillStyle=bg; ctx.fillRect(vp.x,vp.y,vp.w,vp.h);
+    var px=vp.x+vp.w*0.5, py=vp.y+vp.h*0.5, pr=Math.min(vp.w,vp.h)*0.12;
+    var pg = ctx.createRadialGradient(px-pr*0.3,py-pr*0.3,pr*0.1,px,py,pr);
+    pg.addColorStop(0, rgba(P.cobaltSoft,0.95)); pg.addColorStop(0.7,rgba(P.cobalt,0.9)); pg.addColorStop(1,rgba(P.cobalt,0.2));
+    ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2); ctx.fillStyle=pg; ctx.fill();
+    ctx.beginPath(); ctx.arc(px,py,pr*0.32,0,Math.PI*2); ctx.fillStyle=rgba(P.signal,0.9); ctx.fill();
+    drawShield(px,py,pr*1.7,1,0);
+    ctx.restore();
+    window.PrunaCockpit.drawFrame(ctx, W, H, vp, P, {});
+    window.PrunaCockpit.drawPanel(ctx, W, H, vp, P, st);
+    announce();
+    setTimeout(finish, 480);
   }
 
   // --- Play -----------------------------------------------------------------
   function play(opts) {
     opts = opts || {};
-    if (finished && !opts.force) return;
-    // reset state for replay
     finished = false;
-    announced = {};
-    overlay.classList.remove('intro--out', 'intro--hidden');
-    overlay.setAttribute('aria-hidden', 'false');
+    overlay.classList.remove('intro--out','intro--hidden');
+    overlay.setAttribute('aria-hidden','false');
     lockScroll();
-    resize();
-    buildScene();
+    resize(); build();
     document.addEventListener('keydown', onKey);
     if (skipBtn) skipBtn.addEventListener('click', onSkip);
     window.addEventListener('resize', onResize);
 
     if (reduceMotion) { playReduced(); return; }
-    announce('start');
+    announce();
     running = true;
-    lastShuttle = null;
     startT = performance.now();
+    // Paint the first frame synchronously — cabin + live instruments visible now.
+    render(0);
     rafId = requestAnimationFrame(frame);
   }
 
-  // --- Public API -----------------------------------------------------------
   window.PrunaIntro = {
     play: function (o) { play(o || {}); },
     hasPlayed: function () { try { return sessionStorage.getItem(SESSION_KEY) === '1'; } catch (e) { return false; } }
   };
 
-  // --- Auto-run once per session -------------------------------------------
-  var alreadyPlayed = window.PrunaIntro.hasPlayed();
-  if (alreadyPlayed || (prefersData && !reduceMotion)) {
-    // Skip the sequence entirely; make sure nothing is locked or covering.
+  // Auto-run once per session.
+  var already = window.PrunaIntro.hasPlayed();
+  // Never hold the page behind a cinematic for visitors who have requested
+  // reduced motion. The replay control still offers the calm static frame.
+  if (already || reduceMotion || prefersData) {
     overlay.classList.add('intro--hidden');
-    overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('aria-hidden','true');
     unlockScroll();
     finished = true;
   } else {
-    // Lock scroll immediately (before paint) to avoid any jump; the inline
-    // head script already added the lock class, this is a safety net.
     lockScroll();
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () { play(); }, { once: true });
-    } else {
-      play();
-    }
+      document.addEventListener('DOMContentLoaded', function(){ play(); }, { once: true });
+    } else { play(); }
   }
 })();

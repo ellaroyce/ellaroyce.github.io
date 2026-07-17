@@ -92,6 +92,14 @@
   // avoids locking when the intro is skipped. Runs before body paints.
   (function () {
     try {
+      // Apply the saved colour theme BEFORE any paint so the cockpit intro and
+      // the page render in the same theme (no flash, no dark/light mismatch).
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    } catch (e) {}
+    try {
       var played = sessionStorage.getItem('pruna_intro_played') === '1';
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!played && !reduce) {
@@ -461,9 +469,29 @@
 
 </main>
 
+<!-- GSAP + ScrollTrigger (mission snap-scroll). Loaded async with a graceful
+     fallback: if the CDN fails, window.__gsapReady stays false and mission.js
+     falls back to native scrolling. No render depends on GSAP being present. -->
+<script>window.__gsapReady = false;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        onload="window.__gsapCore = !!window.gsap"
+        onerror="window.__gsapCore = false"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+        onload="window.__gsapReady = !!(window.gsap && window.ScrollTrigger)"
+        onerror="window.__gsapReady = false"></script>
+<!-- Lenis smooth scrolling (enhances the scrub-driven cockpit flight). Optional:
+     if it fails to load, native scrolling is used. Disabled on touch + reduced
+     motion inside mission.js. -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"
+        onload="window.__lenisReady = !!(window.Lenis)"
+        onerror="window.__lenisReady = false"></script>
+
 <script src="hero.js" defer></script>
+<script src="shuttle.js" defer></script>
+<script src="cockpit.js" defer></script>
 <script src="intro.js" defer></script>
 <script src="scrollflight.js" defer></script>
+<script src="mission.js" defer></script>
 <script src="script.js" defer></script>
 </body>
 </html>

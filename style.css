@@ -702,3 +702,80 @@ html.intro-arming .intro { display: block; }
 @media (max-width: 720px) {
   .intro__skip { right: 14px; bottom: 14px; }
 }
+
+/* ── Mission progress rail (GSAP ScrollTrigger) ───────────────────────────
+   Fixed, decorative, non-interactive. Transforms/opacity only — no layout,
+   no CLS. Hidden on small screens and for reduced motion. */
+#mission-rail {
+  position: fixed;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  z-index: 4;                 /* below intro overlay + nav, above flight canvas */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 10px;
+  pointer-events: none;       /* never intercepts clicks/scroll */
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+#mission-rail.is-ready { opacity: 1; }
+.mission-rail__track {
+  position: absolute;
+  left: 15px; top: 18px; bottom: 18px;
+  width: 2px;
+  background: color-mix(in srgb, var(--fg) 16%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mission-rail__fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, var(--cobalt), var(--signal));
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}
+.mission-rail__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 12px;
+}
+.mission-rail__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid color-mix(in srgb, var(--fg) 35%, transparent);
+  flex: 0 0 auto;
+  transition: border-color .3s ease, background .3s ease, transform .3s ease;
+}
+.mission-rail__label {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity .3s ease, transform .3s ease, color .3s ease;
+  white-space: nowrap;
+}
+.mission-rail__stage.is-past .mission-rail__dot {
+  border-color: var(--cobalt);
+  background: var(--cobalt);
+}
+.mission-rail__stage.is-active .mission-rail__dot {
+  border-color: var(--signal);
+  background: var(--signal);
+  transform: scale(1.35);
+}
+.mission-rail__stage.is-active .mission-rail__label {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--fg);
+}
+@media (max-width: 900px) { #mission-rail { display: none; } }
+@media (prefers-reduced-motion: reduce) { #mission-rail { display: none; } }

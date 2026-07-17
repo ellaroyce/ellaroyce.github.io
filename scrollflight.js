@@ -37,12 +37,16 @@
   function palette() {
     var c = getComputedStyle(document.documentElement);
     var g = function (n, f) { return (c.getPropertyValue(n).trim() || f); };
+    var light = document.documentElement.getAttribute('data-theme') === 'light';
     return {
-      cobalt: g('--cobalt', '#3f78ff'),
-      cobaltSoft: g('--cobalt-soft', '#6a97ff'),
-      signal: g('--signal', '#b7f24a'),
-      node: g('--viz-node', '#9fb2d4'),
-      ivory: g('--ivory', '#f4efe6'),
+      cobalt: g('--cobalt', light ? '#2151d8' : '#3f78ff'),
+      cobaltSoft: g('--cobalt-soft', light ? '#3f78ff' : '#6a97ff'),
+      signal: g('--signal', light ? '#6ba300' : '#b7f24a'),
+      node: g('--viz-node', light ? '#4a5a7d' : '#9fb2d4'),
+      // fg is theme-adaptive (ink on light, ivory on dark) so lines stay visible
+      fg: g('--fg', light ? '#0c1424' : '#f4efe6'),
+      bg: g('--bg', light ? '#f5f3ec' : '#0c1220'),
+      ivory: g('--fg', light ? '#0c1424' : '#f4efe6'),
       loose: g('--viz-loose', 'rgba(143,166,201,0.55)')
     };
   }
@@ -158,27 +162,20 @@
   }
   function vhClamp(f) { return window.innerHeight * f; }
 
-  // --- Shuttle glyph (identical construction to intro.js) -------------------
+  // --- Shuttle glyph: the same recognizable orbiter used in the intro --------
+  // Always drawn with a contrast plate so it stays legible over alternating
+  // section backgrounds in either theme. Palette is cached per theme.
+  var _spCache = {};
+  function shuttlePal() {
+    var key = document.documentElement.getAttribute('data-theme') || 'dark';
+    if (!_spCache[key]) _spCache[key] = window.PrunaShuttle.palette();
+    return _spCache[key];
+  }
   function drawShuttle(x, y, angle, scale, glow) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-    ctx.scale(scale, scale);
-    var tg = ctx.createLinearGradient(-46, 0, 6, 0);
-    tg.addColorStop(0, withAlpha(P.signal, 0));
-    tg.addColorStop(0.6, withAlpha(P.signal, 0.5 * glow));
-    tg.addColorStop(1, withAlpha(P.cobaltSoft, 0.9 * glow));
-    ctx.beginPath();
-    ctx.moveTo(-44, 0); ctx.lineTo(-6, -7); ctx.lineTo(-6, 7); ctx.closePath();
-    ctx.fillStyle = tg; ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(20, 0); ctx.lineTo(-8, -11); ctx.lineTo(-2, 0); ctx.lineTo(-8, 11); ctx.closePath();
-    ctx.fillStyle = P.ivory; ctx.fill();
-    ctx.beginPath(); ctx.moveTo(20, 0); ctx.lineTo(-2, 0);
-    ctx.strokeStyle = P.cobalt; ctx.lineWidth = 2.2; ctx.stroke();
-    ctx.beginPath(); ctx.arc(4, 0, 3.1, 0, Math.PI * 2);
-    ctx.fillStyle = P.signal; ctx.fill();
-    ctx.restore();
+    if (!window.PrunaShuttle) return;
+    window.PrunaShuttle.draw(ctx, x, y, angle, scale, {
+      palette: shuttlePal(), thrust: 0.45, glow: glow, plate: true
+    });
   }
 
   // --- Checkpoint beats -----------------------------------------------------
@@ -335,7 +332,7 @@
         var ay = py + planetR * 1.35;
         // reaching struts: the arriving signal and founder core both extend
         // toward the same connection point, then remain linked at rest.
-        ctx.strokeStyle = withAlpha(P.ivory, 0.8 * meet);
+        ctx.strokeStyle = withAlpha(P.fg, 0.8 * meet);
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.moveTo(craftX, craftY); ctx.lineTo(lx, ay); ctx.stroke();
         ctx.strokeStyle = withAlpha(P.cobaltSoft, 0.8 * meet);
@@ -363,13 +360,13 @@
         var craftFade = 1 - Math.min(1, Math.max(0, (dock - 0.7) / 0.22));
         ctx.globalAlpha = craftFade;
         var toPlanet = Math.atan2(py - craftY, px - craftX);
-        drawShuttle(craftX, craftY, dock > 0.3 ? toPlanet : heading, small ? 0.75 : 0.95, 1);
+        drawShuttle(craftX, craftY, dock > 0.3 ? toPlanet : heading, small ? 0.5 : 0.62, 1);
         ctx.globalAlpha = 1;
       }
     } else if (showFlight && dock < 0.98) {
       // Normal cruising shuttle along the route.
       var glow = Math.min(1, 0.5 + prog);
-      drawShuttle(pos.x, pos.y, heading, small ? 0.7 : 0.9, glow);
+      drawShuttle(pos.x, pos.y, heading, small ? 0.46 : 0.58, glow);
     }
 
     // Idle pause: stop rAF shortly after motion settles to save battery.
@@ -424,6 +421,7 @@
   // Re-read palette on theme change.
   new MutationObserver(function () {
     P = palette();
+    _spCache = {}; // invalidate cached shuttle palette so hull tracks theme
     if (reduceMotion) drawStaticFinale(); else kick();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
