@@ -80,6 +80,30 @@
 </script>
 </head>
 <body>
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('intro-running');
+  }
+</script>
+
+<div class="intro" aria-hidden="true">
+  <div class="intro__panel intro__panel--top"></div>
+  <div class="intro__panel intro__panel--bottom"></div>
+  <div class="intro__stage">
+    <p class="intro__label">IT architecture · Cybersecurity</p>
+    <div class="intro__name">
+      <span class="intro__word intro__word--pruna">Pruna</span>
+      <span class="intro__word intro__word--secura">Secura</span>
+    </div>
+    <span class="intro__rule"></span>
+    <div class="intro__meta">
+      <span>Munich</span>
+      <span>01 / 04</span>
+      <span>Europe</span>
+    </div>
+  </div>
+</div>
+<noscript><style>.intro{display:none!important}</style></noscript>
 
 <a href="#main" class="skip-link" data-i18n="a11y.skip">Skip to content</a>
 

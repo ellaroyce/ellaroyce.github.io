@@ -1,4 +1,32 @@
 // ---------------------------------------------------------------------------
+// Opening sequence — waits for the portrait, then clears itself completely.
+// ---------------------------------------------------------------------------
+(function () {
+  const root = document.documentElement;
+  const intro = document.querySelector('.intro');
+  if (!intro || !root.classList.contains('intro-running')) {
+    if (intro) intro.remove();
+    return;
+  }
+
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    root.classList.remove('intro-running');
+    root.classList.add('intro-complete');
+    intro.remove();
+  };
+  const play = () => {
+    requestAnimationFrame(() => intro.classList.add('intro--play'));
+    window.setTimeout(finish, 2700);
+  };
+
+  if (document.readyState === 'complete') play();
+  else window.addEventListener('load', play, { once: true });
+})();
+
+// ---------------------------------------------------------------------------
 // Theme toggle — light is the default; a stored choice always wins.
 // ---------------------------------------------------------------------------
 (function () {
