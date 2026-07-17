@@ -77,7 +77,7 @@ const I18N = {
     'rail.1': 'Jahre IT-, Daten- und KI-Plattformen im großen Maßstab geliefert',
     'rail.2': 'Länder, in denen ich geliefert habe',
     'rail.3': 'Tools abgeschaltet und auf eine Handvoll Plattformen zusammengeführt',
-    'rail.4': 'zertifiziert in Enterprise-Architektur & Projektmanagement',
+    'rail.4': 'zertifiziert in Cloud, Engineering und KI',
 
     'work.eyebrow': 'Was meistens brennt',
     'work.title': 'Vier Module, ein System',
@@ -125,6 +125,8 @@ const I18N = {
     'certs.c1': 'Enterprise-Architektur',
     'certs.c2': 'Projektmanagement',
     'certs.c3': 'Moderne Entwicklung',
+    'certs.c5': 'Zertifiziert',
+    'certs.c6': 'Zertifiziert',
     'certs.c4n': 'Doktorandin',
     'certs.c4': 'Angewandte Mathematik',
 
