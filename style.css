@@ -136,27 +136,99 @@ ul, ol { list-style: none; padding: 0; }
   z-index: 1000;
   display: none;
   color: #f4f2ef;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
   overflow: hidden;
+  background: transparent;
 }
 html.intro-running .intro { display: block; }
 .intro__panel {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 50.5%;
+  height: 55%;
   background: #111111;
-  will-change: transform;
+  will-change: transform, clip-path;
+  z-index: 0;
 }
-.intro__panel--top { top: 0; }
-.intro__panel--bottom { bottom: 0; }
+.intro__panel--top {
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+}
+.intro__panel--bottom {
+  bottom: 0;
+  clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
+}
+.intro__grid {
+  position: absolute;
+  inset: clamp(20px, 3vw, 42px);
+  z-index: 2;
+  opacity: .28;
+}
+.intro__grid span {
+  position: absolute;
+  display: block;
+  background: #666;
+  transform-origin: center;
+}
+.intro__grid span:nth-child(1),
+.intro__grid span:nth-child(2) {
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: scaleY(0);
+}
+.intro__grid span:nth-child(1) { left: 25%; }
+.intro__grid span:nth-child(2) { right: 25%; }
+.intro__grid span:nth-child(3),
+.intro__grid span:nth-child(4) {
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+}
+.intro__grid span:nth-child(3) { top: 25%; }
+.intro__grid span:nth-child(4) { bottom: 25%; }
+.intro__portrait {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: min(34vw, 500px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(.86);
+  clip-path: inset(0 50%);
+  opacity: 0;
+  filter: grayscale(100%) contrast(1.1);
+  will-change: transform, clip-path, opacity, filter;
+}
+.intro__portrait picture,
+.intro__portrait img {
+  width: 100%;
+  height: 100%;
+}
+.intro__portrait img { object-fit: cover; }
+.intro__orb {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #b75928;
+  transform: translate(-50%, -50%) scale(0);
+  mix-blend-mode: screen;
+}
 .intro__stage {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 3;
   display: grid;
   grid-template-rows: 1fr auto auto 1fr;
   padding: clamp(28px, 5vw, 72px);
+  mix-blend-mode: difference;
 }
 .intro__label {
   align-self: end;
@@ -180,7 +252,7 @@ html.intro-running .intro { display: block; }
 }
 .intro__word {
   display: block;
-  clip-path: inset(100% 0 0);
+  opacity: 0;
   will-change: clip-path, transform, opacity;
 }
 .intro__rule {
@@ -204,45 +276,103 @@ html.intro-running .intro { display: block; }
   color: #8d8d8d;
   opacity: 0;
 }
+.intro__skip {
+  position: absolute;
+  z-index: 4;
+  right: clamp(28px, 5vw, 72px);
+  bottom: clamp(20px, 3vw, 36px);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #777;
+  opacity: 0;
+}
+.intro.intro--play .intro__grid span:nth-child(1),
+.intro.intro--play .intro__grid span:nth-child(2) {
+  animation: intro-grid-y .75s .08s cubic-bezier(.16,1,.3,1) forwards;
+}
+.intro.intro--play .intro__grid span:nth-child(2) { animation-delay: .2s; }
+.intro.intro--play .intro__grid span:nth-child(3),
+.intro.intro--play .intro__grid span:nth-child(4) {
+  animation: intro-grid-x .85s .18s cubic-bezier(.16,1,.3,1) forwards;
+}
+.intro.intro--play .intro__grid span:nth-child(4) { animation-delay: .3s; }
 .intro.intro--play .intro__label {
-  animation: intro-fade .5s .12s var(--ease) forwards;
+  animation: intro-fade .45s .18s var(--ease) forwards;
 }
-.intro.intro--play .intro__word {
-  animation: intro-word-in .72s .2s var(--ease) forwards;
+.intro.intro--play .intro__word--pruna {
+  animation: intro-word-left .9s .32s cubic-bezier(.16,1,.3,1) forwards;
 }
-.intro.intro--play .intro__word--secura { animation-delay: .3s; }
+.intro.intro--play .intro__word--secura {
+  animation: intro-word-right .9s .43s cubic-bezier(.16,1,.3,1) forwards;
+}
 .intro.intro--play .intro__rule {
-  animation: intro-rule 1s .32s var(--ease) forwards;
+  animation: intro-rule 1.15s .52s var(--ease) forwards;
 }
 .intro.intro--play .intro__meta {
-  animation: intro-fade .45s .7s var(--ease) forwards;
+  animation: intro-fade .45s .92s var(--ease) forwards;
+}
+.intro.intro--play .intro__skip {
+  animation: intro-skip-life 1.55s 1.05s var(--ease) forwards;
+}
+.intro.intro--play .intro__portrait {
+  animation: intro-portrait 2.15s .72s cubic-bezier(.16,1,.3,1) forwards;
+}
+.intro.intro--play .intro__orb {
+  animation: intro-orb 1.25s 1.05s cubic-bezier(.16,1,.3,1) forwards;
+}
+.intro.intro--play .intro__grid {
+  animation: intro-fade-out .35s 2.3s cubic-bezier(.4,0,1,1) forwards;
 }
 .intro.intro--play .intro__stage {
-  animation: intro-stage-out .42s 1.55s cubic-bezier(.4,0,1,1) forwards;
+  animation: intro-stage-out .55s 2.28s cubic-bezier(.4,0,1,1) forwards;
 }
 .intro.intro--play .intro__panel--top {
-  animation: intro-panel-top .86s 1.72s cubic-bezier(.16,1,.3,1) forwards;
+  animation: intro-panel-top 1.05s 2.55s cubic-bezier(.16,1,.3,1) forwards;
 }
 .intro.intro--play .intro__panel--bottom {
-  animation: intro-panel-bottom .86s 1.72s cubic-bezier(.16,1,.3,1) forwards;
+  animation: intro-panel-bottom 1.05s 2.55s cubic-bezier(.16,1,.3,1) forwards;
 }
 
 @keyframes intro-fade { to { opacity: 1; } }
-@keyframes intro-word-in {
-  from { clip-path: inset(100% 0 0); transform: translateY(16%); }
-  to { clip-path: inset(0 0 0); transform: translateY(0); }
+@keyframes intro-fade-out { to { opacity: 0; } }
+@keyframes intro-skip-life {
+  0%, 100% { opacity: 0; }
+  25%, 70% { opacity: 1; }
+}
+@keyframes intro-grid-y { to { transform: scaleY(1); } }
+@keyframes intro-grid-x { to { transform: scaleX(1); } }
+@keyframes intro-word-left {
+  from { opacity: 0; transform: translateX(-32vw) skewX(-7deg); }
+  to { opacity: 1; transform: translateX(0) skewX(0); }
+}
+@keyframes intro-word-right {
+  from { opacity: 0; transform: translateX(32vw) skewX(7deg); }
+  to { opacity: 1; transform: translateX(0) skewX(0); }
 }
 @keyframes intro-rule { to { transform: scaleX(1); } }
-@keyframes intro-stage-out { to { opacity: 0; transform: scale(.985); } }
-@keyframes intro-panel-top { to { transform: translateY(-101%); } }
-@keyframes intro-panel-bottom { to { transform: translateY(101%); } }
+@keyframes intro-portrait {
+  0% { opacity: 0; clip-path: inset(0 50%); transform: translate(-50%, -50%) scale(.86); filter: grayscale(100%) contrast(1.1); }
+  18% { opacity: 1; }
+  55% { opacity: 1; clip-path: inset(0); transform: translate(-50%, -50%) scale(1); filter: grayscale(35%) contrast(1.05); }
+  78% { opacity: 1; clip-path: inset(0); transform: translate(-50%, -50%) scale(1.08); filter: grayscale(0%) contrast(1); }
+  100% { opacity: 0; clip-path: inset(0); transform: translate(-50%, -50%) scale(3.6); filter: grayscale(0%) contrast(1); }
+}
+@keyframes intro-orb {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  55% { transform: translate(-50%, -50%) scale(4); opacity: .9; }
+  100% { transform: translate(-50%, -50%) scale(70); opacity: 0; }
+}
+@keyframes intro-stage-out { to { opacity: 0; transform: scale(1.08); filter: blur(7px); } }
+@keyframes intro-panel-top { to { transform: translate(-8%, -112%) rotate(-3deg); } }
+@keyframes intro-panel-bottom { to { transform: translate(8%, 112%) rotate(-3deg); } }
 @keyframes hero-unmask {
-  from { clip-path: inset(0 0 100% 0); }
+  from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
   to { clip-path: inset(0 0 0 0); }
 }
 html.intro-running .hero__portrait { clip-path: inset(0 0 100% 0); }
 html.intro-complete .hero__portrait {
-  animation: hero-unmask .9s cubic-bezier(.16,1,.3,1) both;
+  animation: hero-unmask 1.05s cubic-bezier(.16,1,.3,1) both;
 }
 
 /* ---- Buttons ------------------------------------------------------------ */
@@ -865,6 +995,7 @@ body:has(.legal) .footer__links a { color: var(--fg); }
 
 @media (max-width: 480px) {
   .intro__stage { padding: 24px 20px; }
+  .intro__portrait { width: min(72vw, 280px); }
   .intro__name {
     flex-direction: column;
     gap: .08em;

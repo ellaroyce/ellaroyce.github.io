@@ -19,8 +19,13 @@
   };
   const play = () => {
     requestAnimationFrame(() => intro.classList.add('intro--play'));
-    window.setTimeout(finish, 2700);
+    window.setTimeout(finish, 3750);
   };
+
+  intro.addEventListener('click', finish);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') finish();
+  }, { once: true });
 
   if (document.readyState === 'complete') play();
   else window.addEventListener('load', play, { once: true });
