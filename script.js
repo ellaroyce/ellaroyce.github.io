@@ -1,45 +1,17 @@
-// ---------------------------------------------------------------------------
-// Opening sequence — waits for the portrait, then clears itself completely.
-// ---------------------------------------------------------------------------
-(function () {
-  const root = document.documentElement;
-  const intro = document.querySelector('.intro');
-  if (!intro || !root.classList.contains('intro-running')) {
-    if (intro) intro.remove();
-    return;
-  }
-
-  let finished = false;
-  const finish = () => {
-    if (finished) return;
-    finished = true;
-    root.classList.remove('intro-running');
-    root.classList.add('intro-complete');
-    intro.remove();
-  };
-  const play = () => {
-    requestAnimationFrame(() => intro.classList.add('intro--play'));
-    window.setTimeout(finish, 3750);
-  };
-
-  intro.addEventListener('click', finish);
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') finish();
-  }, { once: true });
-
-  if (document.readyState === 'complete') play();
-  else window.addEventListener('load', play, { once: true });
-})();
+// ===========================================================================
+// script.js — theme, language, nav, reveals, and small delightful moments.
+// The hero animation lives in hero.js. No cinematic intro overlay.
+// ===========================================================================
 
 // ---------------------------------------------------------------------------
-// Theme toggle — light is the default; a stored choice always wins.
+// Theme toggle — dark is the default; a stored choice always wins.
 // ---------------------------------------------------------------------------
 (function () {
   const btn = document.querySelector('[data-theme-toggle]');
   const root = document.documentElement;
   const STORE = 'theme';
 
-  let theme = 'light';
+  let theme = 'dark';
   try {
     const saved = localStorage.getItem(STORE);
     if (saved === 'light' || saved === 'dark') theme = saved;
@@ -77,57 +49,64 @@
 
 // ---------------------------------------------------------------------------
 // Language switcher (EN / DE) — German is the first-visit default.
+// Copy is founder-to-founder: short, direct, a little playful, never juvenile.
 // ---------------------------------------------------------------------------
 const I18N = {
   de: {
     'a11y.skip': 'Zum Inhalt springen',
 
-    'nav.needs': 'Leistungen',
+    'nav.needs': 'Arbeit',
     'nav.how': 'Ablauf',
     'nav.about': 'Über mich',
     'nav.faq': 'FAQ',
 
-    'hero.eyebrow': 'Unabhängige IT- und Sicherheitsführung',
-    'hero.statement': 'Ich setze die Architektur auf, bringe die Sicherheit in Ordnung und baue das Team, das sie betreibt. Und ich bleibe dabei, bis es trägt.',
-    'hero.role': 'CIO / CISO auf Zeit',
+    'hero.eyebrow': 'Dein CIO / CISO auf Zeit',
+    'hero.l1': 'Komplexe Systeme.',
+    'hero.l2': 'Ruhige Entscheidungen.',
+    'hero.lede': 'Deine IT sollte im besten Sinne langweilig sein: sicher gedacht, verlässlich, wenn es zählt, und angenehm, darauf zu bauen. Ich setze das auf und bringe dein Team dahin, es ohne mich zu betreiben.',
+    'hero.role': 'Sicher von Anfang an',
     'hero.place': 'München · remote in ganz Europa',
-    'hero.cta1': 'Kennenlerngespräch buchen',
-    'hero.cta2': 'Die Arbeit ansehen',
-    'hero.caption': 'Ella Türümina, Gründerin von Pruna Secura',
+    'hero.cta1': '30 Min buchen',
+    'hero.cta2': 'Ansehen, was ich löse',
+    'hero.hint': 'springt zur Buchung',
+    'hero.vizalt': 'Ein animiertes Diagramm aus lose verstreuten Netzwerkknoten, die sich zu geschützten Clustern um einen stabilen Kern zusammenfinden.',
+    'hero.leg1': 'Knoten',
+    'hero.leg2': 'geschützter Cluster',
+    'hero.leg3': 'stabiler Kern',
 
-    'rail.1': 'Jahre Aufbau und Skalierung von IT-, Daten- und KI-Plattformen',
+    'rail.1': 'Jahre IT-, Daten- und KI-Plattformen im großen Maßstab geliefert',
     'rail.2': 'Länder, in denen ich geliefert habe',
-    'rail.3': 'Werkzeuge auf eine Handvoll Plattformen zusammengeführt',
-    'rail.4': 'zertifiziert in Enterprise-Architektur und Projektmanagement',
+    'rail.3': 'Tools abgeschaltet und auf eine Handvoll Plattformen zusammengeführt',
+    'rail.4': 'zertifiziert in Enterprise-Architektur & Projektmanagement',
 
-    'work.eyebrow': 'Was ich mache',
-    'work.title': 'Vier Dinge, die ich für Sie in Ordnung bringe',
-    'work.lede': 'Die meisten kommen mit einem brennenden Thema und wollen am Ende alle vier. Sie hängen zusammen.',
+    'work.eyebrow': 'Was meistens brennt',
+    'work.title': 'Vier Module, ein System',
+    'work.lede': 'Die meisten Gründerinnen und Gründer kommen mit einem brennenden Thema und wollen am Ende alle vier. Sie hängen zusammen, also behandle ich sie als ein System.',
 
     'svc1.h': 'Architektur',
-    'svc1.p': 'Ein klares Zielbild für Ihre Systeme, Cloud und Daten, dann ein Aufräumen des Bestands. Weniger Werkzeuge, klare Verantwortung, eine Architektur, die mit Ihnen wächst statt gegen Sie zu arbeiten.',
-    'svc2.h': 'Sicherheit',
-    'svc2.p': 'Sicherheit in der Größe Ihres Unternehmens, keine Konzern-Checkliste. Ich finde, wo Sie angreifbar sind, schließe die dringenden Lücken zuerst und mache Sie fit für ISO 27001 oder NIS2, ganz ohne Drama.',
+    'svc1.p': 'Ein klares Zielbild für deine Systeme, Cloud und Daten, dann ein Aufräumen des Bestands. Weniger Tools, klare Verantwortung, eine Architektur, die mit dir wächst statt gegen dich zu arbeiten.',
+    'svc2.h': 'Security',
+    'svc2.p': 'Sicherheit in der Größe deines Unternehmens, keine Konzern-Checkliste. Ich finde, wo du angreifbar bist, schließe die dringenden Lücken zuerst und mache dich fit für ISO 27001 oder NIS2, ganz ohne Drama.',
     'svc3.h': 'Team',
-    'svc3.p': 'Werkzeuge betreiben sich nicht von selbst. Ich helfe Ihnen, die richtigen Leute einzustellen, den IT-Alltag aufzusetzen und das Team zu coachen, damit es ohne mich läuft. Klare Rollen, vernünftige Prozesse.',
+    'svc3.p': 'Tools betreiben sich nicht von selbst. Ich helfe dir, die richtigen Leute einzustellen, den IT-Alltag aufzusetzen und das Team zu coachen, damit es ohne mich läuft. Klare Rollen, vernünftige Prozesse.',
     'svc5.h': 'Führung auf Abruf',
-    'svc5.p': 'Erfahrenes Urteil, wenn Sie es brauchen: eine Board-Präsentation zum Gegenprüfen, einen Anbietervertrag zum Lesen, eine schwierige Entscheidung. So viel oder so wenig, wie Sie brauchen.',
+    'svc5.p': 'Erfahrenes Urteil, wenn du es brauchst: ein Board-Deck zum Gegenchecken, ein Anbietervertrag zum Lesen, eine harte Entscheidung. So viel oder so wenig, wie du brauchst.',
 
-    'engage.eyebrow': 'Wie wir zusammenarbeiten',
-    'engage.title': 'Drei Wege hinein, eine Arbeitsweise',
+    'engage.eyebrow': 'So läuft das',
+    'engage.title': 'Drei Wege rein, eine Arbeitsweise',
     'engage.lede': 'Wir legen den Umfang vorab fest, und ich bleibe nah am Team, solange die Arbeit läuft. Keine vage Stundenabrechnung, kein Foliensatz, der an der Tür übergeben wird.',
     'engage.t1l': 'CIO / CISO auf Zeit',
-    'engage.t1d': 'Ein paar Tage im Monat. Ich verantworte Ihre IT- und Sicherheitsrichtung und bleibe nah am Team.',
+    'engage.t1d': 'Ein paar Tage im Monat. Ich verantworte deine IT- und Security-Richtung und bleibe nah am Team.',
     'engage.t2l': 'Projekteinsatz',
-    'engage.t2d': 'Ein klar umrissenes Stück Arbeit: eine Architektur, ein Sicherheitsreview, eine Migration. Fester Umfang, fertig.',
+    'engage.t2d': 'Ein klar umrissenes Stück Arbeit: eine Architektur, ein Security-Review, eine Migration. Fester Umfang, fertig.',
     'engage.t3l': 'Beratung auf Abruf',
-    'engage.t3d': 'Auf Abruf für Board-Präsentationen, Anbietergespräche und die großen Entscheidungen.',
+    'engage.t3d': 'Auf Abruf für Board-Decks, Anbietergespräche und die großen Entscheidungen.',
 
-    'offer.badge': 'Hier starten',
-    'offer.title': 'Ein IT- & Sicherheits-Check',
-    'offer.lede': 'Ein fokussierter Blick auf Ihr Setup: wo die echten Risiken liegen und was zuerst zu beheben ist. Ein entspannter Weg, um zu sehen, wie ich arbeite.',
-    'offer.li1': 'Eine ehrliche Einschätzung Ihrer Architektur und Sicherheit',
-    'offer.li2': 'Die drei Dinge, die sich zuerst zu beheben lohnen, und warum',
+    'offer.badge': 'Fang hier an',
+    'offer.title': 'Ein IT- & Security-Check',
+    'offer.lede': 'Ein fokussierter Blick auf dein Setup: wo die echten Risiken liegen und was zuerst dran ist. Ein entspannter Weg, um zu sehen, wie ich arbeite.',
+    'offer.li1': 'Eine ehrliche Einschätzung deiner Architektur und Security',
+    'offer.li2': 'Die drei Dinge, die sich zuerst lohnen, und warum',
     'offer.li3': 'Eine kurze schriftliche Zusammenfassung zum Handeln oder Weitergeben',
     'offer.m1': 'Format',
     'offer.m1v': 'Halbtags-Review',
@@ -135,12 +114,12 @@ const I18N = {
     'offer.m2v': 'Start-ups & Mittelstand',
     'offer.m3': 'Honorar',
     'offer.m3v': 'Festpreis, vorab vereinbart',
-    'offer.cta': 'Review buchen',
+    'offer.cta': 'Termin buchen',
 
     'about.eyebrow': 'Über mich',
-    'about.title': 'Ich habe das im Konzernmaßstab gemacht. Jetzt mache ich es für Unternehmen Ihrer Größe.',
+    'about.title': 'Ich habe das im Konzernmaßstab gemacht. Jetzt für Unternehmen in deiner Größe.',
     'about.bio': 'Ich habe neun Jahre lang IT-, Daten- und KI-Plattformen in über zehn Ländern aufgebaut und skaliert, zuerst als Enterprise-Architektin, dann als anpackende Leiterin. Ich weiß, wie gut in diesem Maßstab aussieht, und was still und leise kaputtgeht.',
-    'about.bio2': 'Pruna Secura habe ich gegründet, um dieses Urteil zu kleineren Unternehmen zu bringen. Ich habe über 2.500 Werkzeuge auf eine Handvoll strategischer Plattformen zusammengeführt, die Standards für Bau und Sicherheit gesetzt und Teams gecoacht, damit sie die Arbeit nach mir weitertragen. Ich bin anbieterunabhängig und empfehle, was zu Ihnen passt, nicht, was mich bezahlt.',
+    'about.bio2': 'Pruna Secura habe ich gegründet, um dieses Urteil zu kleineren Unternehmen zu bringen. Ich habe über 2.500 Tools auf eine Handvoll strategischer Plattformen zusammengeführt, die Standards für Bau und Sicherheit gesetzt und Teams gecoacht, damit sie die Arbeit nach mir weitertragen. Ich bin anbieterunabhängig und empfehle, was zu dir passt, nicht, was mich bezahlt.',
 
     'evidence.intro': 'Belege',
     'certs.c1': 'Enterprise-Architektur',
@@ -150,33 +129,35 @@ const I18N = {
     'certs.c4': 'Angewandte Mathematik',
 
     'principles.eyebrow': 'Wie ich arbeite',
-    'principles.quote': 'Erfahren genug, um das ganze Feld zu sehen, anpackend genug, um es zu richten. Ich sage Ihnen ehrlich, was wirklich zählt, und übergebe keinen Foliensatz, um dann zu verschwinden.',
-    'principles.p1t': 'Klare Sprache',
-    'principles.p1': 'Kein Fachjargon um seiner selbst willen. Sie wissen immer, was ich tue und warum.',
+    'principles.quote': 'Erfahren genug, um das ganze Feld zu sehen, anpackend genug, um es zu richten. Ich sage dir ehrlich, was wirklich zählt, und übergebe keinen Foliensatz, um dann zu verschwinden.',
+    'principles.p1t': 'Klartext',
+    'principles.p1': 'Kein Fachjargon um seiner selbst willen. Du weißt immer, was ich tue und warum.',
     'principles.p2t': 'Anbieterunabhängig',
-    'principles.p2': 'Ich empfehle, was zu Ihrem Unternehmen passt, nicht, was eine Provision bringt.',
+    'principles.p2': 'Ich empfehle, was zu deinem Unternehmen passt, nicht, was eine Provision bringt.',
     'principles.p3t': 'Auf Übergabe gebaut',
     'principles.p3': 'Das Ziel ist ein Team, das es ohne mich betreibt, keine Abhängigkeit von mir.',
     'principles.refs': 'Referenzen von Kundinnen und Kunden nenne ich gern auf Anfrage, sobald es passt und beide Seiten zugestimmt haben.',
 
-    'faq.eyebrow': 'Bevor Sie schreiben',
-    'faq.title': 'Häufige Fragen',
+    'faq.eyebrow': 'Bevor du schreibst',
+    'faq.title': 'Gute Fragen',
     'faq.q1': 'Wie fangen wir an?',
-    'faq.a1': 'Ein kostenloses Kennenlerngespräch, dann meist ein halbtägiger IT- und Sicherheits-Check. Sie bekommen ein klares Bild und einen Plan, bevor Sie sich auf mehr festlegen.',
-    'faq.q2': 'Arbeiten Sie remote und EU-weit?',
+    'faq.a1': 'Ein kostenloses Intro-Gespräch, dann meist ein halbtägiger IT- und Security-Check. Du bekommst ein klares Bild und einen Plan, bevor du dich auf mehr festlegst.',
+    'faq.q2': 'Arbeitest du remote und EU-weit?',
     'faq.a2': 'Ja. Ich sitze in Deutschland und arbeite mit Unternehmen in ganz Europa. Standardmäßig remote, vor Ort, wenn ein Projekt es braucht.',
-    'faq.q3': 'Sind Sie technisch oder eher Strategin?',
-    'faq.a3': 'Beides. Ich setze die Strategie für Ihr Board und gehe mit Ihren Entwicklern ins Detail. Ich übergebe keinen Foliensatz und verschwinde dann.',
+    'faq.q3': 'Bist du technisch oder eher Strategin?',
+    'faq.a3': 'Beides. Ich setze die Strategie fürs Board und gehe mit deinen Entwicklern ins Detail. Ich übergebe keinen Foliensatz und verschwinde dann.',
     'faq.q4': 'Wir sind klein. Brauchen wir das überhaupt?',
-    'faq.a4': 'Wenn Ihre Technik oder Sicherheit Sie ausbremst oder nachts wachhält, dann ja. Sie bekommen erfahrenes Urteil in der Größe, die zu Ihnen passt, ohne Vollzeitstelle.',
+    'faq.a4': 'Wenn deine Technik oder Security dich ausbremst oder nachts wachhält, dann ja. Du bekommst erfahrenes Urteil in der Größe, die zu dir passt, ohne Vollzeitstelle.',
     'faq.q5': 'Wie funktioniert die Preisgestaltung?',
     'faq.a5': 'Ein einfacher Umfang, vorab festgelegt: ein einmaliges Review, ein Projekt mit festem Umfang oder ein paar Tage im Monat. Keine Überraschungen, keine vage Stundenabrechnung.',
 
-    'contact.eyebrow': 'Sprechen wir',
-    'contact.title': 'Bringen wir Ihre Technik in Ordnung.',
-    'contact.lede': 'Architektur, die Sie ausbremst, Sicherheit, die Sie nachts wachhält, oder einfach jemand Erfahrenes zum Durchdenken? Melden Sie sich.',
+    'contact.eyebrow': 'Sag Hallo',
+    'contact.title': 'Bringen wir deine Technik in Ordnung.',
+    'contact.lede': 'Architektur, die dich ausbremst, Security, die dich nachts wachhält, oder einfach jemand Erfahrenes zum Durchdenken? Schnapp dir einen Termin.',
+    'contact.cta': '30 Min buchen',
+    'contact.ctanote': 'Kostenlos, kein Pitch, klare Antworten.',
     'trust.nda': 'Alles, worüber wir sprechen, bleibt vertraulich. NDA auf Wunsch.',
-    'trust.eu': 'Ansässig in Deutschland. Ihre Daten bleiben in der EU.',
+    'trust.eu': 'Ansässig in Deutschland. Deine Daten bleiben in der EU.',
 
     'footer.copy': '© 2026 Pruna Secura · München, Deutschland',
     'footer.tag': 'IT-Architektur, Cybersicherheit & Teams für Start-ups und den Mittelstand',
@@ -206,17 +187,17 @@ const I18N = {
 
     'ds.h1': 'Datenschutzerklärung',
     'ds.intro.h': '1. Datenschutz auf einen Blick',
-    'ds.intro.p': 'Der Schutz Ihrer persönlichen Daten ist mir wichtig. Ich verarbeite Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TDDDG). Diese Erklärung informiert Sie über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten auf dieser Website.',
+    'ds.intro.p': 'Der Schutz deiner persönlichen Daten ist mir wichtig. Ich verarbeite deine Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TDDDG). Diese Erklärung informiert dich über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten auf dieser Website.',
     'ds.ctrl.h': '2. Verantwortliche Stelle',
     'ds.ctrl.p': 'Verantwortlich für die Datenverarbeitung auf dieser Website ist:',
     'ds.host.h': '3. Hosting',
-    'ds.host.p': 'Diese Website wird bei GitHub Pages gehostet, einem Dienst der GitHub, Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). GitHub kann beim Aufruf der Seite technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit) in Server-Logfiles erfassen. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und zuverlässigen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Für die Übermittlung in die USA stützt sich GitHub auf Standardvertragsklauseln. Weitere Informationen finden Sie in der Datenschutzerklärung von GitHub.',
+    'ds.host.p': 'Diese Website wird bei GitHub Pages gehostet, einem Dienst der GitHub, Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). GitHub kann beim Aufruf der Seite technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit) in Server-Logfiles erfassen. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und zuverlässigen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Für die Übermittlung in die USA stützt sich GitHub auf Standardvertragsklauseln. Weitere Informationen findest du in der Datenschutzerklärung von GitHub.',
     'ds.contactdata.h': '4. Kontaktaufnahme',
-    'ds.contactdata.p': 'Wenn Sie mich per E-Mail oder Telefon kontaktieren, werden Ihre Angaben zur Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) bzw. lit. f (berechtigtes Interesse an der Beantwortung). Ich gebe diese Daten nicht ohne Ihre Einwilligung weiter und lösche sie, sobald sie für den Zweck nicht mehr erforderlich sind.',
+    'ds.contactdata.p': 'Wenn du mich per E-Mail oder Telefon kontaktierst, werden deine Angaben zur Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) bzw. lit. f (berechtigtes Interesse an der Beantwortung). Ich gebe diese Daten nicht ohne deine Einwilligung weiter und lösche sie, sobald sie für den Zweck nicht mehr erforderlich sind.',
     'ds.storage.h': '5. Lokale Speicherung im Browser',
-    'ds.storage.p': 'Diese Website setzt keine Tracking-Cookies ein. Zur Speicherung Ihrer bevorzugten Sprache und des Farbschemas wird der lokale Speicher Ihres Browsers (localStorage) verwendet. Diese Daten verbleiben auf Ihrem Gerät, werden nicht an mich übertragen und können jederzeit über die Einstellungen Ihres Browsers gelöscht werden.',
-    'ds.rights.h': '6. Ihre Rechte',
-    'ds.rights.p': 'Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten. Zudem steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu. Wenden Sie sich dazu an die oben genannten Kontaktdaten.',
+    'ds.storage.p': 'Diese Website setzt keine Tracking-Cookies ein. Zur Speicherung deiner bevorzugten Sprache und des Farbschemas wird der lokale Speicher deines Browsers (localStorage) verwendet. Diese Daten verbleiben auf deinem Gerät, werden nicht an mich übertragen und können jederzeit über die Einstellungen deines Browsers gelöscht werden.',
+    'ds.rights.h': '6. Deine Rechte',
+    'ds.rights.p': 'Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung deiner personenbezogenen Daten. Zudem steht dir ein Beschwerderecht bei einer Aufsichtsbehörde zu. Wende dich dazu an die oben genannten Kontaktdaten.',
     'ds.updated': 'Stand: Juli 2026'
   }
 };
@@ -305,3 +286,90 @@ const I18N = {
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(e => io.observe(e));
 })();
+
+// ---------------------------------------------------------------------------
+// Count-up for proof stats — numbers assemble themselves, matching the
+// "loose things self-organise into something solid" idea of the hero.
+// ---------------------------------------------------------------------------
+(function () {
+  const nums = document.querySelectorAll('.stat__num[data-count]');
+  if (!nums.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  const fmt = (n) => n.toLocaleString(window.__lang === 'de' ? 'de-DE' : 'en-US');
+  const run = (el) => {
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const dur = 900;
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * eased)) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(target) + suffix;
+    };
+    requestAnimationFrame(step);
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  nums.forEach((n) => io.observe(n));
+})();
+
+// ---------------------------------------------------------------------------
+// Easter egg 1 — the "/" key focuses the intro CTA, like a command palette.
+// A tiny nod to product-culture keyboard shortcuts. Non-blocking, a11y-safe.
+// ---------------------------------------------------------------------------
+(function () {
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    const cta = document.querySelector('.hero__actions .btn--primary');
+    if (cta) {
+      e.preventDefault();
+      cta.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      cta.focus({ preventScroll: true });
+      cta.classList.add('btn--ping');
+      setTimeout(() => cta.classList.remove('btn--ping'), 700);
+    }
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Easter egg 2 — click the logo mark 3× quickly and the system "recalibrates":
+// the hero core sends a burst of signals. Purely delightful, discoverable,
+// and skipped entirely under reduced motion.
+// ---------------------------------------------------------------------------
+(function () {
+  const brand = document.querySelector('.nav__brand');
+  if (!brand) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let clicks = 0, timer = null;
+  brand.addEventListener('click', () => {
+    clicks++;
+    clearTimeout(timer);
+    timer = setTimeout(() => { clicks = 0; }, 600);
+    if (clicks >= 3) {
+      clicks = 0;
+      if (!reduce && typeof window.__prunaBurst === 'function') window.__prunaBurst();
+      const logo = brand.querySelector('.nav__logo');
+      if (logo && !reduce) {
+        logo.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+        logo.style.transform = 'rotate(360deg)';
+        setTimeout(() => { logo.style.transform = ''; }, 640);
+      }
+    }
+  });
+})();
+
+// Console note for the curious founder who opens dev tools.
+try {
+  // eslint-disable-next-line no-console
+  console.log('%cPruna Secura', 'font:700 20px system-ui;color:#3f78ff', '\nSecure by design. Reliable in operation. Book a slot: https://cal.com/ask-ella/30min');
+} catch (e) {}
