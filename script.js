@@ -150,9 +150,49 @@ const I18N = {
     'contact.lede': 'Architektur, die Sie ausbremst, Sicherheit, die Sie nachts wachhält, oder einfach jemand Erfahrenes zum Durchdenken? Rufen Sie an.',
     'contact.cta1': 'Kostenloses Kennenlerngespräch →',
     'contact.cta2': 'Schreiben Sie mir',
+    'trust.nda': 'Alles, worüber wir sprechen, bleibt vertraulich. NDA auf Wunsch.',
+    'trust.eu': 'Ansässig in Deutschland. Ihre Daten bleiben in der EU.',
 
     'footer.copy': '© 2026 Pruna Secura · München, Deutschland',
-    'footer.tag': 'IT-Architektur, Cybersicherheit & Teams für Start-ups und den Mittelstand'
+    'footer.tag': 'IT-Architektur, Cybersicherheit & Teams für Start-ups und den Mittelstand',
+    'footer.imprint': 'Impressum',
+    'footer.privacy': 'Datenschutz',
+
+    'legal.back': '← Zurück zur Startseite',
+
+    'imp.title': 'Impressum',
+    'imp.h1': 'Angaben gemäß § 5 DDG',
+    'imp.provider': 'Diensteanbieterin',
+    'imp.addr.label': 'Anschrift',
+    'imp.contact.label': 'Kontakt',
+    'imp.contact.phone': 'Telefon:',
+    'imp.contact.email': 'E-Mail:',
+    'imp.vat.h': 'Umsatzsteuer',
+    'imp.vat.p': 'Als Kleinunternehmerin im Sinne von § 19 UStG wird keine Umsatzsteuer ausgewiesen.',
+    'imp.resp.h': 'Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV',
+    'imp.disp.h': 'Streitschlichtung',
+    'imp.disp.p': 'Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr. Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.',
+    'imp.liability.h': 'Haftung für Inhalte',
+    'imp.liability.p': 'Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Als Diensteanbieterin bin ich für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.',
+    'imp.links.h': 'Haftung für Links',
+    'imp.links.p': 'Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für diese fremden Inhalte kann ich keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets die jeweilige Anbieterin oder der jeweilige Betreiber verantwortlich.',
+    'imp.copy.h': 'Urheberrecht',
+    'imp.copy.p': 'Die durch die Betreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.',
+
+    'ds.h1': 'Datenschutzerklärung',
+    'ds.intro.h': '1. Datenschutz auf einen Blick',
+    'ds.intro.p': 'Der Schutz Ihrer persönlichen Daten ist mir wichtig. Ich verarbeite Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TDDDG). Diese Erklärung informiert Sie über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten auf dieser Website.',
+    'ds.ctrl.h': '2. Verantwortliche Stelle',
+    'ds.ctrl.p': 'Verantwortlich für die Datenverarbeitung auf dieser Website ist:',
+    'ds.host.h': '3. Hosting',
+    'ds.host.p': 'Diese Website wird bei GitHub Pages gehostet, einem Dienst der GitHub, Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). GitHub kann beim Aufruf der Seite technische Zugriffsdaten (z. B. IP-Adresse, Datum und Uhrzeit) in Server-Logfiles erfassen. Rechtsgrundlage ist das berechtigte Interesse an einer sicheren und zuverlässigen Bereitstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Für die Übermittlung in die USA stützt sich GitHub auf Standardvertragsklauseln. Weitere Informationen finden Sie in der Datenschutzerklärung von GitHub.',
+    'ds.contactdata.h': '4. Kontaktaufnahme',
+    'ds.contactdata.p': 'Wenn Sie mich per E-Mail oder Telefon kontaktieren, werden Ihre Angaben zur Bearbeitung der Anfrage und für den Fall von Anschlussfragen gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) bzw. lit. f (berechtigtes Interesse an der Beantwortung). Ich gebe diese Daten nicht ohne Ihre Einwilligung weiter und lösche sie, sobald sie für den Zweck nicht mehr erforderlich sind.',
+    'ds.storage.h': '5. Lokale Speicherung im Browser',
+    'ds.storage.p': 'Diese Website setzt keine Tracking-Cookies ein. Zur Speicherung Ihrer bevorzugten Sprache und des Farbschemas wird der lokale Speicher Ihres Browsers (localStorage) verwendet. Diese Daten verbleiben auf Ihrem Gerät, werden nicht an mich übertragen und können jederzeit über die Einstellungen Ihres Browsers gelöscht werden.',
+    'ds.rights.h': '6. Ihre Rechte',
+    'ds.rights.p': 'Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten. Zudem steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu. Wenden Sie sich dazu an die oben genannten Kontaktdaten.',
+    'ds.updated': 'Stand: Juli 2026'
   }
 };
 
