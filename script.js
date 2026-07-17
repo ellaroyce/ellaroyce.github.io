@@ -104,6 +104,7 @@ const I18N = {
     'engage.t2d': 'Ein klar umrissenes Stück Arbeit: eine Architektur, ein Security-Review, eine Migration. Fester Umfang, fertig.',
     'engage.t3l': 'Beratung auf Abruf',
     'engage.t3d': 'Auf Abruf für Board-Decks, Anbietergespräche und die großen Entscheidungen.',
+    'engage.body': 'Wir legen den Umfang vorab fest. Ich bleibe nah an deinem Team, bis die Arbeit erledigt ist. Keine vage Stundenabrechnung. Ich übergebe dir keinen Foliensatz und verschwinde dann.',
 
     'offer.badge': 'Fang hier an',
     'offer.title': 'Ein IT- & Security-Check',
