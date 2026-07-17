@@ -96,8 +96,8 @@ const I18N = {
     'svc5.p': 'Erfahrenes Urteil, wenn du es brauchst: ein Board-Deck zum Gegenchecken, ein Anbietervertrag zum Lesen, eine harte Entscheidung. So viel oder so wenig, wie du brauchst.',
 
     'engage.eyebrow': 'So läuft das',
-    'engage.title': 'Drei Wege rein, eine Arbeitsweise',
-    'engage.lede': 'Wir legen den Umfang vorab fest, und ich bleibe nah am Team, solange die Arbeit läuft. Keine vage Stundenabrechnung, kein Foliensatz, der an der Tür übergeben wird.',
+    'engage.title': 'Wähle, was du brauchst.',
+    'engage.lede': 'Ein paar Tage im Monat, ein klares Projekt oder eine erfahrene zweite Meinung. Klarer Umfang. Saubere Übergabe.',
     'engage.t1l': 'CIO / CISO auf Zeit',
     'engage.t1d': 'Ein paar Tage im Monat. Ich verantworte deine IT- und Security-Richtung und bleibe nah am Team.',
     'engage.t2l': 'Projekteinsatz',
@@ -120,7 +120,7 @@ const I18N = {
     'offer.cta': 'Termin buchen',
 
     'about.eyebrow': 'Über mich',
-    'about.title': 'Ich habe das im Konzernmaßstab gemacht. Jetzt für Unternehmen in deiner Größe.',
+    'about.title': 'Ich weiß, was im großen Maßstab bricht. Ich repariere es, bevor du dort ankommst.',
     'about.bio': 'Ich habe neun Jahre lang IT-, Daten- und KI-Plattformen in über zehn Ländern aufgebaut und skaliert, zuerst als Enterprise-Architektin, dann als anpackende Leiterin. Ich weiß, wie gut in diesem Maßstab aussieht, und was still und leise kaputtgeht.',
     'about.bio2': 'Pruna Secura habe ich gegründet, um dieses Urteil zu kleineren Unternehmen zu bringen. Ich habe über 2.500 Tools auf eine Handvoll strategischer Plattformen zusammengeführt, die Standards für Bau und Sicherheit gesetzt und Teams gecoacht, damit sie die Arbeit nach mir weitertragen. Ich bin anbieterunabhängig und empfehle, was zu dir passt, nicht, was mich bezahlt.',
 
