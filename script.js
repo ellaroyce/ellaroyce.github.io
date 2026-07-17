@@ -117,6 +117,13 @@ const I18N = {
     'creds.l2': 'Anpackende Umsetzung, nicht nur Foliensätze',
     'creds.l3': 'Anbieterunabhängige Beratung',
 
+    'certs.intro': 'Zertifiziert & qualifiziert',
+    'certs.c1': 'Enterprise-Architektur',
+    'certs.c2': 'Projektmanagement',
+    'certs.c3': 'Moderne Entwicklung',
+    'certs.c4n': 'Doktorandin',
+    'certs.c4': 'Angewandte Mathematik',
+
     'whyme.eyebrow': 'Warum mit mir',
     'whyme.title': 'Erfahren genug, um das ganze Feld zu sehen, anpackend genug, um es zu richten.',
     'whyme.lede': 'Die meisten, die Sie engagieren können, sind entweder Strategen, die die Tastatur nicht anfassen, oder Umsetzer, denen man sagen muss, was zu bauen ist. Ich mache beides und sage Ihnen ehrlich, was wirklich zählt.',
@@ -142,6 +149,7 @@ const I18N = {
     'contact.title': 'Bringen wir Ihre Technik <span class="accent">in Ordnung.</span>',
     'contact.lede': 'Architektur, die Sie ausbremst, Sicherheit, die Sie nachts wachhält, oder einfach jemand Erfahrenes zum Durchdenken? Rufen Sie an.',
     'contact.cta1': 'Kostenloses Kennenlerngespräch →',
+    'contact.cta2': 'Schreiben Sie mir',
 
     'footer.copy': '© 2026 Pruna Secura · München, Deutschland',
     'footer.tag': 'IT-Architektur, Cybersicherheit & Teams für Start-ups und den Mittelstand'

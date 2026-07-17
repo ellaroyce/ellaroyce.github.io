@@ -384,9 +384,19 @@ a,button{transition:color var(--transition-interactive),background var(--transit
 .faq__item[open] summary::after{transform:rotate(45deg)}
 .faq__item p{padding:0 var(--space-6) var(--space-5);font-size:var(--text-sm);color:var(--color-text-muted);max-width:62ch}
 
+/* Certifications row */
+.certs{margin-top:var(--space-6);padding:var(--space-8);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
+.certs__intro{font-size:var(--text-xs);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-faint);margin-bottom:var(--space-5)}
+.certs__row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);list-style:none}
+.cert{display:flex;flex-direction:column;gap:.25rem;padding-left:1rem;border-left:2px solid var(--color-primary)}
+.cert__name{font-weight:700;font-size:var(--text-base);color:var(--color-text)}
+.cert__desc{font-size:var(--text-sm);color:var(--color-text-muted)}
+
 /* Contact + footer additions */
 .contact__actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;margin-top:var(--space-4)}
 .footer__links{display:flex;gap:var(--space-5)}
+.footer__email{color:var(--color-text-muted)}
+.footer__email:hover{color:var(--color-primary)}
 .footer__links a{color:var(--color-text-muted)}
 .footer__links a:hover{color:var(--color-primary)}
 
@@ -398,6 +408,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
   .whynow__grid{grid-template-columns:1fr}
   .services__list{grid-template-columns:1fr}
   .creds ul{grid-template-columns:repeat(2,1fr)}
+  .certs__row{grid-template-columns:repeat(2,1fr);gap:var(--space-5)}
   .about__grid{grid-template-columns:1fr;gap:var(--space-10)}
   .about__media{order:-1;margin-inline:auto}
   .funnel__stage{padding:var(--space-4) var(--space-5)}
@@ -437,7 +448,7 @@ a,button{transition:color var(--transition-interactive),background var(--transit
   .nav__mobile-only{display:block}
   .nav__link-icon{display:none}
   .nav__cta{padding-top:var(--space-4)!important}
-  .usp__grid,.engage__grid,.proof__grid,.creds ul{grid-template-columns:1fr}
+  .usp__grid,.engage__grid,.proof__grid,.creds ul,.certs__row{grid-template-columns:1fr}
   .hero__stats{gap:var(--space-6)}
   .footer__inner{flex-direction:column;align-items:flex-start}
 }
