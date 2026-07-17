@@ -1,6 +1,6 @@
 // ===========================================================================
 // script.js — theme, language, nav, reveals, and small delightful moments.
-// The hero animation lives in hero.js. No cinematic intro overlay.
+// The hero animation lives in hero.js; intro.js hands off to it after launch.
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
@@ -69,6 +69,9 @@ const I18N = {
     'hero.cta1': '30 Min buchen',
     'hero.cta2': 'Ansehen, was ich löse',
     'hero.hint': 'springt zur Buchung',
+
+    'intro.skip': 'Intro überspringen',
+    'intro.replay': 'Startsequenz wiederholen',
     'hero.vizalt': 'Ein animiertes Diagramm aus lose verstreuten Netzwerkknoten, die sich zu geschützten Clustern um einen stabilen Kern zusammenfinden.',
     'hero.leg1': 'Knoten',
     'hero.leg2': 'geschützter Cluster',
@@ -366,6 +369,21 @@ const I18N = {
         logo.style.transform = 'rotate(360deg)';
         setTimeout(() => { logo.style.transform = ''; }, 640);
       }
+    }
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// Replay launch — re-run the cinematic intro on demand. Works even after the
+// session flag is set. Under reduced motion PrunaIntro plays its brief static
+// frame instead of a flight.
+// ---------------------------------------------------------------------------
+(function () {
+  const btn = document.getElementById('intro-replay');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    if (window.PrunaIntro && typeof window.PrunaIntro.play === 'function') {
+      window.PrunaIntro.play({ force: true });
     }
   });
 })();

@@ -627,3 +627,78 @@ html[data-theme="light"] .contact { background: #0c1424; color: #f4efe6; }
   .evidence__desc { text-align: left; }
   .nav__wordmark { display: none; }
 }
+
+/* =========================================================================
+   Cinematic launch intro + persistent scroll-flight layer
+   ========================================================================= */
+
+/* Pre-paint scroll lock (added on <html> by the head guard, and by JS). */
+html.intro-lock, body.intro-lock { overflow: hidden !important; height: 100%; }
+html.intro-lock { touch-action: none; }
+
+/* Intro overlay: hidden by default (so no-JS / noscript never sees it),
+   revealed only when the head guard arms it for a fresh session. */
+.intro {
+  position: fixed; inset: 0; z-index: 2000;
+  display: none;
+  background: var(--ink);
+  opacity: 1;
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Armed for this session -> show. JS also toggles via classes below. */
+html.intro-arming .intro { display: block; }
+
+.intro__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Iris/fade out on completion — fade only (no white flash: background is ink,
+   and the live hero sits directly beneath with a matching core position). */
+.intro.intro--out { opacity: 0; pointer-events: none; }
+.intro.intro--hidden { display: none !important; }
+
+/* Always-visible, accessible skip control. */
+.intro__skip {
+  position: absolute; z-index: 2;
+  right: clamp(16px, 4vw, 40px); bottom: clamp(16px, 4vw, 40px);
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ivory);
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ivory) 40%, transparent);
+  border-radius: 999px; padding: 0.7rem 1.15rem; min-height: 44px;
+  cursor: pointer; backdrop-filter: blur(6px);
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.15s var(--ease);
+}
+.intro__skip:hover { border-color: var(--signal); transform: translateY(-1px); }
+.intro__skip:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+/* Persistent scroll-flight layer: full-viewport, never intercepts input,
+   sits above the page background but below the nav and all interactive UI. */
+.flight-canvas {
+  position: fixed; inset: 0; z-index: 5;
+  width: 100%; height: 100%;
+  pointer-events: none;   /* never steals clicks/scroll */
+  display: block;
+}
+
+/* Discreet replay control in the hero hint area. */
+.hero__replay-wrap { margin-top: 0.5rem; }
+.hero__replay {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: 0.04em; color: var(--fg-faint);
+  background: none; border: 0; padding: 0.25rem 0; cursor: pointer;
+  border-bottom: 1px dotted color-mix(in srgb, var(--fg-faint) 60%, transparent);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.hero__replay:hover { color: var(--cobalt); border-color: var(--cobalt); }
+.hero__replay:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; border-radius: 3px; }
+
+/* Reduced motion: keep the replay control (it plays a static frame) but the
+   intro layer never runs a flight. The scroll-flight paints a static finale. */
+@media (prefers-reduced-motion: reduce) {
+  .intro { transition: opacity 0.2s linear; }
+}
+
+/* Mobile: the scroll-flight route is simplified in JS; keep the layer light. */
+@media (max-width: 720px) {
+  .intro__skip { right: 14px; bottom: 14px; }
+}

@@ -503,6 +503,15 @@
   // Easter egg hook: triple-click the logo (see script.js) fires a burst of
   // signals toward the core — the system "recalibrating". No-op under reduced
   // motion or when the hero is paused off-screen.
+  // Handoff hook: the intro calls this the moment its overlay fades so the hero
+  // replays its formation from a clean state, making the landed intro core flow
+  // straight into the living-systems core. No-op under reduced motion.
+  window.__prunaHeroKick = function () {
+    if (reduceMotion) { drawStatic(); return; }
+    restart();
+    if (!running) { running = true; raf = requestAnimationFrame(frame); }
+  };
+
   window.__prunaBurst = function () {
     if (reduceMotion || !running || !links.length) return;
     const n = 7;

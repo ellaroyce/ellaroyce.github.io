@@ -86,8 +86,34 @@
   }
 }
 </script>
+<script>
+  // Pre-paint intro guard: lock scroll only if the intro will actually play
+  // (first visit this session AND motion not reduced). Prevents scroll jump and
+  // avoids locking when the intro is skipped. Runs before body paints.
+  (function () {
+    try {
+      var played = sessionStorage.getItem('pruna_intro_played') === '1';
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!played && !reduce) {
+        document.documentElement.className += ' intro-lock intro-arming';
+      } else {
+        document.documentElement.className += ' intro-skip-initial';
+      }
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
+
+<!-- Cinematic launch intro (plays once per session; skipped under reduced motion) -->
+<div id="intro" class="intro" role="dialog" aria-label="Intro animation" aria-modal="true">
+  <canvas id="intro-canvas" class="intro__canvas" aria-hidden="true"></canvas>
+  <p id="intro-status" class="sr-only" role="status" aria-live="polite"></p>
+  <button type="button" id="intro-skip" class="intro__skip" data-i18n="intro.skip">Skip intro</button>
+</div>
+
+<!-- Persistent scroll-flight layer: same shuttle journeys down the page (decorative, no pointer events) -->
+<canvas id="flight-canvas" class="flight-canvas" aria-hidden="true"></canvas>
 
 <a href="#main" class="skip-link" data-i18n="a11y.skip">Skip to content</a>
 
@@ -158,6 +184,9 @@
         <a href="#work" class="btn btn--ghost" data-i18n="hero.cta2">See what I fix</a>
       </div>
       <p class="hero__hint reveal" aria-hidden="true"><kbd>/</kbd> <span data-i18n="hero.hint">to jump to booking</span></p>
+      <p class="hero__replay-wrap reveal">
+        <button type="button" id="intro-replay" class="hero__replay" data-i18n="intro.replay">Replay launch</button>
+      </p>
     </div>
 
     <ul class="hero__legend reveal" aria-hidden="true">
@@ -433,6 +462,8 @@
 </main>
 
 <script src="hero.js" defer></script>
+<script src="intro.js" defer></script>
+<script src="scrollflight.js" defer></script>
 <script src="script.js" defer></script>
 </body>
 </html>
