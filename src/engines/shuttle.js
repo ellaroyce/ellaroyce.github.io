@@ -10,13 +10,11 @@
 // on either the dark navy or the warm-ivory light background. A contrast plate
 // keeps it legible over alternating section backgrounds.
 //
-// window.PrunaShuttle (name kept for API compatibility):
+// export const Shuttle:
 //   .palette()
 //   .draw(ctx, x, y, angle, scale, opts)   opts:{thrust,glow,plate,palette}
 // Rocket points along +X (angle 0 = flying right). Reference length ~120px.
 // ===========================================================================
-(function () {
-  'use strict';
 
   function toRgb(c) {
     c = (c || '').trim();
@@ -159,5 +157,4 @@
     ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
     ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 
-  window.PrunaShuttle = { palette: palette, draw: draw, _rgba: rgba, _mix: mix };
-})();
+export const Shuttle = { palette: palette, draw: draw, _rgba: rgba, _mix: mix };
