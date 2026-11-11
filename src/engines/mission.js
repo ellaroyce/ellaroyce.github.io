@@ -49,13 +49,42 @@ export function mountMission(opts) {
   var useLenis = !reduceMotion && !coarse;
 
   var stageProgress = []; // progress value (0..1) of each stage's scroll position
+  var lastRefreshAt = 0;  // time of the last ScrollTrigger refresh
 
   // Snap config tuned to feel premium, not like scroll-jacking. Snaps to the
   // array of stage progress values; ScrollTrigger only fires this AFTER the
   // user stops scrolling (that's its native behaviour), with our low delay.
+  // Directional snap against the *current* stage positions. ScrollTrigger reads
+  // a snap array only once, when the trigger is created, so an array would go
+  // stale as soon as the layout changes (language switch, fonts, resize) and
+  // the page would then settle beside a section instead of on it. A function
+  // is called on every snap and always sees fresh values.
+  function snapToStage(value, self) {
+    var pts = stageProgress.slice().sort(function (a, b) { return a - b; });
+    if (!pts.length) return value;
+    // Like ScrollTrigger's built-in directional snap: right after a refresh
+    // the direction is meaningless, so settle on the nearest stage instead.
+    var dir = Date.now() - lastRefreshAt < 500 ? 0 : (self && self.direction) || 0;
+    var eps = 0.001;
+    var i;
+    if (dir > 0) {
+      for (i = 0; i < pts.length; i++) if (pts[i] >= value - eps) return pts[i];
+      return pts[pts.length - 1];
+    }
+    if (dir < 0) {
+      for (i = pts.length - 1; i >= 0; i--) if (pts[i] <= value + eps) return pts[i];
+      return pts[0];
+    }
+    var best = pts[0];
+    for (i = 1; i < pts.length; i++) {
+      if (Math.abs(pts[i] - value) < Math.abs(best - value)) best = pts[i];
+    }
+    return best;
+  }
+
   function snapConfig() {
     return {
-      snapTo: stageProgress.slice(),
+      snapTo: snapToStage,
       duration: { min: 0.25, max: 0.6 }, // moderate, never a long lurch
       delay: 0.06,                       // fire shortly after scrolling settles
       ease: 'power2.inOut',
@@ -127,7 +156,7 @@ export function mountMission(opts) {
 
   function onRefreshInit() {
     computeStageProgress();
-    if (st) st.vars.snap = snapConfig();
+    lastRefreshAt = Date.now();
   }
 
   function build() {
@@ -177,7 +206,7 @@ export function mountMission(opts) {
     // Show the rail now that ScrollTrigger is active.
     if (onReady) onReady(true);
 
-    // Recompute stage positions + refresh snap array on every refresh.
+    // Recompute stage positions on every refresh.
     ScrollTrigger.addEventListener('refreshInit', onRefreshInit);
     ScrollTrigger.refresh();
   }
