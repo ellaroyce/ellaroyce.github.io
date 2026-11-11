@@ -25,10 +25,38 @@ const UA =
 
 const exists = (p) => access(p).then(() => true, () => false);
 
+// Only ever talk to Fontshare, and only over HTTPS.
+function assertFontshare(url) {
+  const { protocol, hostname } = new URL(url);
+  if (protocol !== 'https:' || !(hostname === 'fontshare.com' || hostname.endsWith('.fontshare.com'))) {
+    throw new Error(`Refusing to download from an unexpected address: ${url}`);
+  }
+}
+
+// The Fontshare API occasionally answers 502; retry a few times before failing.
+const ATTEMPTS = 5;
+
 async function get(url, as) {
-  const res = await fetch(url, { headers: { 'user-agent': UA } });
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-  return as === 'text' ? res.text() : Buffer.from(await res.arrayBuffer());
+  assertFontshare(url);
+  let lastError;
+  for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'user-agent': UA },
+        redirect: 'error',
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+      return as === 'text' ? await res.text() : Buffer.from(await res.arrayBuffer());
+    } catch (err) {
+      lastError = err;
+      if (attempt < ATTEMPTS) {
+        console.log(`fonts: attempt ${attempt} failed (${err.message}), retrying`);
+        await new Promise((r) => setTimeout(r, attempt * 2000));
+      }
+    }
+  }
+  throw lastError;
 }
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -57,6 +85,11 @@ async function main() {
     const style = /font-style:\s*([^;]+)/.exec(block)?.[1]?.trim() ?? 'normal';
     const woff2 = /url\(['"]?([^'")]+)['"]?\)\s*format\(['"]woff2['"]\)/.exec(block)?.[1];
     if (!family || !woff2) throw new Error(`Unexpected @font-face rule:\n${block}`);
+    // These values are written into our own stylesheet, so accept nothing but
+    // plain names, numeric weights and the two known styles.
+    if (!/^[A-Za-z0-9 ]{1,40}$/.test(family) || !/^\d{3}( \d{3})?$/.test(weight) || !/^(normal|italic)$/.test(style)) {
+      throw new Error(`Unexpected @font-face values: ${family} / ${weight} / ${style}`);
+    }
 
     const file = `${slug(family)}-${slug(weight)}${style === 'normal' ? '' : '-' + slug(style)}.woff2`;
     const url = woff2.startsWith('//') ? `https:${woff2}` : woff2;
