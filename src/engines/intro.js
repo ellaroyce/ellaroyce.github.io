@@ -16,15 +16,18 @@
 // The first frame paints synchronously: the cabin + live instruments are
 // visible within ~100ms. No blank open, no freeze.
 //
-// window.PrunaIntro.play({force}) / .hasPlayed()
+// React port: `createIntro` receives the overlay + canvas elements rendered by
+// <Intro/> and callbacks for the "played this session" flag, the screen-reader
+// status text and the hand-off to the hero. Returns { play, skip, destroy }.
 // ===========================================================================
-(function () {
-  'use strict';
+import { Cockpit } from './cockpit.js';
 
-  var SESSION_KEY = 'pruna_intro_played';
-  var overlay = document.getElementById('intro');
-  var canvas = document.getElementById('intro-canvas');
-  if (!overlay || !canvas || !canvas.getContext || !window.PrunaCockpit) { unlockScroll(); return; }
+export function createIntro(opts) {
+  var overlay = opts.overlay, canvas = opts.canvas, statusEl = opts.statusEl;
+  var hasPlayed = opts.hasPlayed, markPlayed = opts.markPlayed;
+  var getStatus = opts.getStatus, onHandoff = opts.onHandoff;
+  var destroyed = false;
+  if (!overlay || !canvas || !canvas.getContext) { unlockScroll(); return null; }
 
   var ctx = canvas.getContext('2d', { alpha: true });
   var _arc = ctx.arc.bind(ctx);
@@ -36,10 +39,10 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var prefersData = window.matchMedia('(prefers-reduced-data: reduce)').matches;
-  function rgba(c, a) { return window.PrunaCockpit._rgba(c, a); }
+  function rgba(c, a) { return Cockpit._rgba(c, a); }
 
   var P;
-  function refreshPalette() { P = window.PrunaCockpit.palette(); }
+  function refreshPalette() { P = Cockpit.palette(); }
   refreshPalette();
 
   // --- Sizing ---------------------------------------------------------------
@@ -53,7 +56,7 @@
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    vp = window.PrunaCockpit.viewport(W, H, small);
+    vp = Cockpit.viewport(W, H, small);
   }
 
   // --- Timeline (seconds) ---------------------------------------------------
@@ -196,14 +199,14 @@
     // ---- SPACE SCENE inside the viewport glass ----------------------------
     ctx.save();
     ctx.translate(vibX, vibY);
-    window.PrunaCockpit.clipViewport(ctx, vp);
+    Cockpit.clipViewport(ctx, vp);
 
     var gx=vp.x, gy=vp.y, gw=vp.w, gh=vp.h;
     var cxg = gx+gw*0.5, cyg = gy+gh*0.5;
 
     // deep-space backdrop
     var bg = ctx.createRadialGradient(cxg, cyg, 0, cxg, cyg, Math.max(gw,gh)*0.7);
-    bg.addColorStop(0, P.light ? window.PrunaCockpit._mix(P.bg,'#ffffff',0.12) : P.bg);
+    bg.addColorStop(0, P.light ? Cockpit._mix(P.bg,'#ffffff',0.12) : P.bg);
     bg.addColorStop(1, P.bgDeep);
     ctx.fillStyle = bg;
     ctx.fillRect(gx, gy, gw, gh);
@@ -356,8 +359,8 @@
     // ---- COCKPIT FRAME + DASHBOARD over the glass --------------------------
     ctx.save();
     ctx.translate(vibX*0.5, vibY*0.5);
-    window.PrunaCockpit.drawFrame(ctx, W, H, vp, P, {});
-    window.PrunaCockpit.drawPanel(ctx, W, H, vp, P, st);
+    Cockpit.drawFrame(ctx, W, H, vp, P, {});
+    Cockpit.drawPanel(ctx, W, H, vp, P, st);
     ctx.restore();
 
     // Warm arrival wash — a gentle relief glow across the cabin at the end.
@@ -409,21 +412,16 @@
   }
 
   // --- SR status ------------------------------------------------------------
-  var statusEl = document.getElementById('intro-status');
   function announce() {
-    if (!statusEl) return;
-    var de = document.documentElement.getAttribute('lang') === 'de';
-    statusEl.textContent = de
-      ? 'Intro-Animation: Ein Missionsflug aus dem Cockpit, der auf der Startseite ankommt.'
-      : 'Intro animation: a cockpit mission flight that arrives at the homepage.';
+    if (statusEl && getStatus) statusEl.textContent = getStatus();
   }
 
   // --- Finish / cleanup -----------------------------------------------------
   function finish() {
-    if (finished) return;
+    if (finished || destroyed) return;
     finished = true; running = false;
     cancelAnimationFrame(rafId);
-    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+    if (markPlayed) markPlayed();
     overlay.classList.add('intro--out');
     unlockScroll();
     var onEnd = function () {
@@ -433,19 +431,16 @@
     };
     overlay.addEventListener('transitionend', onEnd, { once: true });
     setTimeout(onEnd, 1000);
-    if (typeof window.__prunaHeroKick === 'function') window.__prunaHeroKick();
+    if (onHandoff) onHandoff();
   }
   function teardown() {
     window.removeEventListener('resize', onResize);
     document.removeEventListener('keydown', onKey);
-    if (skipBtn) skipBtn.removeEventListener('click', onSkip);
   }
 
   function lockScroll(){ document.documentElement.classList.add('intro-lock'); document.body.classList.add('intro-lock'); }
   function unlockScroll(){ document.documentElement.classList.remove('intro-lock'); document.body.classList.remove('intro-lock'); }
 
-  var skipBtn = document.getElementById('intro-skip');
-  function onSkip(){ finish(); }
   function onKey(e){ if (e.key === 'Escape'){ e.preventDefault(); finish(); } }
   var onResize = function () { resize(); build(); if (!running && !reduceMotion && !finished) render((performance.now()-startT)/1000); };
 
@@ -457,7 +452,7 @@
     var st = missionState(T.done);
     // scene
     ctx.fillStyle = P.frame; ctx.fillRect(0,0,W,H);
-    ctx.save(); window.PrunaCockpit.clipViewport(ctx, vp);
+    ctx.save(); Cockpit.clipViewport(ctx, vp);
     var bg = ctx.createRadialGradient(vp.x+vp.w*0.5, vp.y+vp.h*0.5, 0, vp.x+vp.w*0.5, vp.y+vp.h*0.5, Math.max(vp.w,vp.h)*0.7);
     bg.addColorStop(0, P.bg); bg.addColorStop(1, P.bgDeep);
     ctx.fillStyle=bg; ctx.fillRect(vp.x,vp.y,vp.w,vp.h);
@@ -468,8 +463,8 @@
     ctx.beginPath(); ctx.arc(px,py,pr*0.32,0,Math.PI*2); ctx.fillStyle=rgba(P.signal,0.9); ctx.fill();
     drawShield(px,py,pr*1.7,1,0);
     ctx.restore();
-    window.PrunaCockpit.drawFrame(ctx, W, H, vp, P, {});
-    window.PrunaCockpit.drawPanel(ctx, W, H, vp, P, st);
+    Cockpit.drawFrame(ctx, W, H, vp, P, {});
+    Cockpit.drawPanel(ctx, W, H, vp, P, st);
     announce();
     setTimeout(finish, 480);
   }
@@ -478,12 +473,15 @@
   function play(opts) {
     opts = opts || {};
     finished = false;
+    // The overlay is display:none until <html> is armed. The head guard only arms
+    // it for a fresh session, so arm it here too or a replay would lock scroll
+    // behind an invisible overlay.
+    document.documentElement.classList.add('intro-arming');
     overlay.classList.remove('intro--out','intro--hidden');
     overlay.setAttribute('aria-hidden','false');
     lockScroll();
     resize(); build();
     document.addEventListener('keydown', onKey);
-    if (skipBtn) skipBtn.addEventListener('click', onSkip);
     window.addEventListener('resize', onResize);
 
     if (reduceMotion) { playReduced(); return; }
@@ -495,13 +493,8 @@
     rafId = requestAnimationFrame(frame);
   }
 
-  window.PrunaIntro = {
-    play: function (o) { play(o || {}); },
-    hasPlayed: function () { try { return sessionStorage.getItem(SESSION_KEY) === '1'; } catch (e) { return false; } }
-  };
-
   // Auto-run once per session.
-  var already = window.PrunaIntro.hasPlayed();
+  var already = hasPlayed ? hasPlayed() : false;
   // Never hold the page behind a cinematic for visitors who have requested
   // reduced motion. The replay control still offers the calm static frame.
   if (already || reduceMotion || prefersData) {
@@ -511,8 +504,15 @@
     finished = true;
   } else {
     lockScroll();
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function(){ play(); }, { once: true });
-    } else { play(); }
+    play();
   }
-})();
+
+  function destroy() {
+    destroyed = true; running = false;
+    cancelAnimationFrame(rafId);
+    teardown();
+    unlockScroll();
+  }
+
+  return { play: function (o) { play(o || {}); }, skip: finish, destroy: destroy };
+}

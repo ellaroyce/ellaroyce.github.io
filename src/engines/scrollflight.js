@@ -17,11 +17,12 @@
 //   - offscreen / hidden-tab pause; DPR capped; mobile simplified;
 //   - prefers-reduced-motion -> static protected-planet at the finale, no flight.
 // ===========================================================================
-(function () {
-  'use strict';
+import { Shuttle } from './shuttle.js';
 
-  var canvas = document.getElementById('flight-canvas');
-  if (!canvas || !canvas.getContext) return;
+// React port: `mountFlight` owns the fixed canvas rendered by <FlightCanvas/>
+// and returns { refresh, destroy }.
+export function mountFlight(canvas) {
+  if (!canvas || !canvas.getContext) return null;
   var ctx = canvas.getContext('2d', { alpha: true });
 
   // Defensive radius clamp.
@@ -173,12 +174,12 @@
   var _spCache = {};
   function shuttlePal() {
     var key = document.documentElement.getAttribute('data-theme') || 'dark';
-    if (!_spCache[key]) _spCache[key] = window.PrunaShuttle.palette();
+    if (!_spCache[key]) _spCache[key] = Shuttle.palette();
     return _spCache[key];
   }
   function drawShuttle(x, y, angle, scale, glow) {
-    if (!window.PrunaShuttle) return;
-    window.PrunaShuttle.draw(ctx, x, y, angle, scale, {
+    if (!Shuttle) return;
+    Shuttle.draw(ctx, x, y, angle, scale, {
       palette: shuttlePal(), thrust: 0.45, glow: glow, plate: true
     });
   }
@@ -408,45 +409,51 @@
 
   // --- Events ---------------------------------------------------------------
   var rz;
-  window.addEventListener('resize', function () {
+  function onResize() {
     clearTimeout(rz);
     rz = setTimeout(function () { resize(); if (reduceMotion) drawStaticFinale(); else kick(); }, 150);
-  });
-  window.addEventListener('scroll', function () {
+  }
+  function onScroll() {
     if (reduceMotion) { drawStaticFinale(); return; }
     readScroll();
-  }, { passive: true });
-
-  document.addEventListener('visibilitychange', function () {
+  }
+  function onVisibility() {
     hidden = document.hidden;
     if (hidden) { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
     else if (!reduceMotion) { readScroll(); }
-  });
+  }
+  // Recompute the route when layout settles or changes (fonts, language switch).
+  function refresh() { buildRoute(); if (reduceMotion) drawStaticFinale(); else readScroll(); }
+
+  window.addEventListener('resize', onResize);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('load', refresh);
 
   // Re-read palette on theme change.
-  new MutationObserver(function () {
+  var themeObserver = new MutationObserver(function () {
     P = palette();
     _spCache = {}; // invalidate cached shuttle palette so hull tracks theme
     if (reduceMotion) drawStaticFinale(); else kick();
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   // --- Init -----------------------------------------------------------------
-  function init() {
-    resize();
-    if (reduceMotion) { drawStaticFinale(); return; }
-    readScroll();
-    kick();
+  resize();
+  if (reduceMotion) drawStaticFinale();
+  else { readScroll(); kick(); }
+
+  function destroy() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    clearTimeout(rz);
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('scroll', onScroll);
+    document.removeEventListener('visibilitychange', onVisibility);
+    window.removeEventListener('load', refresh);
+    themeObserver.disconnect();
+    ctx.clearRect(0, 0, W, H);
   }
 
-  // The scroll layer should wake up regardless of whether the intro plays. If
-  // the intro is running it will keep the layer effectively idle until scroll.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
-
-  // Recompute route once everything (fonts/images) settles — guards against
-  // late layout shifts changing section offsets.
-  window.addEventListener('load', function () { buildRoute(); if (reduceMotion) drawStaticFinale(); });
-})();
+  return { refresh: refresh, destroy: destroy };
+}

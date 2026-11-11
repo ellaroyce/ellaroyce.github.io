@@ -9,12 +9,13 @@
 // Design intent: sophisticated and alive, not a particle wallpaper and not a
 // cybersecurity cliche. Structure over noise — every node belongs to a
 // cluster, every cluster orbits the core, every link can carry a signal.
+//
+// React port: the engine is framework-agnostic. `mountHero` owns one canvas
+// and returns { kick, burst, destroy } so the component that renders the
+// canvas can hand off from the intro, fire the logo easter egg, and clean up.
 // ===========================================================================
-(function () {
-  'use strict';
-
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas || !canvas.getContext) return;
+export function mountHero(canvas, heroSection) {
+  if (!canvas || !canvas.getContext) return null;
 
   const ctx = canvas.getContext('2d', { alpha: true });
 
@@ -467,10 +468,11 @@
 
   // Debounced resize
   let rz;
-  window.addEventListener('resize', () => {
+  const onResize = () => {
     clearTimeout(rz);
     rz = setTimeout(restart, 180);
-  });
+  };
+  window.addEventListener('resize', onResize);
 
   // Pointer only when motion allowed (and desktop-ish; touch still gets a nudge)
   if (!reduceMotion) {
@@ -481,9 +483,9 @@
   }
 
   // Pause when the hero scrolls out of view to save battery.
-  const heroSection = document.getElementById('hero');
+  let io = null;
   if ('IntersectionObserver' in window && heroSection && !reduceMotion) {
-    const io = new IntersectionObserver((entries) => {
+    io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
         if (en.isIntersecting) {
           if (!running) { running = true; t0 = performance.now() - 3000; lastEmit = 0; raf = requestAnimationFrame(frame); }
@@ -500,30 +502,40 @@
   const themeObserver = new MutationObserver(() => { palette = readPalette(); if (reduceMotion) drawStatic(); });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Easter egg hook: triple-click the logo (see script.js) fires a burst of
+  // Easter egg hook: triple-click the logo (see Nav.tsx) fires a burst of
   // signals toward the core — the system "recalibrating". No-op under reduced
   // motion or when the hero is paused off-screen.
   // Handoff hook: the intro calls this the moment its overlay fades so the hero
   // replays its formation from a clean state, making the landed intro core flow
   // straight into the living-systems core. No-op under reduced motion.
-  window.__prunaHeroKick = function () {
+  function kick() {
     if (reduceMotion) { drawStatic(); return; }
     restart();
     if (!running) { running = true; raf = requestAnimationFrame(frame); }
-  };
+  }
 
-  window.__prunaBurst = function () {
+  function burst() {
     if (reduceMotion || !running || !links.length) return;
     const n = 7;
     for (let i = 0; i < n; i++) {
       setTimeout(() => { if (running) emitSignal(); }, i * 70);
     }
     core.pulse = 1;
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, { once: true });
-  } else {
-    start();
   }
-})();
+
+  function destroy() {
+    running = false;
+    cancelAnimationFrame(raf);
+    clearTimeout(rz);
+    window.removeEventListener('resize', onResize);
+    canvas.removeEventListener('pointermove', onMove);
+    canvas.removeEventListener('pointerleave', onLeave);
+    canvas.removeEventListener('touchmove', onMove);
+    canvas.removeEventListener('touchend', onLeave);
+    if (io) io.disconnect();
+    themeObserver.disconnect();
+  }
+
+  start();
+  return { kick, burst, destroy };
+}

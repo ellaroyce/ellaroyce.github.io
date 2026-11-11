@@ -16,7 +16,7 @@
 // every element has strong contrast on both the dark cabin and the light
 // daylight control-cabin.
 //
-// window.PrunaCockpit:
+// export const Cockpit:
 //   .palette()                            -> theme-derived colours
 //   .viewport(W,H,small)                  -> {x,y,w,h,r} inner glass rect (a
 //                                            clip region for the space scene)
@@ -27,8 +27,6 @@
 //                 heading:-1..1, bearing:-1..1, lock:0..1, mission:"text",
 //                 shake:px, warn:0..1, protect:0..1 }
 // ===========================================================================
-(function () {
-  'use strict';
 
   function toRgb(c) {
     c = (c || '').trim();
@@ -343,8 +341,7 @@
     ctx.restore();
   }
 
-  window.PrunaCockpit = {
-    palette: palette, viewport: viewport, clipViewport: clipViewport,
-    drawFrame: drawFrame, drawPanel: drawPanel, _rgba: rgba, _mix: mix, _rr: rr
-  };
-})();
+export const Cockpit = {
+  palette: palette, viewport: viewport, clipViewport: clipViewport,
+  drawFrame: drawFrame, drawPanel: drawPanel, _rgba: rgba, _mix: mix, _rr: rr
+};

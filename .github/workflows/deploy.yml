@@ -1,0 +1,57 @@
+# Builds the React site and publishes dist/ to GitHub Pages.
+#
+# One-time setup: Repository settings -> Pages -> Build and deployment ->
+# Source: "GitHub Actions". The custom domain (public/CNAME) is kept.
+#
+# Security notes:
+# - Runs only for pushes to main and manual runs, never for pull requests, so
+#   code from forks cannot trigger it.
+# - The workflow token has no permissions by default. The build job may only
+#   read the repository; only the deploy job may publish to Pages. Neither job
+#   can push code, change settings or read secrets (the workflow uses none).
+# - Actions are pinned to exact commits, so a moved tag cannot swap their code.
+# - Dependencies install from package-lock.json with integrity checks and
+#   without running package install scripts.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -1,0 +1,32 @@
+{
+  "name": "prunasecura-site",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Pruna Secura website (React + Vite, prerendered for GitHub Pages)",
+  "scripts": {
+    "fonts": "node scripts/fetch-fonts.mjs",
+    "dev": "npm run fonts && vite",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run fonts && tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build:preview": "VITE_PERSIST=false npm run build",
+    "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "dependencies": {
+    "gsap": "3.12.5",
+    "lenis": "1.1.13",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}

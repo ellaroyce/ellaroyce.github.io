@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-ssr/
+# Webfonts are downloaded from Fontshare at build time (scripts/fetch-fonts.mjs)
+src/fonts/
+*.log
+.DS_Store

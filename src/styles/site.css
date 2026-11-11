@@ -400,7 +400,8 @@ p { text-wrap: pretty; }
   font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1;
   letter-spacing: -0.02em; color: var(--fg);
 }
-.stat__num--text { font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--cobalt-soft); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0; }
+.stat__num--text { font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--cobalt-soft); font-family: var(--font-mono); font-weight: 500; letter-spacing: 0; }
+.stat__issuer { white-space: nowrap; }
 .stat__label {
   display: block; margin-top: 0.9rem;
   font-size: var(--text-sm); line-height: 1.4; color: var(--fg-mute); max-width: 24ch;
@@ -570,8 +571,18 @@ html[data-theme="light"] .contact { background: #0c1424; color: #f4efe6; }
 .legal strong { color: var(--fg); }
 
 /* ---- Reveal motion ------------------------------------------------------ */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); will-change: opacity, transform; }
-.reveal.in { opacity: 1; transform: none; }
+/* Content is only hidden for the reveal when scripting is available (the head
+   guard adds .js to <html>). Without JavaScript the prerendered page is fully
+   visible. :where() keeps the specificity of the original .reveal rules. */
+.reveal { transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+:where(html.js) .reveal { opacity: 0; transform: translateY(18px); will-change: opacity, transform; }
+:where(html.js) .reveal.in { opacity: 1; transform: none; }
+
+/* The prerendered markup is English. For visitors who get German, keep the page
+   hidden for the few milliseconds until React has swapped the copy, so no
+   English text flashes. The intro overlay stays visible (minus its label). */
+html.lang-pending #root > :not(.intro),
+html.lang-pending .intro__skip { visibility: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; transition: none; }
