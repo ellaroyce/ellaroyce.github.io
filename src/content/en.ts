@@ -84,6 +84,7 @@ export const en = {
   "certs.c3": "Modern engineering",
   "certs.c5": "Certified",
   "certs.c6": "Certified",
+  "certs.c7": "Certified",
   "certs.c4n": "PhD candidate",
   "certs.c4": "Applied mathematics",
 

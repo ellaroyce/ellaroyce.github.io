@@ -86,6 +86,7 @@ export const de: Copy = {
   "certs.c3": "Moderne Entwicklung",
   "certs.c5": "Zertifiziert",
   "certs.c6": "Zertifiziert",
+  "certs.c7": "Zertifiziert",
   "certs.c4n": "Doktorandin",
   "certs.c4": "Angewandte Mathematik",
 

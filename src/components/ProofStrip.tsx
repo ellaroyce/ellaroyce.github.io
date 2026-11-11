@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import type { CopyKey } from '../content/en';
 import { usePrefs } from '../lib/PrefsContext';
 import { prefersReducedMotion } from '../lib/site';
@@ -9,6 +9,10 @@ const STATS: Array<{ count: number; label: CopyKey }> = [
   { count: 10, label: 'rail.2' },
   { count: 2500, label: 'rail.3' },
 ];
+
+// Who issued the certifications shown in the last stat. Each name stays on
+// one line together with its separator dot.
+const ISSUERS = ['MIT', 'Google', 'GitHub', 'Anthropic'];
 
 const COUNT_MS = 900;
 
@@ -63,7 +67,14 @@ export function ProofStrip() {
           </Reveal>
         ))}
         <Reveal className="stat">
-          <span className="stat__num stat__num--text">Google · GitHub · Anthropic</span>
+          <span className="stat__num stat__num--text">
+            {ISSUERS.map((name, i) => (
+              <Fragment key={name}>
+                <span className="stat__issuer">{name}{i < ISSUERS.length - 1 ? '\u00a0·' : ''}</span>
+                {i < ISSUERS.length - 1 ? ' ' : null}
+              </Fragment>
+            ))}
+          </span>
           <span className="stat__label">{t('rail.4')}</span>
         </Reveal>
       </div>

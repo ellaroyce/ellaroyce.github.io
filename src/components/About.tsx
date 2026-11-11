@@ -8,6 +8,7 @@ const EVIDENCE: Array<{ name?: string; nameKey?: CopyKey; desc: CopyKey }> = [
   { name: 'ArchiMate', desc: 'certs.c1' },
   { name: 'IPMA', desc: 'certs.c2' },
   { name: 'GitHub Foundations', desc: 'certs.c3' },
+  { name: 'MIT', desc: 'certs.c7' },
   { name: 'Google', desc: 'certs.c5' },
   { name: 'Anthropic', desc: 'certs.c6' },
   { nameKey: 'certs.c4n', desc: 'certs.c4' },
